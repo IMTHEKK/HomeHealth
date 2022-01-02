@@ -1,72 +1,245 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled3/screens/edit_profile.dart';
-import 'package:untitled3/screens/profile.dart';
-import 'package:untitled3/screens/signup.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
-
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  int _currentIndex = 0;
-  List _screens = [SignUp(), EditProfile(), SignUp(), Profile()];
-
-  void _updateIndex(int value) {
-    setState(() {
-      _currentIndex = value;
-    });
-  }
-
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //  throw UnimplementedError();
     return Scaffold(
-        /*appBar: AppBar(
-        title: Text("Bottom Navigation Bar"),
-      ),*/
-        body: _screens[_currentIndex],
-        bottomNavigationBar: Container(
-            decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                )),
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
+      backgroundColor: Colors.white70,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.25,
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(45),
+                      bottomRight: Radius.circular(45),
+                    )),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.01,
+                          ),
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: Image.asset('images/IHH_Logo.png'),
+                        ),
+                        Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                        ),
+                        //  Icon(Icons.)
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.05,
+                        top: MediaQuery.of(context).size.height * 0.03,
+                        bottom: MediaQuery.of(context).size.height * 0.02,
+                      ),
+                      child: Text(
+                        'Good morning, John Deo',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            //  border: Border.all(
+                            //    width: 1, /*color: Colors.purple, */style: BorderStyle.solid),
+                          ),
+                          child: ListTile(
+                            horizontalTitleGap: 0,
+                            leading: Icon(Icons.search),
+                            title: TextField(
+                              decoration: InputDecoration(
+                                  hintText: 'Search therapist, specialities...',
+                                  //  contentPadding: EdgeInsets.all(15),
+                                  border: InputBorder.none),
+                              onChanged: (value) {},
+                            ),
+                          )),
+                    ),
+                  ],
+                ),
               ),
-              child: BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
-                currentIndex: _currentIndex,
-                onTap: _updateIndex,
-                selectedItemColor: Colors.blue[700],
-                selectedFontSize: 13,
-                unselectedFontSize: 13,
-                iconSize: 30,
-                items: [
-                  BottomNavigationBarItem(
-                    label: "",
-                    icon: Icon(Icons.home),
-                  ),
-                  BottomNavigationBarItem(
-                    label: "",
-                    icon: Icon(Icons.search),
-                  ),
-                  BottomNavigationBarItem(
-                    label: "",
-                    icon: Icon(Icons.grid_view),
-                  ),
-                  BottomNavigationBarItem(
-                    label: "",
-                    icon: Icon(Icons.account_circle_outlined),
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.width * 0.05,
+                      left: MediaQuery.of(context).size.width * 0.05,
+                    ),
+                    child: Text(
+                      'Book a Service',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
-            )));
+              Container(
+                padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.05,
+                  right: MediaQuery.of(context).size.width * 0.05,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.width * 0.44,
+                      child: Card(
+                        elevation: 1,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset('images/massage _therapy_unselectable.png'),
+                            SizedBox(
+                              height: 15
+                            ),
+                            Text(
+                              'Massage Therapy',
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.width * 0.44,
+                      child: Card(
+                        color: Colors.blue,
+                        elevation: 1,
+                        child: Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset('images/physiotherapy_selectable.png'),
+                              SizedBox(
+                                height: 15
+                              ),
+                              Text(
+                                'Physiotherapy',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.width * 0.05,
+                      left: MediaQuery.of(context).size.width * 0.05,
+                    ),
+                    child: Text(
+                      'Top Rated in Your Area',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: 4,
+                itemBuilder: (context, position) {
+                  return Container(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.01,
+                      bottom: MediaQuery.of(context).size.height * 0.01,
+                      left: MediaQuery.of(context).size.width * 0.05,
+                      right: MediaQuery.of(context).size.width * 0.05,
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.02,
+                        bottom: MediaQuery.of(context).size.height * 0.02,
+                        left: MediaQuery.of(context).size.width * 0.05,
+                        right: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('John Deo',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),),
+                          SizedBox(
+                            height: 10
+                          ),Text('Physiotherapist',
+                          style: TextStyle(color: Colors.blue),),
+                          SizedBox(
+                            height: 10
+                          ),Row(
+                            children: [
+                              Icon(Icons.add_location_outlined),
+                              Text('MA, New York')
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10
+                          ),
+                          Row(
+                            children: [
+                              RatingBarIndicator(
+                                rating: 2.75,
+                                itemBuilder: (context, index) => Icon(
+                                  Icons.star,
+                                  color: Colors.blue,
+                                ),
+                                itemCount: 5,
+                                itemSize: 20.0,
+                                direction: Axis.horizontal,
+                              ),
+                              SizedBox(width: 8,),
+                              Text('9.7'),],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

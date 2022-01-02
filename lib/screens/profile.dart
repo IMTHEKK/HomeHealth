@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:untitled3/screens/edit_profile.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -9,7 +10,7 @@ class Profile extends StatelessWidget {
       statusBarColor: Colors.blue,
     ));
     return Scaffold(
-      backgroundColor: Colors.white70,
+      backgroundColor: Color(0xff92AFd9), //white70,
       body: SafeArea(
         child: Stack(
           children: [
@@ -127,7 +128,8 @@ class Profile extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Icon(Icons.person),
+                                        Icon(Icons.person,                                color: Colors.grey,
+                                        ),
                                         SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size
@@ -159,7 +161,8 @@ class Profile extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Icon(Icons.mail),
+                                        Icon(Icons.mail,                                color: Colors.grey,
+                                        ),
                                         SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size
@@ -191,7 +194,8 @@ class Profile extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Icon(Icons.phone),
+                                        Icon(Icons.phone,                                color: Colors.grey,
+                                        ),
                                         SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size
@@ -223,7 +227,8 @@ class Profile extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Icon(Icons.calendar_today_outlined),
+                                        Icon(Icons.calendar_today_outlined,                                color: Colors.grey,
+                                        ),
                                         SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size
@@ -255,7 +260,8 @@ class Profile extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Icon(Icons.location_on),
+                                        Icon(Icons.location_on,                                color: Colors.grey,
+                                        ),
                                         SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size
@@ -287,7 +293,7 @@ class Profile extends StatelessWidget {
                               ),
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.42,
-                              child: GestureDetector(
+                              child: InkWell(
                                 onTap: () {
                                   Navigator.push(
                                     context,
@@ -329,7 +335,7 @@ class Profile extends StatelessWidget {
                               ),
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.42,
-                              child: GestureDetector(
+                              child: InkWell(
                                 onTap: () {},
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -375,7 +381,51 @@ class Profile extends StatelessWidget {
                 children: [
                   Stack(
                     children: <Widget>[
-                      new Container(
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 2,
+                            color: Colors.white,
+                          ),
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(120.0),
+                          ),
+                          child: CachedNetworkImage(
+                            width: 120,
+                            height: 120,
+                            imageUrl:
+                                "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1",
+                            fit: BoxFit.cover,
+                            imageBuilder: (BuildContext context,
+                                ImageProvider<dynamic> imageProvider) {
+                              return Image(
+                                image: imageProvider as ImageProvider<Object>,
+                                fit: BoxFit.cover,
+                              );
+                            },
+                            placeholder: (context, url) => Container(
+                              color: Colors.black12,
+                              child: const Icon(
+                                Icons.person,
+                                color: Colors.grey,
+                                size: 120,
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => Container(
+                              color: Colors.black12,
+                              child: const Icon(
+                                Icons.person,
+                                color: Colors.grey,
+                                size: 120,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      /*new Container(
                         width: 120.0,
                         height: 120.0,
                         decoration: new BoxDecoration(
@@ -383,20 +433,29 @@ class Profile extends StatelessWidget {
                           image: new DecorationImage(
                             fit: BoxFit.fill,
                             image: new NetworkImage(
-                                "https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png"),
+                                "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1"),
+                                //"https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png"),
                           ),
                         ),
-                      ),
+                      ),*/
                       new Positioned(
                         bottom: 10.0,
                         right: 10.0,
-                        child: new CircleAvatar(
-                          radius: 15,
-                          child: Icon(Icons.edit),
-                          backgroundColor: Colors.white,
-                          //backgroundImage: Icon(Icons.edit),/*new NetworkImage(
-                          //   "https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png"),
-                          //AssetImage('assets/camera.png'),*/
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.blue,
+                            ),
+                            shape: BoxShape.circle,
+                          ),
+                          child: CircleAvatar(
+                            radius: 15,
+                            child: Icon(Icons.edit),
+                            backgroundColor: Colors.white,
+                            //backgroundImage: Icon(Icons.edit),/*new NetworkImage(
+                            //   "https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png"),
+                            //AssetImage('assets/camera.png'),*/
+                          ),
                         ),
                       ),
                     ],

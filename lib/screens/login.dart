@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled3/screens/home.dart';
+import 'package:untitled3/screens/onboard.dart';
 import 'package:untitled3/screens/signup.dart';
 
 class Login extends StatelessWidget {
@@ -12,11 +12,23 @@ class Login extends StatelessWidget {
         child: Stack(
           children: [
             Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: <Color>[
+                        Color(0xff8db8e1),
+                        Color(0xff1a9cdb)
+                      ])
+              ),
+            ),
+            Container(
               //color: Colors.red,
               height: MediaQuery.of(context).size.height * 0.4,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  color: Colors.white70,
+                  color: Color(0xffFAFAFA),//s.white70,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20),
@@ -33,9 +45,14 @@ class Login extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        //   height: MediaQuery.of(context).size.width * 0.3,
-                        child: Image(image: AssetImage('images/icon.png'))),
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      //   height: MediaQuery.of(context).size.width * 0.3,
+                      child: Image(
+                        image: AssetImage(
+                          'images/icon.png',
+                        ),color: Colors.blue,
+                      ),
+                    ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                     Card(
                       shape: OutlineInputBorder(
@@ -164,7 +181,7 @@ class Login extends StatelessWidget {
                                   context,
                                   MaterialPageRoute<void>(
                                     builder: (BuildContext context) =>
-                                        Home(), //  Profile(),
+                                        OnBoard(), //  Profile(),
                                   ),
                                 );
                               },
