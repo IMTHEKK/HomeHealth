@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,13 +10,14 @@ class EditProfile extends StatelessWidget {
     ));
 
     return Scaffold(
-      //  backgroundColor: Colors.white70,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Stack(
             children: [
               Container(
-                //color: Colors.red,
+                color: Color(0xff92afd9),
+              ),
+              Container(
                 height: MediaQuery.of(context).size.height * 0.3,
                 decoration: BoxDecoration(
                     color: Colors.blue,
@@ -102,7 +104,8 @@ class EditProfile extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.person),
+                                          Icon(Icons.person,                                color: Colors.grey,
+                                          ),
                                           SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
@@ -136,7 +139,8 @@ class EditProfile extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.mail),
+                                          Icon(Icons.mail,                                color: Colors.grey,
+                                          ),
                                           SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
@@ -170,7 +174,8 @@ class EditProfile extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.phone),
+                                          Icon(Icons.phone,                                color: Colors.grey,
+                                          ),
                                           SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
@@ -204,7 +209,8 @@ class EditProfile extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.calendar_today_outlined),
+                                          Icon(Icons.calendar_today_outlined,                                color: Colors.grey,
+                                          ),
                                           SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
@@ -238,7 +244,8 @@ class EditProfile extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.location_on),
+                                          Icon(Icons.location_on,                                color: Colors.grey,
+                                          ),
                                           SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
@@ -318,28 +325,74 @@ class EditProfile extends StatelessWidget {
                   children: [
                     Stack(
                       children: <Widget>[
-                        new Container(
-                          width: 120.0,
-                          height: 120.0,
-                          decoration: new BoxDecoration(
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.white,
+                            ),
                             shape: BoxShape.circle,
-                            image: new DecorationImage(
-                              fit: BoxFit.fill,
-                              image: new NetworkImage(
-                                  "https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png"),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(120.0),
+                            ),
+                            child: CachedNetworkImage(
+                              width: 120,
+                              height: 120,
+                              imageUrl:
+                                  "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1",
+                              fit: BoxFit.cover,
+                              imageBuilder: (BuildContext context,
+                                  ImageProvider<dynamic> imageProvider) {
+                                return Image(
+                                  image: imageProvider as ImageProvider<Object>,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                              placeholder: (context, url) => ClipRRect(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(120.0),
+                                ),
+                                child: Container(
+                                  color: Colors.black12,
+                                  child: const Icon(
+                                    Icons.person,
+                                    size: 120,
+                                  ),
+                                ),
+                              ),
+                              errorWidget: (context, url, error) => ClipRRect(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(120.0),
+                                ),
+                                child: Container(
+                                  color: Colors.black12,
+                                  child: const Icon(
+                                    Icons.person,
+                                    color: Colors.grey,
+                                    size: 120,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                        new Positioned(
+                        Positioned(
                           bottom: 10.0,
                           right: 10.0,
-                          child: new CircleAvatar(
-                            radius: 15,
-                            child: Icon(Icons.edit),
-                            backgroundColor: Colors.white,
-                            //backgroundImage: Icon(Icons.edit),/*new NetworkImage(
-                            //   "https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png"),
-                            //AssetImage('assets/camera.png'),*/
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.blue,
+                              ),
+                              shape: BoxShape.circle,
+                            ),
+                            child: CircleAvatar(
+                              radius: 15,
+                              child: Icon(Icons.edit),
+                              backgroundColor: Colors.white,
+                            ),
                           ),
                         ),
                       ],
