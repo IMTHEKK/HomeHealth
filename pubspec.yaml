@@ -28,9 +28,10 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  #flutter_svg: ^1.0.0
+  flutter_svg: ^1.0.0
   cached_network_image: 3.2.0
   flutter_rating_bar: ^4.0.0
+  table_calendar: ^3.0.3
 
 dev_dependencies:
   flutter_test:
@@ -64,11 +65,30 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+  fonts:
+     - family: Poppins
+       fonts:
+         - asset: fonts/poppins-regular.ttf
+         - asset: fonts/poppins_italic.ttf
+         - asset: fonts/Poppins-Black.ttf
+         - asset: fonts/Poppins-BlackItalic.ttf
+         - asset: fonts/Poppins-Bold.ttf
+         - asset: fonts/Poppins-BoldItalic.ttf
+         - asset: fonts/Poppins-ExtraBold.ttf
+         - asset: fonts/Poppins-ExtraBoldItalic.ttf
+         - asset: fonts/Poppins-ExtraLight.ttf
+         - asset: fonts/Poppins-ExtraLightItalic.ttf
+         - asset: fonts/Poppins-Italic.ttf
+         - asset: fonts/Poppins-Light.ttf
+         - asset: fonts/Poppins-LightItalic.ttf
+         - asset: fonts/Poppins-Medium.ttf
+         - asset: fonts/Poppins-MediumItalic.ttf
+         - asset: fonts/poppins-regular.ttf
+         - asset: fonts/Poppins-SemiBold.ttf
+         - asset: fonts/Poppins-SemiBoldItalic.ttf
+         - asset: fonts/Poppins-Thin.ttf
+         - asset: fonts/Poppins-ThinItalic.ttf
+         - asset: fonts/poppins_italic.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

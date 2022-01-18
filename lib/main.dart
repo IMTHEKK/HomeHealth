@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'poppins',
         primarySwatch: Colors.blue,
       ),
       home: Splash(), // /* EditProfile(),*/ Selection(),

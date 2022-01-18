@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:untitled3/screens/appointment_list.dart';
+import 'package:untitled3/screens/availability_settings.dart';
 import 'package:untitled3/screens/doctor_detail.dart';
 import 'package:untitled3/screens/home.dart';
+import 'package:untitled3/screens/ongoing_treatment.dart';
 import 'package:untitled3/screens/profile.dart';
 import 'package:untitled3/screens/search.dart';
 
@@ -15,9 +18,13 @@ class _OnBoardState extends State<OnBoard> {
   int _currentIndex = 0;
   List _screens = [
     Home(),
-    DoctorDetailScreen(),//Center(child: Text('search')),
+    DoctorDetailScreen(), //Center(child: Text('search')),
     SearchPage(),
-    Profile(),];
+    //OnGoingTreatment(),
+    //AppointmentList(),
+    //AvailabilitySettings(),
+    Profile(),
+  ];
 
   void _updateIndex(int value) {
     setState(() {
@@ -36,8 +43,8 @@ class _OnBoardState extends State<OnBoard> {
         decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
           ),
         ),
         child: ClipRRect(
@@ -57,23 +64,55 @@ class _OnBoardState extends State<OnBoard> {
             items: [
               BottomNavigationBarItem(
                 label: "",
-                activeIcon: Icon(Icons.home_outlined,color: Colors.white,),
-                icon: Icon(Icons.home_outlined,),
+                activeIcon: Image.asset(
+                  'images/home.png',
+                  height: 24,
+                  width: 24,
+                ),
+                icon: Image.asset(
+                  'images/home.png',
+                  height: 24,
+                  width: 24,
+                ),
               ),
               BottomNavigationBarItem(
                 label: "",
-                activeIcon: Icon(Icons.search,color: Colors.white,),
-                icon: Icon(Icons.search),
+                activeIcon: Image.asset(
+                  'images/appointments.png',
+                  height: 24,
+                  width: 24,
+                ),
+                icon: Image.asset(
+                  'images/appointments.png',
+                  height: 24,
+                  width: 24,
+                ),
               ),
               BottomNavigationBarItem(
                 label: "",
-                activeIcon: Icon(Icons.grid_view,color: Colors.white,),
-                icon: Icon(Icons.grid_view),
+                activeIcon: Image.asset(
+                  'images/chat.png',
+                  height: 24,
+                  width: 24,
+                ),
+                icon: Image.asset(
+                  'images/chat.png',
+                  height: 24,
+                  width: 24,
+                ),
               ),
               BottomNavigationBarItem(
                 label: "",
-                activeIcon: Icon(Icons.account_circle_outlined,color: Colors.white,),
-                icon: Icon(Icons.account_circle_outlined),
+                activeIcon: Image.asset(
+                  'images/profile.png',
+                  height: 24,
+                  width: 24,
+                ),
+                icon: Image.asset(
+                  'images/profile.png',
+                  height: 24,
+                  width: 24,
+                ),
               ),
             ],
           ),

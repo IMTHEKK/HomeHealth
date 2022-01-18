@@ -11,7 +11,7 @@ class SignUp extends StatelessWidget {
           children: [
             Container(
               //color: Colors.red,
-              height: MediaQuery.of(context).size.height * 0.3,
+              height: MediaQuery.of(context).size.height * 0.36,
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -192,7 +192,10 @@ class SignUp extends StatelessWidget {
                                     hintText: "Date of Birth",
                                     fillColor: Colors.white70),
                               ),
-                              trailing: Icon(Icons.calendar_today_outlined),
+                              trailing: Container(
+                                  height: 24,
+                                  width: 24,
+                                  child: Image.asset('images/calendar.png',color: Colors.grey,),),//Icon(Icons.admin_panel_settings),
                             ),
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
@@ -223,7 +226,10 @@ class SignUp extends StatelessWidget {
                                     hintText: "Password",
                                     fillColor: Colors.white70),
                               ),
-                              trailing: Icon(Icons.admin_panel_settings),
+                              trailing:Container(
+                                height: 24,
+                                width: 24,
+                                child: Image.asset('images/security.png'),),
                             ),
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
@@ -254,7 +260,10 @@ class SignUp extends StatelessWidget {
                                     hintText: "Confirm Password",
                                     fillColor: Colors.white70),
                               ),
-                              trailing: Icon(Icons.person),
+                              trailing: Container(
+                                height: 24,
+                                width: 24,
+                                child: Image.asset('images/confirm_pwd.png'),),
                             ),
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,

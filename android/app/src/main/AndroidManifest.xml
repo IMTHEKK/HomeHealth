@@ -1,7 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.untitled3">
-   <application
-        android:label="untitled3"
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:label="Home Health"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

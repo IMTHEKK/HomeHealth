@@ -12,7 +12,7 @@ class SearchPage extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.21,
+                height: MediaQuery.of(context).size.height * 0.25,
                 decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.only(
@@ -126,7 +126,7 @@ class SearchPage extends StatelessWidget {
                                   image: new DecorationImage(
                                       fit: BoxFit.fill,
                                       image: new NetworkImage(
-                                          "https://i.imgur.com/BoN9kdC.png")))),
+                                          "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1")))),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -160,9 +160,9 @@ class SearchPage extends StatelessWidget {
                                   child: Padding(
                                     padding: EdgeInsets.only(
                                       left: MediaQuery.of(context).size.width *
-                                          0.04,
+                                          0.03,
                                       right: MediaQuery.of(context).size.width *
-                                          0.04,
+                                          0.03,
                                       top: MediaQuery.of(context).size.height *
                                           0.008,
                                       bottom:

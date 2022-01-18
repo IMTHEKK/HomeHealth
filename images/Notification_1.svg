@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2018 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="0.311307in" height="0.313677in" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 32.7 32.95"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str1 {stroke:#454545;stroke-width:1.05;stroke-linejoin:round;stroke-miterlimit:10}
+    .str0 {stroke:white;stroke-width:1.05;stroke-linejoin:round;stroke-miterlimit:10}
+    .fil0 {fill:none;fill-rule:nonzero}
+    .fil1 {fill:red;fill-rule:nonzero}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_1835322818720">
+   <line class="fil0 str0" x1="25.7" y1="32.42" x2="4" y2= "32.42" />
+   <path class="fil0 str0" d="M4 32.42c-1.92,0 -3.48,-1.56 -3.48,-3.48"/>
+   <line class="fil0 str0" x1="0.53" y1="28.95" x2="0.53" y2= "7.25" />
+   <path class="fil0 str0" d="M0.53 7.25c0,-1.92 1.56,-3.48 3.48,-3.48"/>
+   <line class="fil0 str0" x1="4" y1="3.77" x2="25.7" y2= "3.77" />
+   <path class="fil0 str1" d="M25.7 3.77c1.92,0 3.48,1.56 3.48,3.48"/>
+   <line class="fil0 str0" x1="29.17" y1="7.25" x2="29.17" y2= "28.95" />
+   <path class="fil0 str0" d="M29.17 28.95c0,1.92 -1.56,3.48 -3.48,3.48"/>
+  </g>
+  <path class="fil1" d="M32.7 5.26c0,-2.9 -2.35,-5.26 -5.26,-5.26 -2.9,0 -5.26,2.35 -5.26,5.26 0,2.9 2.35,5.26 5.26,5.26 2.9,0 5.26,-2.35 5.26,-5.26z"/>
+  <path class="fil0 str0" d="M19.29 16.05l0 -1.93c0,-2.42 -1.96,-4.38 -4.38,-4.38 -2.42,0 -4.38,1.96 -4.38,4.38l0 1.59c0,0.79 0.06,1.56 -0.44,2.18l-2.5 3.41c-0.89,1.11 -0.11,2.75 1.32,2.75l11.83 0c1.45,0 2.23,-1.7 1.28,-2.79l-2.15 -2.93c-0.54,-0.63 -0.59,-1.43 -0.59,-2.26zm-6.59 8.38c0,1.17 0.95,2.11 2.11,2.11 1.17,0 2.11,-0.95 2.11,-2.11"/>
+ </g>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="71" height="72" viewBox="0 0 71 72">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #0098db;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+
+      .cls-1, .cls-2 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: #0098db;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M2543.19,1903.88a32.12,32.12,0,1,1-32.12,32.12A32.121,32.121,0,0,1,2543.19,1903.88Z" transform="translate(-2508 -1900)"/>
+  <path id="_" data-name="+" class="cls-2" d="M2540.3,1924.9v8.31h-8.1v5.23h8.1v8.31h5.65v-8.31h8.1v-5.23h-8.1v-8.31h-5.65Z" transform="translate(-2508 -1900)"/>
+</svg>

@@ -25,7 +25,7 @@ class Login extends StatelessWidget {
             ),
             Container(
               //color: Colors.red,
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: MediaQuery.of(context).size.height * 0.55,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   color: Color(0xffFAFAFA),//s.white70,
@@ -49,8 +49,8 @@ class Login extends StatelessWidget {
                       //   height: MediaQuery.of(context).size.width * 0.3,
                       child: Image(
                         image: AssetImage(
-                          'images/icon.png',
-                        ),color: Colors.blue,
+                          'images/logo.png',
+                        ),//color: Colors.blue,
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.04),
@@ -127,7 +127,10 @@ class Login extends StatelessWidget {
                                     hintText: "Password",
                                     fillColor: Colors.white70),
                               ),
-                              trailing: Icon(Icons.admin_panel_settings),
+                              trailing: Container(
+                                  height: 24,
+                                  width: 24,
+                                  child: Image.asset('images/security.png')),//Icon(Icons.admin_panel_settings),
                             ),
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,

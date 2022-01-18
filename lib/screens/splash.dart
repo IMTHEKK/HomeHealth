@@ -62,7 +62,7 @@ class _SplashState extends State<Splash> {
                 width: MediaQuery.of(context).size.width * 0.4,
                 height: MediaQuery.of(context).size.width * 0.4,
                 child: Image(
-                    color: Colors.blue, image: AssetImage('images/icon.png'))),
+                   /* color: Colors.blue, */image: AssetImage('images/logo.png'))),
           ),
         ],
       ),

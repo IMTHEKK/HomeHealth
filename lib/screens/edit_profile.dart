@@ -104,7 +104,9 @@ class EditProfile extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.person,                                color: Colors.grey,
+                                          Icon(
+                                            Icons.person,
+                                            color: Colors.grey,
                                           ),
                                           SizedBox(
                                             width: MediaQuery.of(context)
@@ -139,7 +141,9 @@ class EditProfile extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.mail,                                color: Colors.grey,
+                                          Icon(
+                                            Icons.mail,
+                                            color: Colors.grey,
                                           ),
                                           SizedBox(
                                             width: MediaQuery.of(context)
@@ -174,7 +178,9 @@ class EditProfile extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.phone,                                color: Colors.grey,
+                                          Icon(
+                                            Icons.phone,
+                                            color: Colors.grey,
                                           ),
                                           SizedBox(
                                             width: MediaQuery.of(context)
@@ -209,7 +215,13 @@ class EditProfile extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.calendar_today_outlined,                                color: Colors.grey,
+                                          Container(
+                                            height: 24,
+                                            width: 24,
+                                            child: Image.asset(
+                                              'images/calendar.png',
+                                              color: Colors.grey,
+                                            ),
                                           ),
                                           SizedBox(
                                             width: MediaQuery.of(context)
@@ -244,7 +256,9 @@ class EditProfile extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.location_on,                                color: Colors.grey,
+                                          Icon(
+                                            Icons.location_on,
+                                            color: Colors.grey,
                                           ),
                                           SizedBox(
                                             width: MediaQuery.of(context)
@@ -390,7 +404,11 @@ class EditProfile extends StatelessWidget {
                             ),
                             child: CircleAvatar(
                               radius: 15,
-                              child: Icon(Icons.edit),
+                              child:   Container(
+                                height: 18,
+                                width: 18,
+                                child: Image.asset('images/pencil.png'),),
+                              //Icon(Icons.edit),
                               backgroundColor: Colors.white,
                             ),
                           ),
