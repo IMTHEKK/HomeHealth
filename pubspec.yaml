@@ -32,6 +32,9 @@ dependencies:
   cached_network_image: 3.2.0
   flutter_rating_bar: ^4.0.0
   table_calendar: ^3.0.3
+  http: ^0.13.4
+  shared_preferences: ^2.0.12
+  rxdart: ^0.27.3
 
 dev_dependencies:
   flutter_test:

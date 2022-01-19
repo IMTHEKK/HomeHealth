@@ -1,7 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled3/network/constant.dart';
 import 'package:untitled3/screens/splash.dart';
 
 void main() {
+  if (kDebugMode) {
+    Constants.setEnvironment(Environment.DEV);
+  } else {
+    Constants.setEnvironment(Environment.STAGING);
+  }
   runApp(
     MyApp(),
   );
