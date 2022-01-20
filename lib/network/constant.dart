@@ -31,7 +31,7 @@ class Constants {
 }
 
 class _Config {
-  static const SERVER_ONE = "SERVER_ONE";
+  static const SERVER_ONE = "https://iconhomehealth.ca";
   static const SERVER_TWO = "SERVER_TWO";
   static const WHERE_AM_I = "WHERE_AM_I";
 

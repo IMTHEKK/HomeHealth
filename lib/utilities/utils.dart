@@ -2,12 +2,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled3/screens/selection.dart';
 import 'package:untitled3/utilities/shared_preference/pref_constants.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Utils {
   static bool validateEmail(String value) {
-    String pattern =
-        r"^[a-zA-Z0-9](\.?[a-zA-Z0-9_-]){1,}@([\w\-]+)((\.(\w){2,})+)$";
-    RegExp regex = new RegExp(pattern,multiLine: true);
+    String pattern = r"^[a-zA-Z0-9](\.?[a-zA-Z0-9_-]){1,}@([\w\-]+)((\.(\w){2,})+)$";
+    RegExp regex = new RegExp(pattern, multiLine: true);
     if (!regex.hasMatch(value))
       return false;
     else
@@ -31,14 +31,22 @@ class Utils {
     return smallestDimension < 600;
   }
 
-  static void showToast(BuildContext context, String msg) {}
+  static void showToast(BuildContext context, String msg) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.transparent,
+        textColor: Colors.black,
+        fontSize: 16.0);
+  }
 
   static Future<void> goToLoginScreen(context) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.getKeys();
     for (String key in preferences.getKeys()) {
-      if (key != PreferenceConstants.company_code &&
-          key != PreferenceConstants.company_logo) {
+      if (key != PreferenceConstants.company_code && key != PreferenceConstants.company_logo) {
         preferences.remove(key);
       }
     }
@@ -63,5 +71,10 @@ class Utils {
         "/Home",
       ),
     );
+  }
+
+  static fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
   }
 }

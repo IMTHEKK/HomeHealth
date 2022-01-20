@@ -36,17 +36,18 @@ class ApiProvider<T> {
   Future<T> hitPostApi(Map<String, dynamic> bodyParams, String apiUrl) async {
     String? token =
         await GetPreference().getStringValuesSF(PreferenceConstants.token);
-    Map<String, String> headers = {
+    Map<String, String> headers ={
       "Content-Type": "application/json",
-      "Authorization": token == null ? "" : token,
+    //  "Authorization": token == null ? "" : token,
     };
-    var url = Uri.parse(Constants.SERVER_ONE + apiUrl);
+    var url = Uri.parse(/*Constants.SERVER_ONE + */apiUrl);
     Response response = await client.post(
       url,
       body: json.encode(bodyParams),
-      headers: headers,
-      encoding: Encoding.getByName("utf-8"),
+    //  headers: headers,
+      //encoding: Encoding.getByName("utf-8"),
     );
+    print('#################'+response.statusCode.toString()+'  '+response.body);
     if (response.statusCode == 200 || response.statusCode == 400) {
       return json.decode(response.body);
     } else if (response.statusCode == 401) {
