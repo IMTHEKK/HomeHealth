@@ -14,6 +14,7 @@ class _OngoingTreatmentListState extends State<OngoingTreatmentList> {
       backgroundColor: Colors.blue,
       body: SingleChildScrollView(
         child: SafeArea(
+          top: false,
           child: Stack(
             children: [
               Container(

@@ -15,6 +15,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     return Scaffold(
       backgroundColor: Color(0xffd0f1ff), //Colors.blue,
       body: SafeArea(
+        top: false,
         child: SingleChildScrollView(
           child: Stack(
             children: [

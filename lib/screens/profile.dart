@@ -12,6 +12,7 @@ class Profile extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xff92AFd9), //white70,
       body: SafeArea(
+        top: false,
         child: Stack(
           children: [
             Container(

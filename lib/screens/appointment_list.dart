@@ -16,6 +16,7 @@ class _AppointmentListState extends State<AppointmentList> {
       backgroundColor: Colors.blue,
       body: SingleChildScrollView(
         child: SafeArea(
+          top: false,
           child: Stack(
             children: [
               Container(

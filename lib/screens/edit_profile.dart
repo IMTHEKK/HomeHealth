@@ -12,6 +12,7 @@ class EditProfile extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
+          top: false,
           child: Stack(
             children: [
               Container(

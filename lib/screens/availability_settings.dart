@@ -15,6 +15,7 @@ class _AvailabilitySettingsState extends State<AvailabilitySettings> {
     return Scaffold(
       backgroundColor: Colors.blue, //Colors.blue,
       body: SafeArea(
+        top: false,
         child: SingleChildScrollView(
           child: Stack(
             children: [

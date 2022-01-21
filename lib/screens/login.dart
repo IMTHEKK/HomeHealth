@@ -15,23 +15,26 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  var emailController = TextEditingController();
+  var pwdController = TextEditingController();
+  final focusEmail = FocusNode();
+  final focusPassword = FocusNode();
+
   @override
   Widget build(BuildContext context) {
-    var emailController = TextEditingController();
-    var pwdController = TextEditingController();
-    final focusEmail = FocusNode();
-    final focusPassword = FocusNode();
-
     return Scaffold(
       backgroundColor: Colors.blue,
       body: SafeArea(
+        top: false,
         child: Stack(
           children: [
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
-                  gradient:
-                      LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: <Color>[Color(0xff8db8e1), Color(0xff1a9cdb)])),
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: <Color>[Color(0xff8db8e1), Color(0xff1a9cdb)])),
             ),
             Container(
               //color: Colors.red,
@@ -65,11 +68,15 @@ class _LoginState extends State<Login> {
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                     Card(
-                      shape: OutlineInputBorder(borderRadius: BorderRadius.circular(38), borderSide: BorderSide(color: Colors.transparent)),
+                      shape: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(38),
+                          borderSide: BorderSide(color: Colors.transparent)),
                       color: Colors.white,
                       child: Column(
                         children: [
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.04),
                           Text(
                             'Login Account',
                             style: TextStyle(
@@ -78,7 +85,9 @@ class _LoginState extends State<Login> {
                               color: Colors.blue,
                             ),
                           ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.04),
                           Container(
                             decoration: BoxDecoration(
                               // color: Colors.blue,
@@ -96,7 +105,8 @@ class _LoginState extends State<Login> {
                                     ),*/
                                     //filled: true,
                                     border: InputBorder.none,
-                                    hintStyle: TextStyle(color: Colors.grey[800]),
+                                    hintStyle:
+                                        TextStyle(color: Colors.grey[800]),
                                     hintText: "Email or Username",
                                     fillColor: Colors.white70),
                               ),
@@ -107,7 +117,9 @@ class _LoginState extends State<Login> {
                               right: MediaQuery.of(context).size.width * 0.07,
                             ),
                           ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
                           Container(
                             decoration: BoxDecoration(
                               // color: Colors.blue,
@@ -126,19 +138,25 @@ class _LoginState extends State<Login> {
                                     ),*/
                                     //filled: true,
                                     border: InputBorder.none,
-                                    hintStyle: TextStyle(color: Colors.grey[800]),
+                                    hintStyle:
+                                        TextStyle(color: Colors.grey[800]),
                                     hintText: "Password",
                                     fillColor: Colors.white70),
                               ),
-                              trailing:
-                                  Container(height: 24, width: 24, child: Image.asset('images/security.png')), //Icon(Icons.admin_panel_settings),
+                              trailing: Container(
+                                  height: 24,
+                                  width: 24,
+                                  child: Image.asset(
+                                      'images/security.png')), //Icon(Icons.admin_panel_settings),
                             ),
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
                               right: MediaQuery.of(context).size.width * 0.07,
                             ),
                           ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
                           Container(
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.04,
@@ -168,7 +186,9 @@ class _LoginState extends State<Login> {
                               ],
                             ),
                           ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
                           Container(
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
@@ -177,32 +197,23 @@ class _LoginState extends State<Login> {
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: GestureDetector(
                               onTap: () async {
-                                Map<String, dynamic> params = {"email": emailController.text, "password": pwdController.text};
+                                Map<String, dynamic> params = {
+                                  "email": emailController.text,
+                                  "password": pwdController.text
+                                };
 
                                 //var res = await commonBloc.hitPostApi( params, ApiUrl.login);
-                                if (Utils.validateEmail(emailController.text.toString()) && (pwdController.text.toString().isNotEmpty)) {
+                                if (Utils.validateEmail(
+                                        emailController.text.toString()) &&
+                                    (pwdController.text
+                                        .toString()
+                                        .isNotEmpty)) {
                                   var client = http.Client();
-                                  try {
-                                    var response = await client.post(Uri.parse(ApiUrl.login),
-                                        body: {"email": emailController.text.toString(), "password": pwdController.text.toString()});
-                                    print('Response status: ${response.statusCode}');
-                                    print('Response body: ${response.body}');
-                                    Utils.showToast(context, 'Sign in Successfully');
-                                    if (response.body.isNotEmpty) {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) => OnBoard(), //  Profile(),
-                                        ),
-                                      );
-                                    }
-                                  } catch (err) {
-                                    rethrow;
-                                  } finally {
-                                    client.close();
-                                  }
+                                  var res = await commonBloc.hitPostApi( params, ApiUrl.login);
+                                  print('Response body: ${res}');
                                 } else {
-                                  Utils.showToast(context, 'Please provide valid data');
+                                  Utils.showToast(
+                                      context, 'Please provide valid data');
                                 }
                               },
                               child: Container(
@@ -233,7 +244,9 @@ class _LoginState extends State<Login> {
                               ),
                             ),
                           ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -243,7 +256,8 @@ class _LoginState extends State<Login> {
                                   Navigator.pushReplacement<void, void>(
                                     context,
                                     MaterialPageRoute<void>(
-                                      builder: (BuildContext context) => SignUp(),
+                                      builder: (BuildContext context) =>
+                                          SignUp(),
                                     ),
                                   );
                                 },
@@ -256,7 +270,9 @@ class _LoginState extends State<Login> {
                               )
                             ],
                           ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.04),
                         ],
                       ),
                     ),

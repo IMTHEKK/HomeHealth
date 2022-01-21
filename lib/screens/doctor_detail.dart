@@ -16,6 +16,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
       backgroundColor: Colors.white70,
       body: SingleChildScrollView(
         child: SafeArea(
+          top: false,
           child: Container(
             height: MediaQuery.of(context).size.height * 0.88,
             child: Column(

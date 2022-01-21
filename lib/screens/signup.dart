@@ -1,12 +1,50 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled3/utilities/utils.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  var fullNameController = TextEditingController();
+  var emailController = TextEditingController();
+  var phoneController = TextEditingController();
+  var dobController = TextEditingController();
+  var passwordController = TextEditingController();
+  var confirmpasswordController = TextEditingController();
+
+  bool isValid() {
+    if (fullNameController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter your full name");
+      return false;
+    } else if (Utils.validateEmail(emailController.text.toString()) == null) {
+      Utils.showToast(context, "Please enter valid email");
+      return false;
+    } else if (phoneController.text.toString().isEmpty ||
+        phoneController.text.length > 10) {
+      Utils.showToast(context, "Please enter valid phone");
+      return false;
+    } else if (dobController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter valid DOB");
+      return false;
+    } else if (passwordController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter password");
+      return false;
+    } else if (confirmpasswordController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter confirm password");
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       body: SafeArea(
+        top: false,
         child: Stack(
           children: [
             Container(
@@ -88,6 +126,8 @@ class SignUp extends StatelessWidget {
                             ),
                             child: ListTile(
                               title: TextField(
+                                controller: fullNameController,
+                                textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
                                     /*  border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.0),
@@ -119,6 +159,8 @@ class SignUp extends StatelessWidget {
                             ),
                             child: ListTile(
                               title: TextField(
+                                controller: emailController,
+                                textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
                                     /*  border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.0),
@@ -150,6 +192,8 @@ class SignUp extends StatelessWidget {
                             ),
                             child: ListTile(
                               title: TextField(
+                                controller: phoneController,
+                                textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
                                     /*  border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.0),
@@ -181,6 +225,8 @@ class SignUp extends StatelessWidget {
                             ),
                             child: ListTile(
                               title: TextField(
+                                controller: dobController,
+                                textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
                                     /*  border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.0),
@@ -193,9 +239,13 @@ class SignUp extends StatelessWidget {
                                     fillColor: Colors.white70),
                               ),
                               trailing: Container(
-                                  height: 24,
-                                  width: 24,
-                                  child: Image.asset('images/calendar.png',color: Colors.grey,),),//Icon(Icons.admin_panel_settings),
+                                height: 24,
+                                width: 24,
+                                child: Image.asset(
+                                  'images/calendar.png',
+                                  color: Colors.grey,
+                                ),
+                              ), //Icon(Icons.admin_panel_settings),
                             ),
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
@@ -215,6 +265,8 @@ class SignUp extends StatelessWidget {
                             ),
                             child: ListTile(
                               title: TextField(
+                                controller: passwordController,
+                                textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
                                     /*  border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.0),
@@ -226,10 +278,11 @@ class SignUp extends StatelessWidget {
                                     hintText: "Password",
                                     fillColor: Colors.white70),
                               ),
-                              trailing:Container(
+                              trailing: Container(
                                 height: 24,
                                 width: 24,
-                                child: Image.asset('images/security.png'),),
+                                child: Image.asset('images/security.png'),
+                              ),
                             ),
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
@@ -249,6 +302,8 @@ class SignUp extends StatelessWidget {
                             ),
                             child: ListTile(
                               title: TextField(
+                                controller: confirmpasswordController,
+                                textInputAction: TextInputAction.done,
                                 decoration: InputDecoration(
                                     /*  border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.0),
@@ -263,7 +318,8 @@ class SignUp extends StatelessWidget {
                               trailing: Container(
                                 height: 24,
                                 width: 24,
-                                child: Image.asset('images/confirm_pwd.png'),),
+                                child: Image.asset('images/confirm_pwd.png'),
+                              ),
                             ),
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
@@ -307,7 +363,9 @@ class SignUp extends StatelessWidget {
                             ),
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                //createAccount();
+                              },
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.blue,
@@ -370,5 +428,11 @@ class SignUp extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void createAccount() {
+    if (isValid()) {
+
+    }
   }
 }
