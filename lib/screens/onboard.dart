@@ -18,11 +18,12 @@ class _OnBoardState extends State<OnBoard> {
   int _currentIndex = 0;
   List _screens = [
     Home(),
-    DoctorDetailScreen(), //Center(child: Text('search')),
+    //DoctorDetailScreen(),
     SearchPage(),
-    //OnGoingTreatment(),
-    //AppointmentList(),
     //AvailabilitySettings(),
+    //Text('search'),
+    OnGoingTreatment(),
+    //AppointmentList(),
     Profile(),
   ];
 
@@ -35,9 +36,6 @@ class _OnBoardState extends State<OnBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /*appBar: AppBar(
-        title: Text("Bottom Navigation Bar"),
-      ),*/
       body: _screens[_currentIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(

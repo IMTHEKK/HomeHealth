@@ -102,7 +102,7 @@ class Profile extends StatelessWidget {
                                               color: Colors.blue,
                                               fontSize: 22,
                                               fontWeight: FontWeight.bold,
-                                              letterSpacing: 1,
+                                              letterSpacing: 0,
                                             ),
                                           ),
                                         ),
@@ -165,7 +165,7 @@ class Profile extends StatelessWidget {
                                                   SizedBox(
                                                     width: MediaQuery.of(context).size.height * 0.01,
                                                   ),
-                                                  Text('Email Address'),
+                                                  Text('Email'),
                                                 ],
                                               ),
                                               Text(customer.customerEmail, /*'john_deo225@gmail.com'*/),

@@ -20,7 +20,7 @@ class _AvailabilitySettingsState extends State<AvailabilitySettings> {
           child: Stack(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.2,
+                height: MediaQuery.of(context).size.height * 0.25,
                 decoration: BoxDecoration(
                     color: Color(0xfff7f7f7), //s.grey,
                     borderRadius: BorderRadius.only(
@@ -41,7 +41,7 @@ class _AvailabilitySettingsState extends State<AvailabilitySettings> {
                           child: Padding(
                             padding: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.05,
-                              top: 20,
+                              top: MediaQuery.of(context).size.height * 0.05,
                             ),
                             child: Icon(
                               Icons.arrow_back,
@@ -54,7 +54,7 @@ class _AvailabilitySettingsState extends State<AvailabilitySettings> {
                             padding: EdgeInsets.all(8),
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.1,
-                              top: 8,
+                              top: MediaQuery.of(context).size.width * 0.05,
                             ),
                             // alignment: Alignment.center,
                             child: Text(
@@ -73,7 +73,7 @@ class _AvailabilitySettingsState extends State<AvailabilitySettings> {
               ),
               Container(
                 margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.06,
+                  top: MediaQuery.of(context).size.height * 0.09,
                   left: MediaQuery.of(context).size.width * 0.04,
                   right: MediaQuery.of(context).size.width * 0.04,
                   bottom: MediaQuery.of(context).size.width * 0.04,

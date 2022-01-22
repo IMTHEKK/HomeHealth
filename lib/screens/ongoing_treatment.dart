@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled3/screens/appointment_list.dart';
 
@@ -56,7 +59,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
               ),
               Container(
                 margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.025,
+                  top: MediaQuery.of(context).size.height * 0.04,
                   left: MediaQuery.of(context).size.width * 0.04,
                   right: MediaQuery.of(context).size.width * 0.04,
                   bottom: MediaQuery.of(context).size.width * 0.04,
@@ -142,7 +145,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                 // fontFamily: 'Montserrat',
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
-                                letterSpacing: 1,
+                                letterSpacing: 0,
                               ),
                             ),
                           )
@@ -325,7 +328,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.02,
                           ),
-                          Container(
+                          /*Container(
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.12,
                               right: MediaQuery.of(context).size.width * 0.07,
@@ -446,7 +449,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.02,
-                          ),
+                          ),*/
                           Container(
                             padding: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.04,
@@ -489,7 +492,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                           SizedBox(
                               height:
                                   MediaQuery.of(context).size.height * 0.02),
-                          Container(
+                          /*Container(
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
                               right: MediaQuery.of(context).size.width * 0.07,
@@ -504,7 +507,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                 Text('is the complete therapy'),
                               ],
                             ),
-                          ),
+                          ),*/
                           SizedBox(
                               height:
                                   MediaQuery.of(context).size.height * 0.02),
@@ -558,14 +561,50 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                   ],
                 ),
               ),
+              Container(
+                margin: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.03),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child:IconButton(
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          ),
+                          onPressed: null,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: IconButton(
+                        icon: Icon(
+                          CupertinoIcons.ellipsis,
+                          color: Colors.white,
+                        ),
+                        onPressed: null,
+                      ),
+                    ),
+                    //  Icon(Icons.)
+                  ],
+                ),
+              ),
+/*
               InkWell(
                 onTap: () {
                   Navigator.pop(context);
                 },
                 child: Container(
                   margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.08,
-                    top: MediaQuery.of(context).size.height * 0.02,
+                    left: MediaQuery.of(context).size.width * 0.03,
+                    top: MediaQuery.of(context).size.height * 0.05,
                   ),
                   child: Icon(
                     Icons.arrow_back,
@@ -577,17 +616,17 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
               InkWell(
                 onTap: () {
                   // Navigator.pop(context);
-/*
+*//*
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => AppointmentList()));
-*/
+*//*
                 },
                 child: Container(
                   margin: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width * 0.86,
-                    top: MediaQuery.of(context).size.height * 0.02,
+                    top: MediaQuery.of(context).size.height * 0.05,
                   ),
                   child: Icon(
                     Icons.menu,
@@ -595,7 +634,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                     color: Colors.white,
                   ),
                 ),
-              ),
+              ),*/
             ],
           ),
         ),

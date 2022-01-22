@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -6,7 +8,8 @@ import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 
 class DoctorDetailScreen extends StatefulWidget {
-  const DoctorDetailScreen({Key? key}) : super(key: key);
+  final doctorId;
+  const DoctorDetailScreen({Key? key,this.doctorId}) : super(key: key);
 
   @override
   _DoctorDetailScreenState createState() => _DoctorDetailScreenState();
@@ -16,9 +19,9 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white70,
+      //backgroundColor: Colors.white70,
       body: FutureBuilder(
-        future: commonBloc.hitGetApi(ApiUrl.therapist_details + "?th_id=2"),
+        future: commonBloc.hitGetApi(ApiUrl.therapist_details + "?th_id="+widget.doctorId),
         builder: (context, AsyncSnapshot snap) {
           if (snap.data == null) {
             return Container(
@@ -47,22 +50,39 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.white,
+                              InkWell(
+                                onTap: (){
+                                  Navigator.pop(context);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child:IconButton(
+                                    icon: Icon(
+                                      Icons.arrow_back,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: null,
+                                  ),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  Icons.menu,
-                                  color: Colors.white,
+                                child: Transform.rotate(
+                                  angle: 90 * pi / 180,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.menu,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: null,
+                                  ),
                                 ),
                               ),
                               //  Icon(Icons.)

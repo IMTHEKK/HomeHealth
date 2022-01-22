@@ -57,7 +57,7 @@ class _LoginState extends State<Login> {
             SingleChildScrollView(
               child: Container(
                 margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.05,
+                  top: MediaQuery.of(context).size.height * 0.1,
                   left: MediaQuery.of(context).size.width * 0.07,
                   right: MediaQuery.of(context).size.width * 0.07,
                   bottom: MediaQuery.of(context).size.width * 0.07,
@@ -270,7 +270,7 @@ class _LoginState extends State<Login> {
               child: Container(
                 margin: EdgeInsets.only(
                   left: MediaQuery.of(context).size.width * 0.08,
-                  top: MediaQuery.of(context).size.height * 0.02,
+                  top: MediaQuery.of(context).size.height * 0.07,
                 ),
                 child: Icon(
                   Icons.arrow_back,
