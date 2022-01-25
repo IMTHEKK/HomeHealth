@@ -5,12 +5,17 @@ import 'package:untitled3/models/customers.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/screens/edit_profile.dart';
+import 'package:untitled3/screens/selection.dart';
 import 'dart:convert';
 
-class Profile extends StatefulWidget {
-  var id;
+import 'package:untitled3/utilities/shared_preference/get_prefer.dart';
+import 'package:untitled3/utilities/shared_preference/save_pref.dart';
+import 'package:untitled3/utilities/utils.dart';
 
-  Profile({Key? key, required this.id}) : super(key: key);
+class Profile extends StatefulWidget {
+  final id;
+
+  const Profile({Key? key, required this.id}) : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -349,7 +354,18 @@ class _ProfileState extends State<Profile> {
                                         height: MediaQuery.of(context).size.height * 0.06,
                                         width: MediaQuery.of(context).size.width * 0.42,
                                         child: InkWell(
-                                          onTap: () {},
+                                          onTap: () async {
+                                            SavePreference.addStringToSF('id', '');
+                                            SavePreference.addStringToSF('email', '');
+                                            SavePreference.addStringToSF('name', '');
+                                            Utils.showToast(context, 'Sign out Successfully');
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => Selection(),
+                                              ),
+                                            );
+                                          },
                                           child: Container(
                                             decoration: BoxDecoration(
                                               color: Colors.white,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:untitled3/screens/doctor_detail.dart';
+import 'package:untitled3/screens/ongoing_treatment.dart';
 import 'package:untitled3/screens/review.dart';
 
 class TestimonialsList extends StatefulWidget {
@@ -14,20 +16,23 @@ class _TestimonialsListState extends State<TestimonialsList> {
     return ListView.builder(
       itemCount: 6,
       itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey,
-            ),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          margin: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.01,
-            bottom: MediaQuery.of(context).size.height * 0.01,
-            left: MediaQuery.of(context).size.width * 0.05,
-            right: MediaQuery.of(context).size.width * 0.05,
-          ),
+        return InkWell(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => DoctorDetailScreen(doctorId: "2",)));
+          },
           child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.grey,
+              ),
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.01,
+              bottom: MediaQuery.of(context).size.height * 0.01,
+              left: MediaQuery.of(context).size.width * 0.05,
+              right: MediaQuery.of(context).size.width * 0.05,
+            ),
             padding: EdgeInsets.only(
               top: MediaQuery.of(context).size.height * 0.02,
               bottom: MediaQuery.of(context).size.height * 0.02,
@@ -48,16 +53,13 @@ class _TestimonialsListState extends State<TestimonialsList> {
                         image: new DecorationImage(
                             fit: BoxFit.fill,
                             image: new NetworkImage(
-                                 "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1"
-                            )))),
+                                "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1")))),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Dr. David Gilmour',
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
+                    Text(
+                      'Dr. David Gilmour',
+                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -72,8 +74,8 @@ class _TestimonialsListState extends State<TestimonialsList> {
                         width: MediaQuery.of(context).size.width * 0.4,
                         decoration: BoxDecoration(
                           /*border: Border.all(
-                                      color: Colors.blue,
-                                    ),*/
+                                        color: Colors.blue,
+                                      ),*/
                           color: Color(0XFFFFC5DBF4),
                           borderRadius: BorderRadius.circular(8.0),
                         ),
@@ -100,10 +102,7 @@ class _TestimonialsListState extends State<TestimonialsList> {
                     SizedBox(height: 10),
                     InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ReviewScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewScreen()));
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.4,
@@ -122,7 +121,7 @@ class _TestimonialsListState extends State<TestimonialsList> {
                           ),
                           child: Center(
                             child: Text(
-                              'Review Doctor',
+                              'Leave a Review',
                               style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:untitled3/screens/availability_settings.dart';
+import 'package:untitled3/screens/help.dart';
 import 'package:untitled3/screens/home.dart';
 import 'package:untitled3/screens/ongoing_treatment.dart';
 import 'package:untitled3/screens/ongoing_treatment_list.dart';
 import 'package:untitled3/screens/profile.dart';
 import 'package:untitled3/screens/search.dart';
+import 'package:untitled3/screens/search1.dart';
 import 'package:untitled3/screens/testimonials_list.dart';
 
 class OnBoard extends StatefulWidget {
-  const OnBoard({Key? key}) : super(key: key);
+  final id;
+
+  const OnBoard({Key? key, this.id}) : super(key: key);
 
   @override
   _OnBoardState createState() => _OnBoardState();
@@ -16,17 +20,6 @@ class OnBoard extends StatefulWidget {
 
 class _OnBoardState extends State<OnBoard> {
   int _currentIndex = 0;
-  List _screens = [
-    Home(),
-    //DoctorDetailScreen(),
-    //SearchPage(),
-    //Text('search'),
-    TestimonialsList(),
-    OngoingTreatmentList(),
-    //AppointmentList(),
-    AvailabilitySettings(),
-  //  Profile(),
-  ];
 
   void _updateIndex(int value) {
     setState(() {
@@ -36,6 +29,18 @@ class _OnBoardState extends State<OnBoard> {
 
   @override
   Widget build(BuildContext context) {
+    List _screens = [
+      //Home(id: widget.id),
+      //DoctorDetailScreen(),
+      SearchPage1(),
+      //Text('search'),
+      TestimonialsList(),
+      // OngoingTreatmentList(),
+      //AppointmentList(),
+      //AvailabilitySettings(),
+      HelpScreen(),
+      Profile(id: widget.id),
+    ];
     return Scaffold(
       body: _screens[_currentIndex],
       bottomNavigationBar: Container(

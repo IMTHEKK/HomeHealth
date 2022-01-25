@@ -42,7 +42,7 @@ class _SignUpState extends State<SignUp> {
     } else if (confirmPasswordController.text.toString().isEmpty) {
       Utils.showToast(context, "Please enter confirm password");
       return false;
-    }else if(passwordController.text.toString()!=confirmPasswordController.text.toString()){
+    } else if (passwordController.text.toString() != confirmPasswordController.text.toString()) {
       Utils.showToast(context, "Password and confirm password mismatch");
       return false;
     }
@@ -52,6 +52,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.blueAccent,
       body: SafeArea(
         top: false,
@@ -96,7 +97,6 @@ class _SignUpState extends State<SignUp> {
                             Expanded(
                               child: Container(
                                 margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.22),
-                                // alignment: Alignment.center,
                                 child: Text(
                                   'Sign Up',
                                   style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 22),
@@ -115,7 +115,9 @@ class _SignUpState extends State<SignUp> {
                         ),
                         child: Card(
                           elevation: 10,
-                          shape: OutlineInputBorder(borderRadius: BorderRadius.circular(38), borderSide: BorderSide(color: Colors.transparent)),
+                          shape: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(38),
+                              borderSide: BorderSide(color: Colors.transparent)),
                           color: Colors.white,
                           child: Column(
                             children: [
@@ -131,12 +133,7 @@ class _SignUpState extends State<SignUp> {
                                 child: ListTile(
                                   title: TextField(
                                     controller: fullNameController,
-                                    textInputAction: TextInputAction.next,
                                     decoration: InputDecoration(
-                                        /*  border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                        ),*/
-                                        //filled: true,
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
                                         hintText: "Full Name",
@@ -161,12 +158,7 @@ class _SignUpState extends State<SignUp> {
                                 child: ListTile(
                                   title: TextField(
                                     controller: emailController,
-                                    textInputAction: TextInputAction.next,
                                     decoration: InputDecoration(
-                                        /*  border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                        ),*/
-                                        //filled: true,
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
                                         hintText: "Email Address",
@@ -191,12 +183,7 @@ class _SignUpState extends State<SignUp> {
                                 child: ListTile(
                                   title: TextField(
                                     controller: phoneController,
-                                    textInputAction: TextInputAction.next,
                                     decoration: InputDecoration(
-                                        /*  border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                        ),*/
-                                        //filled: true,
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
                                         hintText: "Phone Number",
@@ -221,12 +208,7 @@ class _SignUpState extends State<SignUp> {
                                 child: ListTile(
                                   title: TextField(
                                     controller: dobController,
-                                    textInputAction: TextInputAction.next,
                                     decoration: InputDecoration(
-                                        /*  border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                        ),*/
-                                        //filled: true,
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
                                         hintText: "Date of Birth",
@@ -258,12 +240,7 @@ class _SignUpState extends State<SignUp> {
                                 child: ListTile(
                                   title: TextField(
                                     controller: addressController,
-                                    textInputAction: TextInputAction.next,
                                     decoration: InputDecoration(
-                                        /*  border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                        ),*/
-                                        //filled: true,
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
                                         hintText: "Address",
@@ -295,12 +272,8 @@ class _SignUpState extends State<SignUp> {
                                 child: ListTile(
                                   title: TextField(
                                     controller: passwordController,
-                                    textInputAction: TextInputAction.next,
+                                    obscureText: true,
                                     decoration: InputDecoration(
-                                        /*  border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                        ),*/
-                                        //filled: true,
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
                                         hintText: "Password",
@@ -328,13 +301,9 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
+                                    obscureText: true,
                                     controller: confirmPasswordController,
-                                    textInputAction: TextInputAction.done,
                                     decoration: InputDecoration(
-                                        /*  border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                        ),*/
-                                        //filled: true,
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
                                         hintText: "Confirm Password",
@@ -384,7 +353,7 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 height: MediaQuery.of(context).size.height * 0.06,
                                 child: GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
                                     isVisible = true;
                                     setState(() {});
                                     Map<String, dynamic> params = {
@@ -395,8 +364,21 @@ class _SignUpState extends State<SignUp> {
                                       'dob': dobController.text,
                                       'password': confirmPasswordController.text
                                     };
-                                   createAccount(params);
-                                   Utils.showToast(context, 'User Registered Successfully');
+
+                                    if (isValid()) {
+                                      var res = await commonBloc.hitPostApi(params, ApiUrl.customer_signup);
+                                      if (res['code'] == 200) {
+                                        Utils.showToast(context, '${res['message']}');
+                                        Navigator.pop(context);
+                                      } else if (res['code'] == 400) {
+                                        Utils.showToast(
+                                            context,'${res['validation-errors']}');
+                                      } else {
+                                        Utils.showToast(context, 'User Registration failed');
+                                      }
+                                    }
+                                    isVisible = false;
+                                    setState(() {});
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -470,13 +452,5 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
-  }
-
-  void createAccount(params) {
-    if (isValid()) {
-      commonBloc.hitPostApi(params, ApiUrl.customer_signup);
-      isVisible = false;
-      setState(() {});
-    }
   }
 }

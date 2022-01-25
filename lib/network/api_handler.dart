@@ -15,12 +15,12 @@ class ApiProvider<T> {
     print(token);
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "Authorization": token == null ? "" : token,
+      //"Authorization": token == null ? "" : token,
     };
     var url = Uri.parse(/*Constants.SERVER_ONE + */apiUrl);
     Response response = await client.get(
       url,
-     // headers: headers,
+      headers: headers,
     );
     if (response.statusCode == 200 || response.statusCode == 400) {
       return json.decode(response.body);

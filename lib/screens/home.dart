@@ -12,6 +12,8 @@ import 'package:untitled3/screens/search.dart';
 import 'package:untitled3/utilities/shared_preference/get_prefer.dart';
 
 class Home extends StatefulWidget {
+  final id;
+  const Home({Key? key, this.id}) : super(key: key);
   @override
   State<Home> createState() => _HomeState();
 }
@@ -20,13 +22,15 @@ class _HomeState extends State<Home> {
   late TabController _tabController;
   var id;
 
-  @override
+/*  @override
   void initState() {
     GetPreference().getStringValuesSF('id').then((n) {
       id = n.toString();
+      print('elkgdrhjsjhrf'+id);
     });
+    print('xghdfjgbd'+id);
     super.initState();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +96,7 @@ class _HomeState extends State<Home> {
                             bottom: MediaQuery.of(context).size.height * 0.02,
                           ),
                           child: Text(
-                            'Good morning,',// John Deo',
+                            'Good morning,', // John Deo',
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.white,
@@ -202,6 +206,7 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         padding: EdgeInsets.only(
@@ -212,6 +217,23 @@ class _HomeState extends State<Home> {
                           'Top Rated in Your Area',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.width * 0.05,
+                            right: MediaQuery.of(context).size.width * 0.05,
+                          ),
+                          child: Text(
+                            'See All',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
@@ -346,12 +368,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Profile(id:id)));
-                      },
+                      onTap: () {},
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: IconButton(

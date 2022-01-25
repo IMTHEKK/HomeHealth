@@ -19,15 +19,15 @@ class _SplashState extends State<Splash> {
   }
 
   Future<void> navigationToLoginPage() async {
-   await GetPreference().getStringValuesSF('id').then((value){
-      if(value!=null){
+    await GetPreference().getStringValuesSF('id').then((value) {
+      if (value != null && value.toString().trim().isNotEmpty) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => OnBoard(),
+            builder: (context) => OnBoard(id: value.toString()),
           ),
         );
-      }else{
+      } else {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -36,7 +36,6 @@ class _SplashState extends State<Splash> {
         );
       }
     });
-
   }
 
   @override
@@ -76,7 +75,8 @@ class _SplashState extends State<Splash> {
                 width: MediaQuery.of(context).size.width * 0.4,
                 height: MediaQuery.of(context).size.width * 0.4,
                 child: Image(
-                   /* color: Colors.blue, */image: AssetImage('images/logo.png'))),
+                    /* color: Colors.blue, */
+                    image: AssetImage('images/logo.png'))),
           ),
         ],
       ),

@@ -109,10 +109,6 @@ class _LoginState extends State<Login> {
                               title: TextField(
                                 controller: emailController,
                                 decoration: InputDecoration(
-                                    /*  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),*/
-                                    //filled: true,
                                     border: InputBorder.none,
                                     hintStyle: TextStyle(color: Colors.grey[800]),
                                     hintText: "Email or Username",
@@ -212,11 +208,12 @@ class _LoginState extends State<Login> {
                                     SavePreference.addStringToSF('id', customer.data[0].customerId);
                                     SavePreference.addStringToSF('email', customer.data[0].customerEmail);
                                     SavePreference.addStringToSF('name', customer.data[0].customerName);
-                                    Navigator.pushReplacement(
+                                    Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (BuildContext context) => OnBoard(), //  Profile(),
+                                        builder: (BuildContext context) => OnBoard(id:customer.data[0].customerId.toString()),
                                       ),
+                                          (route) => false,
                                     );
                                   } else {
                                     Utils.showToast(

@@ -6,4 +6,5 @@ class ApiUrl {
   static const String view_profile = base_url+"/API/view-profile.php";
   static const String customer_signup = base_url+"/API/signup.php";
   static const String therapist_signup = base_url+"/API/therapist-signup.php";
+  static const String edit_profile = base_url+"/API/edit-profile.php";
 }
