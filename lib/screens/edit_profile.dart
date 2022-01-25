@@ -1,8 +1,34 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:untitled3/models/customers.dart';
 
-class EditProfile extends StatelessWidget {
+class EditProfile extends StatefulWidget {
+  final Customer customer;
+
+  EditProfile({Key? key, required this.customer}) : super(key: key);
+
+  @override
+  State<EditProfile> createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
+  var fullNameController = TextEditingController();
+  var emailController = TextEditingController();
+  var phoneController = TextEditingController();
+  var dobController = TextEditingController();
+  var addressController = TextEditingController();
+
+  @override
+  void initState() {
+    fullNameController.text = widget.customer.data[0].customerName;
+    emailController.text = widget.customer.data[0].customerEmail;
+    phoneController.text = widget.customer.data[0].customerPhone;
+    dobController.text = widget.customer.data[0].customerDob;
+    addressController.text = widget.customer.data[0].customerAddress;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -54,16 +80,11 @@ class EditProfile extends StatelessWidget {
                           ),
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.only(
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.22),
+                              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.22),
                               // alignment: Alignment.center,
                               child: Text(
                                 'Edit profile',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22),
+                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
                               ),
                             ),
                           ),
@@ -80,141 +101,111 @@ class EditProfile extends StatelessWidget {
                       child: Column(
                         children: [
                           Card(
-                            shape: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(38),
-                                borderSide:
-                                    BorderSide(color: Colors.transparent)),
+                            shape: OutlineInputBorder(borderRadius: BorderRadius.circular(38), borderSide: BorderSide(color: Colors.transparent)),
                             color: Colors.white,
                             child: Column(
                               children: [
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.12),
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.12),
                                 Container(
                                   margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.height *
-                                        0.03,
-                                    right: MediaQuery.of(context).size.height *
-                                        0.03,
+                                    left: MediaQuery.of(context).size.height * 0.03,
+                                    right: MediaQuery.of(context).size.height * 0.03,
                                   ),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           Icon(
                                             Icons.person,
                                             color: Colors.grey,
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.01,
+                                            width: MediaQuery.of(context).size.height * 0.01,
                                           ),
                                           Text('Full Name'),
                                         ],
                                       ),
                                       Container(
                                           margin: EdgeInsets.only(left: 32),
-                                          child: TextField()),
+                                          child: TextField(
+                                            controller: fullNameController,
+                                          )),
                                     ],
                                   ),
                                 ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.04),
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                                 Container(
                                   margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.height *
-                                        0.03,
-                                    right: MediaQuery.of(context).size.height *
-                                        0.03,
+                                    left: MediaQuery.of(context).size.height * 0.03,
+                                    right: MediaQuery.of(context).size.height * 0.03,
                                   ),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           Icon(
                                             Icons.mail,
                                             color: Colors.grey,
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.01,
+                                            width: MediaQuery.of(context).size.height * 0.01,
                                           ),
                                           Text('Email Address'),
                                         ],
                                       ),
                                       Container(
                                           margin: EdgeInsets.only(left: 32),
-                                          child: TextField()),
+                                          child: TextField(
+                                            controller: emailController,
+                                          )),
                                     ],
                                   ),
                                 ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.04),
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                                 Container(
                                   margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.height *
-                                        0.03,
-                                    right: MediaQuery.of(context).size.height *
-                                        0.03,
+                                    left: MediaQuery.of(context).size.height * 0.03,
+                                    right: MediaQuery.of(context).size.height * 0.03,
                                   ),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           Icon(
                                             Icons.phone,
                                             color: Colors.grey,
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.01,
+                                            width: MediaQuery.of(context).size.height * 0.01,
                                           ),
                                           Text('Phone Number'),
                                         ],
                                       ),
                                       Container(
                                           margin: EdgeInsets.only(left: 32),
-                                          child: TextField()),
+                                          child: TextField(
+                                            controller: phoneController,
+                                          )),
                                     ],
                                   ),
                                 ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.04),
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                                 Container(
                                   margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.height *
-                                        0.03,
-                                    right: MediaQuery.of(context).size.height *
-                                        0.03,
+                                    left: MediaQuery.of(context).size.height * 0.03,
+                                    right: MediaQuery.of(context).size.height * 0.03,
                                   ),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           Container(
                                             height: 24,
@@ -225,69 +216,56 @@ class EditProfile extends StatelessWidget {
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.01,
+                                            width: MediaQuery.of(context).size.height * 0.01,
                                           ),
                                           Text('Date of Birth'),
                                         ],
                                       ),
                                       Container(
                                           margin: EdgeInsets.only(left: 32),
-                                          child: TextField()),
+                                          child: TextField(
+                                            controller: dobController,
+                                          )),
                                     ],
                                   ),
                                 ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.04),
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                                 Container(
                                   margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.height *
-                                        0.03,
-                                    right: MediaQuery.of(context).size.height *
-                                        0.03,
+                                    left: MediaQuery.of(context).size.height * 0.03,
+                                    right: MediaQuery.of(context).size.height * 0.03,
                                   ),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           Icon(
                                             Icons.location_on,
                                             color: Colors.grey,
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.01,
+                                            width: MediaQuery.of(context).size.height * 0.01,
                                           ),
                                           Text('Address'),
                                         ],
                                       ),
                                       Container(
                                           margin: EdgeInsets.only(left: 32),
-                                          child: TextField()),
+                                          child: TextField(
+                                            controller: addressController,
+                                          )),
                                     ],
                                   ),
                                 ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.04),
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                                 Container(
                                   margin: EdgeInsets.only(
-                                    left:
-                                        MediaQuery.of(context).size.width * 0.1,
-                                    right:
-                                        MediaQuery.of(context).size.width * 0.1,
+                                    left: MediaQuery.of(context).size.width * 0.1,
+                                    right: MediaQuery.of(context).size.width * 0.1,
                                   ),
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.06,
+                                  height: MediaQuery.of(context).size.height * 0.06,
                                   width: MediaQuery.of(context).size.width,
                                   child: GestureDetector(
                                     onTap: () {},
@@ -297,12 +275,10 @@ class EditProfile extends StatelessWidget {
                                         border: Border.all(
                                           color: Colors.transparent,
                                         ),
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
+                                        borderRadius: BorderRadius.circular(30.0),
                                       ),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
                                           Center(
                                             child: Text(
@@ -320,9 +296,7 @@ class EditProfile extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.04),
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                               ],
                             ),
                           ),
@@ -333,8 +307,7 @@ class EditProfile extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.13),
+                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.13),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -355,11 +328,10 @@ class EditProfile extends StatelessWidget {
                             child: CachedNetworkImage(
                               width: 120,
                               height: 120,
-                              imageUrl:
-                                  "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1",
+                              imageUrl:'http://iconhomehealth.ca/assets/images/'+widget.customer.data[0].customerPhoto,
+                              //"https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1",
                               fit: BoxFit.cover,
-                              imageBuilder: (BuildContext context,
-                                  ImageProvider<dynamic> imageProvider) {
+                              imageBuilder: (BuildContext context, ImageProvider<dynamic> imageProvider) {
                                 return Image(
                                   image: imageProvider as ImageProvider<Object>,
                                   fit: BoxFit.cover,
@@ -405,10 +377,11 @@ class EditProfile extends StatelessWidget {
                             ),
                             child: CircleAvatar(
                               radius: 15,
-                              child:   Container(
+                              child: Container(
                                 height: 18,
                                 width: 18,
-                                child: Image.asset('images/pencil.png'),),
+                                child: Image.asset('images/pencil.png'),
+                              ),
                               //Icon(Icons.edit),
                               backgroundColor: Colors.white,
                             ),

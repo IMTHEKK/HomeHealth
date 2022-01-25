@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:untitled3/screens/onboard.dart';
 import 'package:untitled3/screens/selection.dart';
+import 'package:untitled3/utilities/shared_preference/get_prefer.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -16,13 +18,25 @@ class _SplashState extends State<Splash> {
     return new Timer(_duration, navigationToLoginPage);
   }
 
-  void navigationToLoginPage() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Selection(),
-      ),
-    );
+  Future<void> navigationToLoginPage() async {
+   await GetPreference().getStringValuesSF('id').then((value){
+      if(value!=null){
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OnBoard(),
+          ),
+        );
+      }else{
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Selection(),
+          ),
+        );
+      }
+    });
+
   }
 
   @override

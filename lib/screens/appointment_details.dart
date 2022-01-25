@@ -99,7 +99,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                       height: MediaQuery.of(context).size.height * 0.01,
                     ),
                     Text(
-                      'Message Therapy',
+                      'Massage Therapy',
                       style: TextStyle(
                         fontSize: 13,
                         color: Colors.white,

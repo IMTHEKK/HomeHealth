@@ -9,7 +9,8 @@ import 'package:untitled3/network/api_urls.dart';
 
 class DoctorDetailScreen extends StatefulWidget {
   final doctorId;
-  const DoctorDetailScreen({Key? key,this.doctorId}) : super(key: key);
+
+  const DoctorDetailScreen({Key? key, this.doctorId}) : super(key: key);
 
   @override
   _DoctorDetailScreenState createState() => _DoctorDetailScreenState();
@@ -21,7 +22,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
     return Scaffold(
       //backgroundColor: Colors.white70,
       body: FutureBuilder(
-        future: commonBloc.hitGetApi(ApiUrl.therapist_details + "?th_id="+widget.doctorId),
+        future: commonBloc.hitGetApi(ApiUrl.therapist_details + "?th_id=" + widget.doctorId),
         builder: (context, AsyncSnapshot snap) {
           if (snap.data == null) {
             return Container(
@@ -58,12 +59,12 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               InkWell(
-                                onTap: (){
+                                onTap: () {
                                   Navigator.pop(context);
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child:IconButton(
+                                  child: IconButton(
                                     icon: Icon(
                                       Icons.arrow_back,
                                       color: Colors.white,
@@ -74,15 +75,12 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Transform.rotate(
-                                  angle: 90 * pi / 180,
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.menu,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: null,
+                                child: IconButton(
+                                  icon: Icon(
+                                    CupertinoIcons.ellipsis,
+                                    color: Colors.white,
                                   ),
+                                  onPressed: null,
                                 ),
                               ),
                               //  Icon(Icons.)
@@ -106,7 +104,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  therapistDetails.doctorName, //'Aaron J. Hogan',
+                                  therapistDetails.data[0].doctorName, //'Aaron J. Hogan',
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -114,7 +112,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  therapistDetails.doctorType, //'Psychotherapist',
+                                  therapistDetails.data[0].doctorType, //'Psychotherapist',
                                   style: TextStyle(
                                     color: Colors.blue,
                                   ),
@@ -129,7 +127,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               children: [
                                 //Text('* * * * *'),
                                 RatingBarIndicator(
-                                  rating: double.parse(therapistDetails.doctorRatings.toString()),
+                                  rating: double.parse(therapistDetails.data[0].doctorRatings.toString()),
                                   itemBuilder: (context, index) => Icon(
                                     Icons.star,
                                     color: Colors.blue,
@@ -165,7 +163,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                           ),
                           Expanded(
                             child: Text(
-                              therapistDetails.doctorAddress, /*'MA, New York'*/
+                              therapistDetails.data[0].doctorAddress, /*'MA, New York'*/
                             ),
                           ),
                         ],
@@ -198,7 +196,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  therapistDetails.doctorExp + ' years\nExperience',
+                                  therapistDetails.data[0].doctorExp + ' years\nExperience',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,
@@ -223,7 +221,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  therapistDetails.totalPatients + '\nPatients',
+                                  therapistDetails.data[0].totalPatients + '\nPatients',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,
@@ -251,7 +249,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                             ),
                             child:*/
                             Text(
-                          therapistDetails
+                          therapistDetails.data[0]
                               .description, //'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
                           // ),
                         ),
@@ -279,7 +277,9 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30.0),
                               gradient: LinearGradient(
-                                  begin: Alignment.topLeft, end: Alignment.bottomRight, colors: <Color>[Color(0xff8db8e1), Color(0xff1a9cdb)])),
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: <Color>[Color(0xff8db8e1), Color(0xff1a9cdb)])),
                           /*decoration: BoxDecoration(
                         color: Colors.blue,
                         border: Border.all(

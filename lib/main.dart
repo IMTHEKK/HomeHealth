@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled3/network/constant.dart';
+import 'package:untitled3/screens/onboard.dart';
 import 'package:untitled3/screens/splash.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'poppins',
         primarySwatch: Colors.blue,
       ),
-      home: Splash(), // /* EditProfile(),*/ Selection(),
+      home: /*OnBoard(),*/Splash(), // /* EditProfile(),*/ Selection(),
     );
   }
 }
