@@ -7,6 +7,9 @@ import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/screens/availability_settings.dart';
 import 'package:untitled3/screens/doctor_detail.dart';
 import 'package:untitled3/screens/ongoing_treatment.dart';
+import 'package:untitled3/screens/profile.dart';
+import 'package:untitled3/screens/search.dart';
+import 'package:untitled3/utilities/shared_preference/get_prefer.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,16 +18,18 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late TabController _tabController;
+  var id;
 
   @override
   void initState() {
-    // TODO: implement initState
+    GetPreference().getStringValuesSF('id').then((n) {
+      id = n.toString();
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    //  throw UnimplementedError();
     var type = 'Massage Therapy';
 
     return Scaffold(
@@ -50,7 +55,7 @@ class _HomeState extends State<Home> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.05,
                         ),
-                      /*  Row(
+                        /*  Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -87,7 +92,7 @@ class _HomeState extends State<Home> {
                             bottom: MediaQuery.of(context).size.height * 0.02,
                           ),
                           child: Text(
-                            'Good morning, John Deo',
+                            'Good morning,',// John Deo',
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.white,
@@ -136,8 +141,7 @@ class _HomeState extends State<Home> {
                   ),
                   InkWell(
                     onTap: () {
-                      type = 'Massage Therapy';
-                      setState(() {});
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
                     },
                     child: Container(
                       padding: EdgeInsets.only(
@@ -168,8 +172,7 @@ class _HomeState extends State<Home> {
                           ),
                           InkWell(
                             onTap: () {
-                              type = 'Psychotherapist';
-                              setState(() {});
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
                             },
                             child: Container(
                               height: MediaQuery.of(context).size.height * 0.2,
@@ -231,87 +234,88 @@ class _HomeState extends State<Home> {
                           shrinkWrap: true,
                           itemCount: therapistList.data.length,
                           itemBuilder: (context, index) {
-                            if (therapistList.data[index].doctorType == type)
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => DoctorDetailScreen(doctorId:therapistList.data[index].doctorId)//OnGoingTreatment(),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height * 0.01,
-                                    bottom: MediaQuery.of(context).size.height * 0.01,
-                                    left: MediaQuery.of(context).size.width * 0.05,
-                                    right: MediaQuery.of(context).size.width * 0.05,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.grey,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height * 0.02,
-                                    bottom: MediaQuery.of(context).size.height * 0.02,
-                                    left: MediaQuery.of(context).size.width * 0.05,
-                                    right: MediaQuery.of(context).size.width * 0.05,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        therapistList.data[index].doctorName, //'John Deo',
-                                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                            //  if (therapistList.data[index].doctorType == type)
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DoctorDetailScreen(
+                                          doctorId: therapistList.data[index].doctorId) //OnGoingTreatment(),
                                       ),
-                                      SizedBox(height: 10),
-                                      Text(
-                                        therapistList.data[index].doctorType, //'Physiotherapist',
-                                        style: TextStyle(color: Colors.blue),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.add_location_outlined),
-                                          SizedBox(
-                                            width: MediaQuery.of(context).size.width * 0.03,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              therapistList.data[index].doctorAddress, /*'MA, New York'*/
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(height: 10),
-                                      Row(
-                                        children: [
-                                          RatingBarIndicator(
-                                            rating: double.parse(therapistList.data[index].doctorRatings),
-                                            //2.75,
-                                            itemBuilder: (context, index) => Icon(
-                                              Icons.star,
-                                              color: Colors.blue,
-                                            ),
-                                            itemCount: 5,
-                                            itemSize: 20.0,
-                                            direction: Axis.horizontal,
-                                          ),
-                                          SizedBox(
-                                            width: 8,
-                                          ),
-                                          Text(
-                                            therapistList.data[index].doctorRatings, /*'9.7'*/
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                );
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height * 0.01,
+                                  bottom: MediaQuery.of(context).size.height * 0.01,
+                                  left: MediaQuery.of(context).size.width * 0.05,
+                                  right: MediaQuery.of(context).size.width * 0.05,
                                 ),
-                              );
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.grey,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height * 0.02,
+                                  bottom: MediaQuery.of(context).size.height * 0.02,
+                                  left: MediaQuery.of(context).size.width * 0.05,
+                                  right: MediaQuery.of(context).size.width * 0.05,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      therapistList.data[index].doctorName, //'John Deo',
+                                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      therapistList.data[index].doctorType, //'Physiotherapist',
+                                      style: TextStyle(color: Colors.blue),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.add_location_outlined),
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width * 0.03,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            therapistList.data[index].doctorAddress, /*'MA, New York'*/
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(height: 10),
+                                    Row(
+                                      children: [
+                                        RatingBarIndicator(
+                                          rating: double.parse(therapistList.data[index].doctorRatings),
+                                          //2.75,
+                                          itemBuilder: (context, index) => Icon(
+                                            Icons.star,
+                                            color: Colors.blue,
+                                          ),
+                                          itemCount: 5,
+                                          itemSize: 20.0,
+                                          direction: Axis.horizontal,
+                                        ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(
+                                          therapistList.data[index].doctorRatings, /*'9.7'*/
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
                             return Container();
                           },
                         );
@@ -321,18 +325,18 @@ class _HomeState extends State<Home> {
                 ],
               ),
               Container(
-                margin: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.03),
+                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         Navigator.pop(context);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child:IconButton(
+                        child: IconButton(
                           icon: Icon(
                             Icons.arrow_back,
                             color: Colors.white,
@@ -341,14 +345,22 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.menu,
-                          color: Colors.white,
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Profile(id:id)));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.menu,
+                            color: Colors.white,
+                          ),
+                          onPressed: null,
                         ),
-                        onPressed: null,
                       ),
                     ),
                     //  Icon(Icons.)

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:untitled3/screens/appointment_list.dart';
 import 'package:untitled3/screens/availability_settings.dart';
-import 'package:untitled3/screens/doctor_detail.dart';
 import 'package:untitled3/screens/home.dart';
 import 'package:untitled3/screens/ongoing_treatment.dart';
+import 'package:untitled3/screens/ongoing_treatment_list.dart';
 import 'package:untitled3/screens/profile.dart';
 import 'package:untitled3/screens/search.dart';
+import 'package:untitled3/screens/testimonials_list.dart';
 
 class OnBoard extends StatefulWidget {
   const OnBoard({Key? key}) : super(key: key);
@@ -19,12 +19,13 @@ class _OnBoardState extends State<OnBoard> {
   List _screens = [
     Home(),
     //DoctorDetailScreen(),
-    SearchPage(),
-    //AvailabilitySettings(),
+    //SearchPage(),
     //Text('search'),
-    OnGoingTreatment(),
+    TestimonialsList(),
+    OngoingTreatmentList(),
     //AppointmentList(),
-    Profile(),
+    AvailabilitySettings(),
+  //  Profile(),
   ];
 
   void _updateIndex(int value) {

@@ -7,7 +7,16 @@ import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/screens/edit_profile.dart';
 import 'dart:convert';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  var id;
+
+  Profile({Key? key, required this.id}) : super(key: key);
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -18,7 +27,7 @@ class Profile extends StatelessWidget {
       body: SafeArea(
         top: false,
         child: FutureBuilder(
-          future: commonBloc.hitGetApi(ApiUrl.view_profile + "?cs_id=71"),
+          future: commonBloc.hitGetApi(ApiUrl.view_profile + "?cs_id=" + widget.id),
           builder: (context, AsyncSnapshot snap) {
             if (snap.data == null) {
               return Container(
@@ -72,7 +81,8 @@ class Profile extends StatelessWidget {
                                       // alignment: Alignment.center,
                                       child: Text(
                                         'Profile',
-                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+                                        style:
+                                            TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
                                       ),
                                     ),
                                   ),
@@ -90,14 +100,15 @@ class Profile extends StatelessWidget {
                                 children: [
                                   Card(
                                     shape: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(38), borderSide: BorderSide(color: Colors.transparent)),
+                                        borderRadius: BorderRadius.circular(38),
+                                        borderSide: BorderSide(color: Colors.transparent)),
                                     color: Colors.white,
                                     child: Column(
                                       children: [
                                         SizedBox(height: MediaQuery.of(context).size.height * 0.08),
                                         Center(
                                           child: Text(
-                                            customer.customerName, //"John Deo",
+                                            customer.data[0].customerName, //"John Deo",
                                             style: TextStyle(
                                               color: Colors.blue,
                                               fontSize: 22,
@@ -109,7 +120,8 @@ class Profile extends StatelessWidget {
                                         SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                                         Center(
                                           child: Text(
-                                            customer.customerEmail, //"john_deo225@gmail.com",
+                                            customer.data[0].customerEmail,
+                                            //"john_deo225@gmail.com",
                                             style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 13,
@@ -141,7 +153,7 @@ class Profile extends StatelessWidget {
                                                 ],
                                               ),
                                               Text(
-                                                customer.customerName, /*'John Deo'*/
+                                                customer.data[0].customerName, /*'John Deo'*/
                                               ),
                                             ],
                                           ),
@@ -168,7 +180,19 @@ class Profile extends StatelessWidget {
                                                   Text('Email'),
                                                 ],
                                               ),
-                                              Text(customer.customerEmail, /*'john_deo225@gmail.com'*/),
+                                              Container(
+                                                width: MediaQuery.of(context).size.width * 0.45,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Expanded(
+                                                        child: Text(
+                                                      customer.data[0].customerEmail,
+                                                      textAlign: TextAlign.right, /*'123 Royal Street, New York'*/
+                                                    )),
+                                                  ],
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -194,7 +218,7 @@ class Profile extends StatelessWidget {
                                                   Text('Phone Number'),
                                                 ],
                                               ),
-                                              Text(customer.customerPhone/*',+91 9999 888 777'*/),
+                                              Text(customer.data[0].customerPhone /*',+91 9999 888 777'*/),
                                             ],
                                           ),
                                         ),
@@ -226,7 +250,7 @@ class Profile extends StatelessWidget {
                                                   Text('Date of Birth'),
                                                 ],
                                               ),
-                                              Text(customer.customerDob/*'24 Aug, 1990'*/),
+                                              Text(customer.data[0].customerDob /*'24 Aug, 1990'*/),
                                             ],
                                           ),
                                         ),
@@ -252,7 +276,19 @@ class Profile extends StatelessWidget {
                                                   Text('Address'),
                                                 ],
                                               ),
-                                              Text(customer.customerAddress/*'123 Royal Street, New York'*/),
+                                              Container(
+                                                width: MediaQuery.of(context).size.width * 0.45,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Expanded(
+                                                        child: Text(
+                                                      customer.data[0].customerAddress,
+                                                      textAlign: TextAlign.right, /*'123 Royal Street, New York'*/
+                                                    )),
+                                                  ],
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -275,7 +311,7 @@ class Profile extends StatelessWidget {
                                           onTap: () {
                                             Navigator.push(
                                               context,
-                                              MaterialPageRoute(builder: (context) => EditProfile()),
+                                              MaterialPageRoute(builder: (context) => EditProfile(customer: customer)),
                                             );
                                           },
                                           child: Container(
@@ -371,7 +407,9 @@ class Profile extends StatelessWidget {
                                       child: CachedNetworkImage(
                                         width: 120,
                                         height: 120,
-                                        imageUrl: "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1",
+                                        imageUrl:
+                                            'http://iconhomehealth.ca/assets/images/' + customer.data[0].customerPhoto,
+                                        //"https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1",
                                         fit: BoxFit.cover,
                                         imageBuilder: (BuildContext context, ImageProvider<dynamic> imageProvider) {
                                           return Image(

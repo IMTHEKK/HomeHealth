@@ -19,13 +19,15 @@ class TherapistList {
   int code;
   List<Datum> data;
 
-  factory TherapistList.fromJson(Map<String, dynamic> json) => TherapistList(
+  factory TherapistList.fromJson(Map<String, dynamic> json) =>
+      TherapistList(
         status: json['status'],
         code: json['code'],
         data: List<Datum>.from(json['data'].map((x) => Datum.fromJson(x))),
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         'status': status,
         'code': code,
         'data': List<dynamic>.from(data.map((x) => x.toJson())),
@@ -40,6 +42,8 @@ class Datum {
     required this.doctorAddress,
     required this.doctorPhoto,
     required this.doctorRatings,
+    required this.doctorExp,
+    required this.totalPatients,
   });
 
   String doctorId;
@@ -48,22 +52,30 @@ class Datum {
   String doctorAddress;
   String doctorPhoto;
   String doctorRatings;
+  String doctorExp;
+  String totalPatients;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        doctorId: json['doctorID'],
-        doctorName: json['doctorName'],
-        doctorType: json['doctorType'],
-        doctorAddress: json['doctorAddress'],
-        doctorPhoto: json['doctorPhoto'],
-        doctorRatings: json['doctorRatings'],
+  factory Datum.fromJson(Map<String, dynamic> json) =>
+      Datum(
+        doctorId: json['doctorID'] ?? '',
+        doctorName: json['doctorName'] ?? '',
+        doctorType: json['doctorType'] ?? '',
+        doctorAddress: json['doctorAddress'] ?? '',
+        doctorPhoto: json['doctorPhoto'] ?? '',
+        doctorRatings: json['doctorRatings']??'0',
+        doctorExp: json['doctorExp']??'0',
+        totalPatients: json['totalPatients']??'0',
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         'doctorID': doctorId,
         'doctorName': doctorName,
         'doctorType': doctorType,
         'doctorAddress': doctorAddress,
         'doctorPhoto': doctorPhoto,
         'doctorRatings': doctorRatings,
+        'doctorExp': doctorExp,
+        'totalPatients': totalPatients,
       };
 }

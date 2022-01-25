@@ -2,11 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled3/models/customers.dart';
 import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/screens/onboard.dart';
 import 'package:untitled3/screens/signup.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:http/http.dart' as http;
+import 'package:untitled3/utilities/shared_preference/save_pref.dart';
 import 'package:untitled3/utilities/utils.dart';
 
 class Login extends StatefulWidget {
@@ -17,6 +21,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   var emailController = TextEditingController();
   var pwdController = TextEditingController();
+  bool isVisible = false;
 
   bool isValid() {
     if (!Utils.validateEmail(emailController.text.toString())) {
@@ -40,8 +45,10 @@ class _LoginState extends State<Login> {
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
-                  gradient:
-                      LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: <Color>[Color(0xff8db8e1), Color(0xff1a9cdb)])),
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: <Color>[Color(0xff8db8e1), Color(0xff1a9cdb)])),
             ),
             Container(
               //color: Colors.red,
@@ -75,7 +82,8 @@ class _LoginState extends State<Login> {
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                     Card(
-                      shape: OutlineInputBorder(borderRadius: BorderRadius.circular(38), borderSide: BorderSide(color: Colors.transparent)),
+                      shape: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(38), borderSide: BorderSide(color: Colors.transparent)),
                       color: Colors.white,
                       child: Column(
                         children: [
@@ -140,8 +148,10 @@ class _LoginState extends State<Login> {
                                     hintText: "Password",
                                     fillColor: Colors.white70),
                               ),
-                              trailing:
-                                  Container(height: 24, width: 24, child: Image.asset('images/security.png')), //Icon(Icons.admin_panel_settings),
+                              trailing: Container(
+                                  height: 24,
+                                  width: 24,
+                                  child: Image.asset('images/security.png')), //Icon(Icons.admin_panel_settings),
                             ),
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
@@ -187,21 +197,33 @@ class _LoginState extends State<Login> {
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: GestureDetector(
                               onTap: () async {
-                                Map<String, dynamic> params = {"email": emailController.text, "password": pwdController.text};
-
-                                //var res = await commonBloc.hitPostApi( params, ApiUrl.login);
+                                Map<String, dynamic> params = {
+                                  "email": emailController.text,
+                                  "password": pwdController.text
+                                };
                                 if (isValid()) {
-                                  var client = http.Client();
+                                  isVisible = true;
+                                  setState(() {});
                                   var res = await commonBloc.hitPostApi(params, ApiUrl.login);
-                                  print('Response body: $res');
-                                  if (res.isNotEmpty) {
+                                  Customer customer = Customer.fromJson(res);
+                                  print('Response body: ${customer.code}');
+                                  if (customer.code == 200) {
+                                    Utils.showToast(context, 'Login Success');
+                                    SavePreference.addStringToSF('id', customer.data[0].customerId);
+                                    SavePreference.addStringToSF('email', customer.data[0].customerEmail);
+                                    SavePreference.addStringToSF('name', customer.data[0].customerName);
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (BuildContext context) => OnBoard(), //  Profile(),
                                       ),
                                     );
+                                  } else {
+                                    Utils.showToast(
+                                        context, 'Login Failed: ${res['validation-errors']['wrong-credentials']}');
                                   }
+                                  isVisible = false;
+                                  setState(() {});
                                 }
                               },
                               child: Container(
@@ -279,6 +301,18 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
+            Visibility(
+              visible: isVisible,
+              child: SpinKitFadingCircle(
+                itemBuilder: (BuildContext context, int index) {
+                  return DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: index.isEven ? Colors.red : Colors.green,
+                    ),
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),

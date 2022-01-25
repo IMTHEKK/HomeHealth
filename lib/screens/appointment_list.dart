@@ -158,7 +158,7 @@ class _AppointmentListState extends State<AppointmentList> {
                                 ),
                                 SizedBox(height: 6),
                                 Text(
-                                  'Message Therapy',
+                                  'Massage Therapy',
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold,
