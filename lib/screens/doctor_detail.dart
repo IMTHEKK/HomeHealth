@@ -153,7 +153,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                     Container(
                       margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.07,
-                        right: MediaQuery.of(context).size.width * 0.4,
+                       // right: MediaQuery.of(context).size.width * 0.4,
                       ),
                       child: Row(
                         children: [
@@ -161,9 +161,16 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.01,
                           ),
-                          Expanded(
-                            child: Text(
-                              therapistDetails.data[0].doctorAddress, /*'MA, New York'*/
+                          Container(
+                            width: MediaQuery.of(context).size.width*0.78,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    therapistDetails.data[0].doctorAddress, /*'MA, New York'*/
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -240,19 +247,23 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                         left: MediaQuery.of(context).size.width * 0.07,
                         right: MediaQuery.of(context).size.width * 0.1,
                       ),
-                      child: Expanded(
-                        child: /*Container(
-                            margin: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.01,
-                              left: MediaQuery.of(context).size.width * 0.07,
-                              right: MediaQuery.of(context).size.width * 0.1,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: /*Container(
+                                margin: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height * 0.01,
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.1,
+                                ),
+                                child:*/
+                                Text(
+                              therapistDetails.data[0]
+                                  .description, //'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+                              // ),
                             ),
-                            child:*/
-                            Text(
-                          therapistDetails.data[0]
-                              .description, //'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
-                          // ),
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     Container(

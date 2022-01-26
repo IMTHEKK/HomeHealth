@@ -263,7 +263,7 @@ class _HomeState extends State<Home> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => DoctorDetailScreen(
-                                          doctorId: therapistList.data[index].doctorId) //OnGoingTreatment(),
+                                          doctorId: therapistList.data[index].doctorId.toString()) //OnGoingTreatment(),
                                       ),
                                 );
                               },

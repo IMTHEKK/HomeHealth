@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:untitled3/models/customers.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
@@ -23,6 +27,7 @@ class _EditProfileState extends State<EditProfile> {
   var dobController = TextEditingController();
   var addressController = TextEditingController();
   bool isVisible = false;
+  var imageFile;
 
   bool isValid() {
     if (fullNameController.text.toString().isEmpty) {
@@ -298,7 +303,10 @@ class _EditProfileState extends State<EditProfile> {
                                         onTap: () async {
                                           isVisible = true;
                                           setState(() {});
+                                          final bytes = imageFile.readAsBytesSync();
+                                          var img64 = base64Encode(bytes);
                                           Map<String, dynamic> params = {
+                                            'customerPhoto':imageFile!=null?img64:widget.customer.data[0].customerPhoto.toString(),
                                             'full-name': fullNameController.text,
                                             'email': emailController.text,
                                             'phone-number': phoneController.text,
@@ -365,54 +373,70 @@ class _EditProfileState extends State<EditProfile> {
                       children: [
                         Stack(
                           children: <Widget>[
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 2,
-                                  color: Colors.white,
-                                ),
-                                shape: BoxShape.circle,
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(120.0),
-                                ),
-                                child: CachedNetworkImage(
-                                  width: 120,
-                                  height: 120,
-                                  imageUrl:'http://iconhomehealth.ca/assets/images/'+widget.customer.data[0].customerPhoto,
-                                  //"https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1",
-                                  fit: BoxFit.cover,
-                                  imageBuilder: (BuildContext context, ImageProvider<dynamic> imageProvider) {
-                                    return Image(
-                                      image: imageProvider as ImageProvider<Object>,
-                                      fit: BoxFit.cover,
-                                    );
-                                  },
-                                  placeholder: (context, url) => ClipRRect(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(120.0),
-                                    ),
-                                    child: Container(
-                                      color: Colors.black12,
-                                      child: const Icon(
-                                        Icons.person,
-                                        size: 120,
-                                      ),
-                                    ),
+                            InkWell(
+                              onTap:() async {
+                                final pickedImage =
+                                    await ImagePicker().getImage(source: ImageSource.gallery);
+                                setState(() {
+                                  imageFile = pickedImage != null ? File(pickedImage.path) : null;
+                                  //var imgPath=pickedImage.path;
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 2,
+                                    color: Colors.white,
                                   ),
-                                  errorWidget: (context, url, error) => ClipRRect(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(120.0),
-                                    ),
-                                    child: Container(
-                                      color: Colors.black12,
-                                      child: const Icon(
-                                        Icons.person,
-                                        color: Colors.grey,
-                                        size: 120,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(120.0),
+                                  ),
+                                  child: (imageFile==null)?
+                                  CachedNetworkImage(
+                                    width: 120,
+                                    height: 120,
+                                    imageUrl:'http://iconhomehealth.ca/assets/images/'+widget.customer.data[0].customerPhoto,
+                                    //"https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1",
+                                    fit: BoxFit.cover,
+                                    imageBuilder: (BuildContext context, ImageProvider<dynamic> imageProvider) {
+                                      return Image(
+                                        image: imageProvider as ImageProvider<Object>,
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                    placeholder: (context, url) => ClipRRect(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(120.0),
+                                      ),
+                                      child: Container(
+                                        color: Colors.black12,
+                                        child: const Icon(
+                                          Icons.person,
+                                          size: 120,
+                                        ),
                                       ),
                                     ),
+                                    errorWidget: (context, url, error) => ClipRRect(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(120.0),
+                                      ),
+                                      child: Container(
+                                        color: Colors.black12,
+                                        child: const Icon(
+                                          Icons.person,
+                                          color: Colors.grey,
+                                          size: 120,
+                                        ),
+                                      ),
+                                    ),
+                                  ):
+                                  Image(
+                                    image: FileImage(/*File(*/ imageFile /*)*/),
+                                    width: 120,
+                                    height: 120,
                                   ),
                                 ),
                               ),

@@ -67,7 +67,7 @@ class _ProfileState extends State<Profile> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      Navigator.pop(context);
+      //                                Navigator.pop(context);
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(
