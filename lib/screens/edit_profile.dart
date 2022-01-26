@@ -301,12 +301,10 @@ class _EditProfileState extends State<EditProfile> {
                                       width: MediaQuery.of(context).size.width,
                                       child: GestureDetector(
                                         onTap: () async {
-                                          isVisible = true;
-                                          setState(() {});
-                                          final bytes = imageFile.readAsBytesSync();
-                                          var img64 = base64Encode(bytes);
+                                          //final bytes = imageFile.readAsBytesSync();
+                                          //var img64 = base64Encode(bytes);
                                           Map<String, dynamic> params = {
-                                            'customerPhoto':imageFile!=null?img64:widget.customer.data[0].customerPhoto.toString(),
+                                           // 'customerPhoto':imageFile!=null?img64:widget.customer.data[0].customerPhoto.toString(),
                                             'full-name': fullNameController.text,
                                             'email': emailController.text,
                                             'phone-number': phoneController.text,
@@ -315,6 +313,8 @@ class _EditProfileState extends State<EditProfile> {
                                             'password':widget.customer.data[0].customerPassword,
                                           };
                                           if (isValid()) {
+                                            isVisible = true;
+                                            setState(() {});
                                             var res = await commonBloc.hitPostApi(params, ApiUrl.edit_profile+'?cs_id='+widget.customer.data[0].customerId);
                                             if (res['code'] == 200) {
                                               Utils.showToast(context, 'Details uploaded Successfully');
