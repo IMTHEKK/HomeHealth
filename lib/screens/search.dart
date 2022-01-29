@@ -211,7 +211,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                   return Container(
                     height: MediaQuery.of(context).size.height * 0.3,
                     child: Center(
-                      child: Text('Loading...'),
+                      child: CircularProgressIndicator(),
                     ),
                   );
                 } else {
@@ -372,7 +372,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                   return Container(
                     height: MediaQuery.of(context).size.height * 0.3,
                     child: Center(
-                      child: Text('Loading...'),
+                      child: CircularProgressIndicator(),
                     ),
                   );
                 } else {
@@ -522,7 +522,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                   return Container(
                     height: MediaQuery.of(context).size.height * 0.3,
                     child: Center(
-                      child: Text('Loading...'),
+                      child: CircularProgressIndicator(),
                     ),
                   );
                 } else {
