@@ -32,12 +32,13 @@ class _ProfileState extends State<Profile> {
       body: SafeArea(
         top: false,
         child: FutureBuilder(
-          future: commonBloc.hitGetApi(ApiUrl.view_profile + "?cs_id=" + widget.id),
+          future:
+              commonBloc.hitGetApi(ApiUrl.view_profile + "?cs_id=" + widget.id),
           builder: (context, AsyncSnapshot snap) {
             if (snap.data == null) {
               return Container(
                 child: Center(
-                  child: Text('Loading...'),
+                  child: CircularProgressIndicator(),
                 ),
               );
             } else {
@@ -67,11 +68,13 @@ class _ProfileState extends State<Profile> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-      //                                Navigator.pop(context);
+                                      //                                Navigator.pop(context);
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(
-                                        left: MediaQuery.of(context).size.width * 0.05,
+                                        left:
+                                            MediaQuery.of(context).size.width *
+                                                0.05,
                                       ),
                                       child: Icon(
                                         Icons.arrow_back,
@@ -82,12 +85,18 @@ class _ProfileState extends State<Profile> {
                                   ),
                                   Expanded(
                                     child: Container(
-                                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.28),
+                                      margin: EdgeInsets.only(
+                                          left: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.28),
                                       // alignment: Alignment.center,
                                       child: Text(
                                         'Profile',
-                                        style:
-                                            TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22),
                                       ),
                                     ),
                                   ),
@@ -99,21 +108,28 @@ class _ProfileState extends State<Profile> {
                                 top: MediaQuery.of(context).size.height * 0.145,
                                 left: MediaQuery.of(context).size.width * 0.04,
                                 right: MediaQuery.of(context).size.width * 0.04,
-                                bottom: MediaQuery.of(context).size.width * 0.07,
+                                bottom:
+                                    MediaQuery.of(context).size.width * 0.07,
                               ),
                               child: Column(
                                 children: [
                                   Card(
                                     shape: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(38),
-                                        borderSide: BorderSide(color: Colors.transparent)),
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent)),
                                     color: Colors.white,
                                     child: Column(
                                       children: [
-                                        SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+                                        SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.08),
                                         Center(
                                           child: Text(
-                                            customer.data[0].customerName, //"John Deo",
+                                            customer.data[0].customerName,
+                                            //"John Deo",
                                             style: TextStyle(
                                               color: Colors.blue,
                                               fontSize: 22,
@@ -122,7 +138,11 @@ class _ProfileState extends State<Profile> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                                        SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.02),
                                         Center(
                                           child: Text(
                                             customer.data[0].customerEmail,
@@ -135,65 +155,104 @@ class _ProfileState extends State<Profile> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                                        SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.02),
                                         Container(
                                           margin: EdgeInsets.only(
-                                            left: MediaQuery.of(context).size.height * 0.03,
-                                            right: MediaQuery.of(context).size.height * 0.03,
+                                            left: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.03,
+                                            right: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.03,
                                           ),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   Icon(
                                                     Icons.person,
                                                     color: Colors.grey,
                                                   ),
                                                   SizedBox(
-                                                    width: MediaQuery.of(context).size.height * 0.01,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.01,
                                                   ),
                                                   Text('Full Name'),
                                                 ],
                                               ),
                                               Text(
-                                                customer.data[0].customerName, /*'John Deo'*/
+                                                customer.data[0]
+                                                    .customerName, /*'John Deo'*/
                                               ),
                                             ],
                                           ),
                                         ),
-                                        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                                        SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.04),
                                         Container(
                                           margin: EdgeInsets.only(
-                                            left: MediaQuery.of(context).size.height * 0.03,
-                                            right: MediaQuery.of(context).size.height * 0.03,
+                                            left: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.03,
+                                            right: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.03,
                                           ),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   Icon(
                                                     Icons.mail,
                                                     color: Colors.grey,
                                                   ),
                                                   SizedBox(
-                                                    width: MediaQuery.of(context).size.height * 0.01,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.01,
                                                   ),
                                                   Text('Email'),
                                                 ],
                                               ),
                                               Container(
-                                                width: MediaQuery.of(context).size.width * 0.45,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.45,
                                                 child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
                                                   children: [
                                                     Expanded(
                                                         child: Text(
-                                                      customer.data[0].customerEmail,
-                                                      textAlign: TextAlign.right, /*'123 Royal Street, New York'*/
+                                                      customer.data[0]
+                                                          .customerEmail,
+                                                      textAlign: TextAlign
+                                                          .right, /*'123 Royal Street, New York'*/
                                                     )),
                                                   ],
                                                 ),
@@ -201,43 +260,72 @@ class _ProfileState extends State<Profile> {
                                             ],
                                           ),
                                         ),
-                                        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                                        SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.04),
                                         Container(
                                           margin: EdgeInsets.only(
-                                            left: MediaQuery.of(context).size.height * 0.03,
-                                            right: MediaQuery.of(context).size.height * 0.03,
+                                            left: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.03,
+                                            right: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.03,
                                           ),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   Icon(
                                                     Icons.phone,
                                                     color: Colors.grey,
                                                   ),
                                                   SizedBox(
-                                                    width: MediaQuery.of(context).size.height * 0.01,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.01,
                                                   ),
                                                   Text('Phone Number'),
                                                 ],
                                               ),
-                                              Text(customer.data[0].customerPhone /*',+91 9999 888 777'*/),
+                                              Text(customer.data[0]
+                                                  .customerPhone /*',+91 9999 888 777'*/),
                                             ],
                                           ),
                                         ),
-                                        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                                        SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.04),
                                         Container(
                                           margin: EdgeInsets.only(
-                                            left: MediaQuery.of(context).size.height * 0.03,
-                                            right: MediaQuery.of(context).size.height * 0.03,
+                                            left: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.03,
+                                            right: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.03,
                                           ),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   Container(
                                                     height: 24,
@@ -250,46 +338,73 @@ class _ProfileState extends State<Profile> {
                                                   /* Icon(Icons.calendar_today_outlined,                                color: Colors.grey,
                                             ),*/
                                                   SizedBox(
-                                                    width: MediaQuery.of(context).size.height * 0.01,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.01,
                                                   ),
                                                   Text('Date of Birth'),
                                                 ],
                                               ),
-                                              Text(customer.data[0].customerDob /*'24 Aug, 1990'*/),
+                                              Text(customer.data[0]
+                                                  .customerDob /*'24 Aug, 1990'*/),
                                             ],
                                           ),
                                         ),
-                                        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                                        SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.04),
                                         Container(
                                           margin: EdgeInsets.only(
-                                            left: MediaQuery.of(context).size.height * 0.03,
-                                            right: MediaQuery.of(context).size.height * 0.03,
+                                            left: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.03,
+                                            right: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.03,
                                           ),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   Icon(
                                                     Icons.location_on,
                                                     color: Colors.grey,
                                                   ),
                                                   SizedBox(
-                                                    width: MediaQuery.of(context).size.height * 0.01,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.01,
                                                   ),
                                                   Text('Address'),
                                                 ],
                                               ),
                                               Container(
-                                                width: MediaQuery.of(context).size.width * 0.45,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.45,
                                                 child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
                                                   children: [
                                                     Expanded(
                                                         child: Text(
-                                                      customer.data[0].customerAddress,
-                                                      textAlign: TextAlign.right, /*'123 Royal Street, New York'*/
+                                                      customer.data[0]
+                                                          .customerAddress,
+                                                      textAlign: TextAlign
+                                                          .right, /*'123 Royal Street, New York'*/
                                                     )),
                                                   ],
                                                 ),
@@ -297,27 +412,39 @@ class _ProfileState extends State<Profile> {
                                             ],
                                           ),
                                         ),
-                                        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                                        SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.04),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                                  SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.02),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Container(
                                         margin: EdgeInsets.only(
                                           //  left: MediaQuery.of(context).size.width * 0.03,
-                                          right: MediaQuery.of(context).size.width * 0.03,
+                                          right: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.03,
                                         ),
-                                        height: MediaQuery.of(context).size.height * 0.06,
-                                        width: MediaQuery.of(context).size.width * 0.42,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.06,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.42,
                                         child: InkWell(
                                           onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => EditProfile(customer: customer)),
-                                            );
+                                            goToEdditProfile(customer);
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(
@@ -325,10 +452,12 @@ class _ProfileState extends State<Profile> {
                                               border: Border.all(
                                                 color: Colors.transparent,
                                               ),
-                                              borderRadius: BorderRadius.circular(30.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0),
                                             ),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: <Widget>[
                                                 Center(
                                                   child: Text(
@@ -336,7 +465,8 @@ class _ProfileState extends State<Profile> {
                                                     style: TextStyle(
                                                       color: Colors.blue,
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                       letterSpacing: 1,
                                                     ),
                                                   ),
@@ -348,21 +478,33 @@ class _ProfileState extends State<Profile> {
                                       ),
                                       Container(
                                         margin: EdgeInsets.only(
-                                          left: MediaQuery.of(context).size.width * 0.03,
+                                          left: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.03,
                                           // right: MediaQuery.of(context).size.width * 0.03,
                                         ),
-                                        height: MediaQuery.of(context).size.height * 0.06,
-                                        width: MediaQuery.of(context).size.width * 0.42,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.06,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.42,
                                         child: InkWell(
                                           onTap: () async {
-                                            SavePreference.addStringToSF('id', '');
-                                            SavePreference.addStringToSF('email', '');
-                                            SavePreference.addStringToSF('name', '');
-                                            Utils.showToast(context, 'Sign out Successfully');
+                                            SavePreference.addStringToSF(
+                                                'id', '');
+                                            SavePreference.addStringToSF(
+                                                'email', '');
+                                            SavePreference.addStringToSF(
+                                                'name', '');
+                                            Utils.showToast(context,
+                                                'Sign out Successfully');
                                             Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => Selection(),
+                                                builder: (context) =>
+                                                    Selection(),
                                               ),
                                             );
                                           },
@@ -372,10 +514,12 @@ class _ProfileState extends State<Profile> {
                                               border: Border.all(
                                                 color: Colors.transparent,
                                               ),
-                                              borderRadius: BorderRadius.circular(30.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0),
                                             ),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: <Widget>[
                                                 Center(
                                                   child: Text(
@@ -384,7 +528,8 @@ class _ProfileState extends State<Profile> {
                                                       color: Colors.blue,
                                                       // fontFamily: 'Montserrat',
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                       letterSpacing: 1,
                                                     ),
                                                   ),
@@ -402,7 +547,8 @@ class _ProfileState extends State<Profile> {
                           ],
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.13),
+                          margin: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.13),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -424,16 +570,21 @@ class _ProfileState extends State<Profile> {
                                         width: 120,
                                         height: 120,
                                         imageUrl:
-                                            'http://iconhomehealth.ca/assets/images/' + customer.data[0].customerPhoto,
+                                            'http://iconhomehealth.ca/assets/images/' +
+                                                customer.data[0].customerPhoto,
                                         //"https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1",
                                         fit: BoxFit.cover,
-                                        imageBuilder: (BuildContext context, ImageProvider<dynamic> imageProvider) {
+                                        imageBuilder: (BuildContext context,
+                                            ImageProvider<dynamic>
+                                                imageProvider) {
                                           return Image(
-                                            image: imageProvider as ImageProvider<Object>,
+                                            image: imageProvider
+                                                as ImageProvider<Object>,
                                             fit: BoxFit.cover,
                                           );
                                         },
-                                        placeholder: (context, url) => Container(
+                                        placeholder: (context, url) =>
+                                            Container(
                                           color: Colors.black12,
                                           child: const Icon(
                                             Icons.person,
@@ -441,7 +592,8 @@ class _ProfileState extends State<Profile> {
                                             size: 120,
                                           ),
                                         ),
-                                        errorWidget: (context, url, error) => Container(
+                                        errorWidget: (context, url, error) =>
+                                            Container(
                                           color: Colors.black12,
                                           child: const Icon(
                                             Icons.person,
@@ -467,7 +619,8 @@ class _ProfileState extends State<Profile> {
                                         child: Container(
                                           height: 18,
                                           width: 18,
-                                          child: Image.asset('images/pencil.png'),
+                                          child:
+                                              Image.asset('images/pencil.png'),
                                         ),
                                         backgroundColor: Colors.white,
                                         //backgroundImage: Icon(Icons.edit),/*new NetworkImage(
@@ -491,5 +644,22 @@ class _ProfileState extends State<Profile> {
         ),
       ),
     );
+  }
+
+  void goToEdditProfile(customer) async{
+    var result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditProfile(
+          customer: customer,
+        ),
+      ),
+    );
+    if(result=="true"){
+      //Utils.showToast(context, "claal");
+      setState(() {
+        
+      });
+    }
   }
 }

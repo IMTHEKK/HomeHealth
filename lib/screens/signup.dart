@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/utilities/utils.dart';
@@ -19,6 +20,9 @@ class _SignUpState extends State<SignUp> {
   var confirmPasswordController = TextEditingController();
   var addressController = TextEditingController();
   bool isVisible = false;
+  DateTime currentDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now();
+  String? dob;
 
   bool isValid() {
     if (fullNameController.text.toString().isEmpty) {
@@ -27,10 +31,11 @@ class _SignUpState extends State<SignUp> {
     } else if (!Utils.validateEmail(emailController.text.toString())) {
       Utils.showToast(context, "Please enter valid email");
       return false;
-    } else if (phoneController.text.toString().isEmpty || phoneController.text.length > 10) {
+    } else if (phoneController.text.toString().isEmpty ||
+        phoneController.text.length > 10) {
       Utils.showToast(context, "Please enter valid phone");
       return false;
-    } else if (dobController.text.toString().isEmpty) {
+    } else if (getDateMonthYear(_selectedDate).toString().isEmpty) {
       Utils.showToast(context, "Please enter valid DOB");
       return false;
     } else if (addressController.text.toString().isEmpty) {
@@ -42,11 +47,43 @@ class _SignUpState extends State<SignUp> {
     } else if (confirmPasswordController.text.toString().isEmpty) {
       Utils.showToast(context, "Please enter confirm password");
       return false;
-    } else if (passwordController.text.toString() != confirmPasswordController.text.toString()) {
+    } else if (passwordController.text.toString() !=
+        confirmPasswordController.text.toString()) {
       Utils.showToast(context, "Password and confirm password mismatch");
       return false;
     }
     return true;
+  }
+
+  void _pickDateDialog() {
+    showDatePicker(
+            context: context,
+            initialDate: _selectedDate,
+            //which date will display when user open the picker
+            firstDate: DateTime(1950),
+            //what will be the previous supported year in picker
+            lastDate:
+                currentDate) //what will be the up to supported date in picker
+        .then((pickedDate) {
+      //then usually do the future job
+      if (pickedDate == null) {
+        //if user tap cancel then this function will stop
+        return;
+      }
+      setState(() {
+        //for rebuilding the ui
+        _selectedDate = pickedDate;
+        dob = getDateMonthYear(_selectedDate);
+      });
+    });
+  }
+
+  String getDateMonthYear(DateTime selectedStartDate) {
+    if (selectedStartDate != null) {
+      return DateFormat('yyyy-MM-dd').format(selectedStartDate);
+    } else {
+      return "";
+    }
   }
 
   @override
@@ -85,7 +122,8 @@ class _SignUpState extends State<SignUp> {
                               },
                               child: Container(
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                                 child: Icon(
                                   Icons.arrow_back,
@@ -96,10 +134,15 @@ class _SignUpState extends State<SignUp> {
                             ),
                             Expanded(
                               child: Container(
-                                margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.22),
+                                margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width *
+                                        0.22),
                                 child: Text(
                                   'Sign Up',
-                                  style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 22),
+                                  style: TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22),
                                 ),
                               ),
                             ),
@@ -117,11 +160,14 @@ class _SignUpState extends State<SignUp> {
                           elevation: 10,
                           shape: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(38),
-                              borderSide: BorderSide(color: Colors.transparent)),
+                              borderSide:
+                                  BorderSide(color: Colors.transparent)),
                           color: Colors.white,
                           child: Column(
                             children: [
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.04),
                               Container(
                                 decoration: BoxDecoration(
                                   // color: Colors.blue,
@@ -135,18 +181,23 @@ class _SignUpState extends State<SignUp> {
                                     controller: fullNameController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey[800]),
                                         hintText: "Full Name",
                                         fillColor: Colors.white70),
                                   ),
                                   trailing: Icon(Icons.person),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   // color: Colors.blue,
@@ -160,18 +211,23 @@ class _SignUpState extends State<SignUp> {
                                     controller: emailController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey[800]),
                                         hintText: "Email Address",
                                         fillColor: Colors.white70),
                                   ),
                                   trailing: Icon(Icons.mail),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   // color: Colors.blue,
@@ -185,18 +241,23 @@ class _SignUpState extends State<SignUp> {
                                     controller: phoneController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey[800]),
                                         hintText: "Phone Number",
                                         fillColor: Colors.white70),
                                   ),
                                   trailing: Icon(Icons.phone),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   // color: Colors.blue,
@@ -206,29 +267,39 @@ class _SignUpState extends State<SignUp> {
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
                                 child: ListTile(
-                                  title: TextField(
-                                    controller: dobController,
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Date of Birth",
-                                        fillColor: Colors.white70),
+                                  title: Container(
+                                    child: Text(
+                                      dob == null
+                                          ? "Select DOB"
+                                          : "${getDateMonthYear(_selectedDate)}",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                      ),
+                                    ),
                                   ),
-                                  trailing: Container(
-                                    height: 24,
-                                    width: 24,
-                                    child: Image.asset(
-                                      'images/calendar.png',
-                                      color: Colors.grey,
+                                  trailing: GestureDetector(
+                                    onTap: _pickDateDialog,
+                                    child: Container(
+                                      height: 24,
+                                      width: 24,
+                                      child: Image.asset(
+                                        'images/calendar.png',
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ), //Icon(Icons.admin_panel_settings),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   // color: Colors.blue,
@@ -242,7 +313,8 @@ class _SignUpState extends State<SignUp> {
                                     controller: addressController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey[800]),
                                         hintText: "Address",
                                         fillColor: Colors.white70),
                                   ),
@@ -256,11 +328,15 @@ class _SignUpState extends State<SignUp> {
                                   ), //Icon(Icons.admin_panel_settings),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   // color: Colors.blue,
@@ -275,7 +351,8 @@ class _SignUpState extends State<SignUp> {
                                     obscureText: true,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey[800]),
                                         hintText: "Password",
                                         fillColor: Colors.white70),
                                   ),
@@ -286,11 +363,15 @@ class _SignUpState extends State<SignUp> {
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   // color: Colors.blue,
@@ -305,25 +386,32 @@ class _SignUpState extends State<SignUp> {
                                     controller: confirmPasswordController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey[800]),
                                         hintText: "Confirm Password",
                                         fillColor: Colors.white70),
                                   ),
                                   trailing: Container(
                                     height: 24,
                                     width: 24,
-                                    child: Image.asset('images/confirm_pwd.png'),
+                                    child:
+                                        Image.asset('images/confirm_pwd.png'),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.04,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.04,
                                 ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -345,13 +433,18 @@ class _SignUpState extends State<SignUp> {
                                   ],
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
-                                height: MediaQuery.of(context).size.height * 0.06,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.06,
                                 child: GestureDetector(
                                   onTap: () async {
                                     isVisible = true;
@@ -361,20 +454,23 @@ class _SignUpState extends State<SignUp> {
                                       'email': emailController.text,
                                       'phone-number': phoneController.text,
                                       'address': addressController.text,
-                                      'dob': dobController.text,
+                                      'dob': getDateMonthYear(_selectedDate),
                                       'password': confirmPasswordController.text
                                     };
 
                                     if (isValid()) {
-                                      var res = await commonBloc.hitPostApi(params, ApiUrl.customer_signup);
+                                      var res = await commonBloc.hitPostApi(
+                                          params, ApiUrl.customer_signup);
                                       if (res['code'] == 200) {
-                                        Utils.showToast(context, '${res['message']}');
+                                        Utils.showToast(
+                                            context, '${res['message']}');
                                         Navigator.pop(context);
                                       } else if (res['code'] == 400) {
-                                        Utils.showToast(
-                                            context,'${res['validation-errors']}');
+                                        Utils.showToast(context,
+                                            '${res['validation-errors']}');
                                       } else {
-                                        Utils.showToast(context, 'User Registration failed');
+                                        Utils.showToast(context,
+                                            'User Registration failed');
                                       }
                                     }
                                     isVisible = false;
@@ -389,7 +485,8 @@ class _SignUpState extends State<SignUp> {
                                       borderRadius: BorderRadius.circular(30.0),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
                                         Center(
                                           child: Text(
@@ -408,7 +505,9 @@ class _SignUpState extends State<SignUp> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -426,7 +525,9 @@ class _SignUpState extends State<SignUp> {
                                   )
                                 ],
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.04),
                             ],
                           ),
                         ),

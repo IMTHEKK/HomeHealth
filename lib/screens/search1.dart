@@ -56,7 +56,7 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Navigator.pop(context);
+                                  //Navigator.pop(context);
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -251,7 +251,7 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                   return Container(
                     height: MediaQuery.of(context).size.height * 0.3,
                     child: Center(
-                      child: Text('Loading...'),
+                      child: CircularProgressIndicator(),
                     ),
                   );
                 } else {
@@ -356,7 +356,7 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                   return Container(
                     height: MediaQuery.of(context).size.height * 0.3,
                     child: Center(
-                      child: Text('Loading...'),
+                      child: CircularProgressIndicator(),
                     ),
                   );
                 } else {
