@@ -116,6 +116,7 @@ class _HelpScreenState extends State<HelpScreen> {
               ),
             ),
             ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) => DataPopUp(data[index]),
               itemCount: data.length,

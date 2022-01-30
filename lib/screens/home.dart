@@ -4,16 +4,14 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:untitled3/models/therapist_list.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
-import 'package:untitled3/screens/availability_settings.dart';
 import 'package:untitled3/screens/doctor_detail.dart';
-import 'package:untitled3/screens/ongoing_treatment.dart';
-import 'package:untitled3/screens/profile.dart';
 import 'package:untitled3/screens/search.dart';
-import 'package:untitled3/utilities/shared_preference/get_prefer.dart';
 
 class Home extends StatefulWidget {
   final id;
+
   const Home({Key? key, this.id}) : super(key: key);
+
   @override
   State<Home> createState() => _HomeState();
 }
@@ -145,7 +143,14 @@ class _HomeState extends State<Home> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SearchPage(
+                            cId: widget.id,
+                          ),
+                        ),
+                      );
                     },
                     child: Container(
                       padding: EdgeInsets.only(
@@ -176,7 +181,14 @@ class _HomeState extends State<Home> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SearchPage(
+                                    cId: widget.id,
+                                  ),
+                                ),
+                              );
                             },
                             child: Container(
                               height: MediaQuery.of(context).size.height * 0.2,
@@ -222,7 +234,14 @@ class _HomeState extends State<Home> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SearchPage(
+                                cId: widget.id,
+                              ),
+                            ),
+                          );
                         },
                         child: Container(
                           padding: EdgeInsets.only(
@@ -263,7 +282,9 @@ class _HomeState extends State<Home> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => DoctorDetailScreen(
-                                          doctorId: therapistList.data[index].doctorId.toString()) //OnGoingTreatment(),
+                                            doctorId: therapistList.data[index].doctorId.toString(),
+                                            cId: widget.id,
+                                          ) //OnGoingTreatment(),
                                       ),
                                 );
                               },

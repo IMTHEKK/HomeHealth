@@ -4,11 +4,14 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:untitled3/models/therapist_list.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
-import 'package:untitled3/screens/availability_settings.dart';
 import 'package:untitled3/screens/doctor_detail.dart';
 import 'package:untitled3/screens/search.dart';
 
 class SearchPage1 extends StatefulWidget {
+  final cId;
+
+  const SearchPage1({Key? key, this.cId}) : super(key: key);
+
   @override
   State<SearchPage1> createState() => _SearchPage1State();
 }
@@ -268,7 +271,9 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                               context,
                               MaterialPageRoute(
                                   builder: (context) => DoctorDetailScreen(
-                                      doctorId: therapistList.data[index].doctorId) //OnGoingTreatment(),
+                                        doctorId: therapistList.data[index].doctorId,
+                                    cId: widget.cId,
+                                      ) //OnGoingTreatment(),
                                   ),
                             );
                           },

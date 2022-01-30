@@ -1,16 +1,16 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:untitled3/models/therapist_details.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
+import 'package:untitled3/screens/appointment_form.dart';
 
 class DoctorDetailScreen extends StatefulWidget {
   final doctorId;
+  final cId;
 
-  const DoctorDetailScreen({Key? key, this.doctorId}) : super(key: key);
+  const DoctorDetailScreen({Key? key, this.doctorId, this.cId}) : super(key: key);
 
   @override
   _DoctorDetailScreenState createState() => _DoctorDetailScreenState();
@@ -153,7 +153,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                     Container(
                       margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.07,
-                       // right: MediaQuery.of(context).size.width * 0.4,
+                        // right: MediaQuery.of(context).size.width * 0.4,
                       ),
                       child: Row(
                         children: [
@@ -162,7 +162,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                             width: MediaQuery.of(context).size.width * 0.01,
                           ),
                           Container(
-                            width: MediaQuery.of(context).size.width*0.78,
+                            width: MediaQuery.of(context).size.width * 0.78,
                             child: Row(
                               children: [
                                 Expanded(
@@ -276,13 +276,13 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                       height: MediaQuery.of(context).size.height * 0.06,
                       child: GestureDetector(
                         onTap: () {
-                          /*Navigator.pushReplacement<void, void>(
-                        context,
-                        MaterialPageRoute<void>(
-                          builder: (BuildContext context) =>
-                              OnBoard(), //  Profile(),
-                        ),
-                      );*/
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  AppointmentForm(dId: therapistDetails.data[0].doctorId, cId: widget.cId),
+                            ),
+                          );
                         },
                         child: Container(
                           decoration: BoxDecoration(
