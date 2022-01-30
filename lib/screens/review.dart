@@ -19,7 +19,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
 
   bool isValid() {
     if (bodyController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter your full name");
+      Utils.showToast(context, "Please enter Review Text");
       return false;
     }
     return true;

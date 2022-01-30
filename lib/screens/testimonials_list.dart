@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:untitled3/screens/doctor_detail.dart';
-import 'package:untitled3/screens/ongoing_treatment.dart';
 import 'package:untitled3/screens/review.dart';
 
 class TestimonialsList extends StatefulWidget {
-  const TestimonialsList({Key? key}) : super(key: key);
+  final cId;
+
+  const TestimonialsList({Key? key, this.cId}) : super(key: key);
 
   @override
   _TestimonialsListState createState() => _TestimonialsListState();
@@ -18,7 +19,12 @@ class _TestimonialsListState extends State<TestimonialsList> {
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => DoctorDetailScreen(doctorId: "2",)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DoctorDetailScreen(
+                          doctorId: "2",
+                        )));
           },
           child: Container(
             decoration: BoxDecoration(

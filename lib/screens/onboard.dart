@@ -32,9 +32,9 @@ class _OnBoardState extends State<OnBoard> {
     List _screens = [
       //Home(id: widget.id),
       //DoctorDetailScreen(),
-      SearchPage1(),
+      SearchPage1(cId: widget.id),
       //Text('search'),
-      TestimonialsList(),
+      TestimonialsList(cId: widget.id),
       // OngoingTreatmentList(),
       //AppointmentList(),
       //AvailabilitySettings(),
