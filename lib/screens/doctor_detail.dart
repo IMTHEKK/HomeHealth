@@ -27,7 +27,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
           if (snap.data == null) {
             return Container(
               child: Center(
-                child: Text('Loading...'),
+                child: CircularProgressIndicator(),
               ),
             );
           } else {

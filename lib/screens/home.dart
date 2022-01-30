@@ -265,7 +265,7 @@ class _HomeState extends State<Home> {
                         return Container(
                           height: MediaQuery.of(context).size.height * 0.3,
                           child: Center(
-                            child: Text('Loading...'),
+                            child: CircularProgressIndicator(),
                           ),
                         );
                       } else {
