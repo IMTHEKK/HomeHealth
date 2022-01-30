@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:untitled3/models/customers.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
@@ -31,6 +32,9 @@ class _EditProfileState extends State<EditProfile> {
   var addressController = TextEditingController();
   bool isVisible = false;
   var imageFile;
+  DateTime currentDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now();
+  String? dob;
 
   bool isValid() {
     if (fullNameController.text.toString().isEmpty) {
@@ -51,6 +55,37 @@ class _EditProfileState extends State<EditProfile> {
       return false;
     }
     return true;
+  }
+
+
+  void _pickDateDialog() {
+    showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        //which date will display when user open the picker
+        firstDate: DateTime(1950),
+        //what will be the previous supported year in picker
+        lastDate: currentDate) //what will be the up to supported date in picker
+        .then((pickedDate) {
+      //then usually do the future job
+      if (pickedDate == null) {
+        //if user tap cancel then this function will stop
+        return;
+      }
+      setState(() {
+        //for rebuilding the ui
+        _selectedDate = pickedDate;
+        dob = getDateMonthYear(_selectedDate);
+      });
+    });
+  }
+
+  String getDateMonthYear(DateTime selectedStartDate) {
+    if (selectedStartDate != null) {
+      return DateFormat('yyyy-MM-dd').format(selectedStartDate);
+    } else {
+      return "";
+    }
   }
 
   hitUpdateProfile() async {

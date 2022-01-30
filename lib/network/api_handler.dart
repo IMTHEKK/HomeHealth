@@ -47,9 +47,7 @@ class ApiProvider<T> {
       encoding: Encoding.getByName("utf-8"),
     );
     print('#################' +
-        response.statusCode.toString() +
-        '  ' +
-        response.body);
+        response.body.toString());
     if (response.statusCode == 200 || response.statusCode == 400) {
       return json.decode(response.body);
     } else if (response.statusCode == 401) {

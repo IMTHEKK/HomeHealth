@@ -6,12 +6,12 @@ import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/utilities/utils.dart';
 
-class SignUp extends StatefulWidget {
+class SignUpTherapist extends StatefulWidget {
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<SignUpTherapist> createState() => _SignUpTherapistState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpTherapistState extends State<SignUpTherapist> {
   var fullNameController = TextEditingController();
   var emailController = TextEditingController();
   var phoneController = TextEditingController();
@@ -19,10 +19,16 @@ class _SignUpState extends State<SignUp> {
   var passwordController = TextEditingController();
   var confirmPasswordController = TextEditingController();
   var addressController = TextEditingController();
+  var descController = TextEditingController();
+  var expController = TextEditingController();
+  var numPatientController = TextEditingController();
+  var docTypeController = TextEditingController();
   bool isVisible = false;
   DateTime currentDate = DateTime.now();
   DateTime _selectedDate = DateTime.now();
   String? dob;
+
+  bool? showValue = false;
 
   bool isValid() {
     if (fullNameController.text.toString().isEmpty) {
@@ -48,6 +54,18 @@ class _SignUpState extends State<SignUp> {
       return false;
     } else if (passwordController.text.toString() != confirmPasswordController.text.toString()) {
       Utils.showToast(context, "Password and confirm password mismatch");
+      return false;
+    } else if (descController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter Description");
+      return false;
+    } else if (expController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter total experience");
+      return false;
+    } else if (numPatientController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter total patients");
+      return false;
+    } else if (docTypeController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter doctor type");
       return false;
     }
     return true;
@@ -367,6 +385,143 @@ class _SignUpState extends State<SignUp> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Checkbox(
+                                      value: showValue,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          showValue = value;
+                                        });
+                                      },
+                                    ),
+                                    Text('Are you a therapist ?'),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    maxLines: 6,
+                                    maxLength: 200,
+                                    controller: descController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Description",
+                                        fillColor: Colors.white70),
+                                  ),
+                                  /*trailing: Container(
+                                      height: 24,
+                                      width: 24,
+                                      child: Image.asset('images/confirm_pwd.png'),
+                                    ),*/
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  // color: Colors.blue,
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    controller: expController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Experience in years",
+                                        fillColor: Colors.white70),
+                                  ),
+                                  /*trailing: Container(
+                                      height: 24,
+                                      width: 24,
+                                      child: Image.asset('images/confirm_pwd.png'),
+                                    ),*/
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  // color: Colors.blue,
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    controller: numPatientController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Total Patients",
+                                        fillColor: Colors.white70),
+                                  ),
+                                  /*trailing: Container(
+                                      height: 24,
+                                      width: 24,
+                                      child: Image.asset('images/confirm_pwd.png'),
+                                    ),*/
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  // color: Colors.blue,
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    controller: docTypeController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Doctor Type",
+                                        fillColor: Colors.white70),
+                                  ),
+                                  /* trailing: Container(
+                                        height: 24,
+                                        width: 24,
+                                        child: Image.asset('images/confirm_pwd.png'),
+                                      ),*/
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.04,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Checkbox(
                                       onChanged: (bool? value) {},
                                       value: true,
                                     ),
@@ -394,17 +549,23 @@ class _SignUpState extends State<SignUp> {
                                   onTap: () async {
                                     isVisible = true;
                                     setState(() {});
-                                    if (isValid()) {
-                                      Map<String, dynamic> params = {
-                                        'full-name': fullNameController.text,
-                                        'email': emailController.text,
-                                        'phone-number': phoneController.text,
-                                        'address': addressController.text,
-                                        'dob': getDateMonthYear(_selectedDate),
-                                        'password': confirmPasswordController.text
-                                      };
-                                      var res = await commonBloc.hitPostApi(params, ApiUrl.customer_signup);
 
+                                    if (isValid()) {
+                                      var res;
+                                      Map<String, dynamic> params1 = {
+                                        'full-name': fullNameController.text.toString(),
+                                        'email': emailController.text.toString(),
+                                        'phone-number': phoneController.text.toString(),
+                                        'address': addressController.text.toString(),
+                                        'dob': getDateMonthYear(_selectedDate),
+                                        'password': confirmPasswordController.text.toString(),
+                                        'desc': descController.text.toString(),
+                                        'exp': expController.text.toString(),
+                                        'num_patients': numPatientController.text.toString(),
+                                        'doctorType': docTypeController.text.toString()
+                                      };
+                                      print('hcddctctg' + params1.toString());
+                                      res = await commonBloc.hitPostApi(params1, ApiUrl.therapist_signup);
                                       if (res['code'] == 200) {
                                         Utils.showToast(context, '${res['message']}');
                                         Navigator.pop(context);

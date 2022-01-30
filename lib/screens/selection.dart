@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:untitled3/screens/login.dart';
 import 'package:untitled3/screens/signup.dart';
+import 'package:untitled3/screens/signup_therapist.dart';
 
 class Selection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    //  backgroundColor: Colors.blue,
+      //  backgroundColor: Colors.blue,
       body: Stack(
         children: [
           Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              child: Image.asset('images/BG.jpg',
+              child: Image.asset(
+                'images/BG.jpg',
                 fit: BoxFit.cover,
               )),
           Column(
@@ -113,9 +115,42 @@ class Selection extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.06,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
+                    /*Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => SignUp()),
+                    );*/
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        //title: Text("Alert "),
+                        content: Text("Are you a therapist ?"),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(ctx).pop();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SignUpTherapist(),
+                                ),
+                              );
+                            },
+                            child: Text("Yes"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(ctx).pop();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SignUp(),
+                                ),
+                              );
+                            },
+                            child: Text("No"),
+                          ),
+                        ],
+                      ),
                     );
                   },
                   child: Container(
