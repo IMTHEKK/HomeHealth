@@ -22,17 +22,17 @@ class HelpModel {
   Data data;
 
   factory HelpModel.fromJson(Map<String, dynamic> json) => HelpModel(
-        status: json['status'],
-        code: json['code'],
-        message: json['message'],
-        data: Data.fromJson(json['data']),
+        status: json["status"],
+        code: json["code"],
+        message: json["message"],
+        data: Data.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
-        'status': status,
-        'code': code,
-        'message': message,
-        'data': data.toJson(),
+        "status": status,
+        "code": code,
+        "message": message,
+        "data": data.toJson(),
       };
 }
 
@@ -43,16 +43,16 @@ class Data {
   });
 
   Support support;
-  Faq faq;
+  List<Faq> faq;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        support: Support.fromJson(json['support']),
-        faq: Faq.fromJson(json['faq']),
+        support: Support.fromJson(json["support"]),
+        faq: List<Faq>.from(json["faq"].map((x) => Faq.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        'support': support.toJson(),
-        'faq': faq.toJson(),
+        "support": support.toJson(),
+        "faq": List<dynamic>.from(faq.map((x) => x.toJson())),
       };
 }
 
@@ -72,19 +72,19 @@ class Faq {
   String status;
 
   factory Faq.fromJson(Map<String, dynamic> json) => Faq(
-        id: json['id'],
-        question: json['question'],
-        answer: json['answer'],
-        priority: json['priority'],
-        status: json['status'],
+        id: json["id"],
+        question: json["question"],
+        answer: json["answer"],
+        priority: json["priority"],
+        status: json["status"],
       );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'question': question,
-        'answer': answer,
-        'priority': priority,
-        'status': status,
+        "id": id,
+        "question": question,
+        "answer": answer,
+        "priority": priority,
+        "status": status,
       };
 }
 
@@ -100,14 +100,14 @@ class Support {
   String address;
 
   factory Support.fromJson(Map<String, dynamic> json) => Support(
-        contactNumber: json['contactNumber'],
-        email: json['email'],
-        address: json['address'],
+        contactNumber: json["contactNumber"],
+        email: json["email"],
+        address: json["address"],
       );
 
   Map<String, dynamic> toJson() => {
-        'contactNumber': contactNumber,
-        'email': email,
-        'address': address,
+        "contactNumber": contactNumber,
+        "email": email,
+        "address": address,
       };
 }

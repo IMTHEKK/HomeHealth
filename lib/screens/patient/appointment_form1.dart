@@ -14,40 +14,79 @@ class AppointmentForm1 extends StatefulWidget {
 }
 
 class _AppointmentForm1State extends State<AppointmentForm1> {
-  var ageController = TextEditingController();
-  var genderController = TextEditingController();
-  var therapyController = TextEditingController();
-  var appointmentDateController = TextEditingController();
-  var passwordController = TextEditingController();
-  var appointmentTimeController = TextEditingController();
+  var firstNameController = TextEditingController();
+  var lastNameController = TextEditingController();
+  var dobController = TextEditingController();
+  var addressController = TextEditingController();
+  var phoneController = TextEditingController();
+  var emailController = TextEditingController();
+  var familyDoctorController = TextEditingController();
+  var medicalConditionsController = TextEditingController();
   var patientConcernController = TextEditingController();
-  var nameController = TextEditingController();
-  bool isVisible = false;
+  var injuredAreaController = TextEditingController();
+  var xrayController = TextEditingController();
+  var medicationsController = TextEditingController();
+  var emergencyNameController = TextEditingController();
+  var relationshipController = TextEditingController();
+  var emergencyPhoneController = TextEditingController();
+  var aDateController = TextEditingController();
+  var aTimeController = TextEditingController();
 
+  bool isVisible = false;
   int? _gender = 0;
   int? _appointmentDate = 0;
 
   bool isValid() {
-    if (nameController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter your full name");
+    if (firstNameController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter First Name");
       return false;
-    } else if (ageController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter your age");
+    } else if (lastNameController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter your Last Name");
       return false;
-    } else if (genderController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please choose gender");
+    } else if (dobController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please choose DOB");
       return false;
-    } else if (therapyController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter therapy");
+    } else if (addressController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter Address");
       return false;
-    } else if (appointmentDateController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter appointment Date");
+    } else if (phoneController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter Phone Number");
       return false;
-    } else if (patientConcernController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter your Concern");
+    } else if (emailController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter your Email");
       return false;
-    } else if (appointmentTimeController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter Appointment time");
+    } else if (familyDoctorController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter Family Doctor");
+      return false;
+    } else if (medicalConditionsController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter medical Conditions");
+      return false;
+    } /*else if (patientConcernController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter patient Concern");
+      return false;
+    }*/ else if (injuredAreaController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter injured Area");
+      return false;
+    } else if (xrayController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter X-Ray/Ultrasound/MRI");
+      return false;
+    } else if (medicationsController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter medications");
+      return false;
+    } else if (emergencyNameController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter emergency Contact Name");
+      return false;
+    } else if (relationshipController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter relationship");
+      return false;
+    } else if (emergencyPhoneController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter Emergency Phone number");
+      return false;
+    } else if (aDateController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter Appointment Date");
+      return false;
+    } else if (aTimeController.text.toString().isEmpty) {
+      Utils.showToast(context, "Please enter Appointment Time");
       return false;
     }
     return true;
@@ -61,7 +100,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
-        appointmentDateController.text =
+        emailController.text =
             selectedDate.year.toString() + '-' + selectedDate.month.toString() + '-' + selectedDate.day.toString();
       });
   }
@@ -115,7 +154,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                               child: Container(
                                 margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.12),
                                 child: Text(
-                                  'Appointment Form1',
+                                  'Appointment Form',
                                   style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 22),
                                 ),
                               ),
@@ -149,7 +188,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    controller: nameController,
+                                    controller: firstNameController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
@@ -174,7 +213,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    controller: nameController,
+                                    controller: lastNameController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
@@ -199,7 +238,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    controller: ageController,
+                                    controller: dobController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
@@ -223,7 +262,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    controller: therapyController,
+                                    controller: addressController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
@@ -248,7 +287,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   //  onTap: _selectDate(context),
                                   child: ListTile(
                                     title: TextField(
-                                      controller: appointmentDateController,
+                                      controller: phoneController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintStyle: TextStyle(color: Colors.grey[800]),
@@ -274,7 +313,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   //  onTap: _selectDate(context),
                                   child: ListTile(
                                     title: TextField(
-                                      controller: appointmentDateController,
+                                      controller: emailController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintStyle: TextStyle(color: Colors.grey[800]),
@@ -300,7 +339,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   //  onTap: _selectDate(context),
                                   child: ListTile(
                                     title: TextField(
-                                      controller: appointmentDateController,
+                                      controller: familyDoctorController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintStyle: TextStyle(color: Colors.grey[800]),
@@ -326,7 +365,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   //  onTap: _selectDate(context),
                                   child: ListTile(
                                     title: TextField(
-                                      controller: appointmentDateController,
+                                      controller: medicalConditionsController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintStyle: TextStyle(color: Colors.grey[800]),
@@ -351,7 +390,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                 child: InkWell(
                                   child: ListTile(
                                     title: TextField(
-                                      controller: appointmentDateController,
+                                      controller: injuredAreaController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintStyle: TextStyle(color: Colors.grey[800]),
@@ -377,7 +416,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   //  onTap: _selectDate(context),
                                   child: ListTile(
                                     title: TextField(
-                                      controller: appointmentDateController,
+                                      controller: xrayController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintStyle: TextStyle(color: Colors.grey[800]),
@@ -402,7 +441,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                 child: InkWell(
                                   child: ListTile(
                                     title: TextField(
-                                      controller: appointmentDateController,
+                                      controller: medicationsController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintStyle: TextStyle(color: Colors.grey[800]),
@@ -430,7 +469,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   //  onTap: _selectDate(context),
                                   child: ListTile(
                                     title: TextField(
-                                      controller: appointmentDateController,
+                                      controller: emergencyNameController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintStyle: TextStyle(color: Colors.grey[800]),
@@ -456,7 +495,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   //  onTap: _selectDate(context),
                                   child: ListTile(
                                     title: TextField(
-                                      controller: appointmentDateController,
+                                      controller: relationshipController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintStyle: TextStyle(color: Colors.grey[800]),
@@ -481,11 +520,77 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                 child: InkWell(
                                   child: ListTile(
                                     title: TextField(
-                                      controller: appointmentDateController,
+                                      controller: emergencyPhoneController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintStyle: TextStyle(color: Colors.grey[800]),
                                           hintText: "Phone Number",
+                                          fillColor: Colors.white70),
+                                    ),
+                                    /*trailing: Container(
+                                      height: 24,
+                                      width: 24,
+                                      child: Image.asset(
+                                        'images/calendar.png',
+                                        color: Colors.grey,
+                                      ),
+                                    ),*/ //Icon(Icons.admin_panel_settings),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: InkWell(
+                                  child: ListTile(
+                                    title: TextField(
+                                      controller: aDateController,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintText: "Appointment Date",
+                                          fillColor: Colors.white70),
+                                    ),
+                                    /*trailing: Container(
+                                      height: 24,
+                                      width: 24,
+                                      child: Image.asset(
+                                        'images/calendar.png',
+                                        color: Colors.grey,
+                                      ),
+                                    ),*/ //Icon(Icons.admin_panel_settings),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: InkWell(
+                                  child: ListTile(
+                                    title: TextField(
+                                      controller: aTimeController,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintText: "Appointment Time",
                                           fillColor: Colors.white70),
                                     ),
                                     /*trailing: Container(
@@ -514,16 +619,29 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   onTap: () async {
                                     isVisible = true;
                                     setState(() {});
-                                    /*Map<String, dynamic> params = {
-                                      'age': ageController.text.toString(),
-                                      'gender': genderController.text.toString(),
-                                      'therapy': therapyController.text.toString(),
-                                      'patient_concern': patientConcernController.text.toString(),
-                                      'appointment_date': appointmentDateController.text.toString(),
-                                      'appointment_time': appointmentTimeController.text.toString(),
-                                      'docid': widget.dId.toString(),
-                                      'cid': widget.cId.toString(),
-                                      'full-name': nameController.text.toString(),
+
+                                    //     '&appointment_date=2022-02-06'
+                                    //   '&appointment_time=09:00-12:00'
+                                    Map<String, dynamic> params = {
+                                      'customer_id': widget.cId.toString(),
+                                      'doctor_id': widget.dId.toString(),
+                                      'first_name': firstNameController.text.toString(),
+                                      'last_name': lastNameController.text.toString(),
+                                      'dob': dobController.text.toString(),
+                                      'address': addressController.text.toString(),
+                                      'phone': phoneController.text.toString(),
+                                      'email': emailController.text.toString(),
+                                      'family_doctor': familyDoctorController.text.toString(),
+                                      'medical_conditions': medicalConditionsController.text.toString(),
+                                      'injured_area': injuredAreaController.text.toString(),
+                                      // 'xray': injuredAreaController.text.toString(),
+                                      'medications': medicationsController.text.toString(),
+                                      'xray': xrayController.text.toString(),
+                                      'emergency_contact_name': emergencyNameController.text.toString(),
+                                      'emergency_contact_relation': relationshipController.text.toString(),
+                                      'emergency_contact_number': emergencyPhoneController.text.toString(),
+                                      'appointment_date': aDateController.text.toString(),
+                                      'appointment_time': aTimeController.text.toString(),
                                     };
                                     print('######################' + params.toString());
                                     if (isValid()) {
@@ -531,12 +649,9 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       if (res['code'] == 200) {
                                         Utils.showToast(context, '${res['message']}');
                                         Navigator.pop(context);
-                                      } else if (res['code'] == 400) {
+                                      } else
                                         Utils.showToast(context, '${res['validation-errors']}');
-                                      } else {
-                                        Utils.showToast(context, 'Appointment booking failed');
-                                      }
-                                    }*/
+                                    }
                                     isVisible = false;
                                     setState(() {});
                                   },

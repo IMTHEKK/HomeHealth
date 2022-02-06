@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:untitled3/models/doctors.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
-import 'package:untitled3/screens/edit_profile.dart';
+import 'package:untitled3/screens/doctor/edit_profile.dart';
 import 'package:untitled3/screens/selection.dart';
 import 'package:untitled3/utilities/shared_preference/save_pref.dart';
 import 'package:untitled3/utilities/utils.dart';
@@ -31,7 +31,7 @@ class _ProfileState extends State<Profile> {
       body: SafeArea(
         top: false,
         child: FutureBuilder(
-          future: commonBloc.hitGetApi(ApiUrl.view_profile + "?th_id=2" /*+ widget.id*/),
+          future: commonBloc.hitGetApi(ApiUrl.view_profile + "?th_id=" + widget.id),
           builder: (context, AsyncSnapshot snap) {
             if (snap.data == null) {
               return Container(
@@ -40,7 +40,7 @@ class _ProfileState extends State<Profile> {
                 ),
               );
             } else {
-              Doctor customer = doctorFromJson(json.encode(snap.data));
+              Doctor doctor = doctorFromJson(json.encode(snap.data));
               return Stack(
                 children: [
                   Container(
@@ -112,7 +112,7 @@ class _ProfileState extends State<Profile> {
                                         SizedBox(height: MediaQuery.of(context).size.height * 0.08),
                                         Center(
                                           child: Text(
-                                            customer.data[0].doctorName,
+                                            doctor.data[0].doctorName,
                                             //"John Deo",
                                             style: TextStyle(
                                               color: Colors.blue,
@@ -125,8 +125,8 @@ class _ProfileState extends State<Profile> {
                                         SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                                         Center(
                                           child: Text(
-                                            //customer.data[0].customerEmail,
-                                            "john_deo225@gmail.com",
+                                            doctor.data[0].doctorEmail,
+                                            //"john_deo225@gmail.com",
                                             style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 13,
@@ -158,7 +158,7 @@ class _ProfileState extends State<Profile> {
                                                 ],
                                               ),
                                               Text(
-                                                customer.data[0].doctorName, /*'John Deo'*/
+                                                doctor.data[0].doctorName, /*'John Deo'*/
                                               ),
                                             ],
                                           ),
@@ -192,9 +192,7 @@ class _ProfileState extends State<Profile> {
                                                   children: [
                                                     Expanded(
                                                         child: Text(
-                                                      'abc@abc.abc' /*customer.data[0]
-                                                              .customerEmail*/
-                                                      ,
+                                                      doctor.data[0].doctorEmail,
                                                       textAlign: TextAlign.right, /*'123 Royal Street, New York'*/
                                                     )),
                                                   ],
@@ -225,10 +223,7 @@ class _ProfileState extends State<Profile> {
                                                   Text('Phone Number'),
                                                 ],
                                               ),
-                                              Text(
-                                                  /*customer.data[0]
-                                                  .customerPhone */
-                                                  ',+91 9999 888 777'),
+                                              Text(doctor.data[0].doctorPhone),
                                             ],
                                           ),
                                         ),
@@ -261,9 +256,8 @@ class _ProfileState extends State<Profile> {
                                                 ],
                                               ),
                                               Text(
-                                                  /*customer.data[0]
-                                                  .customerDob */
-                                                  '24 Aug, 1990'),
+                                                doctor.data[0].doctorDob.toString(),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -296,7 +290,7 @@ class _ProfileState extends State<Profile> {
                                                   children: [
                                                     Expanded(
                                                         child: Text(
-                                                      customer.data[0].doctorAddress,
+                                                      doctor.data[0].doctorAddress,
                                                       textAlign: TextAlign.right, /*'123 Royal Street, New York'*/
                                                     )),
                                                   ],
@@ -322,7 +316,7 @@ class _ProfileState extends State<Profile> {
                                         width: MediaQuery.of(context).size.width * 0.42,
                                         child: InkWell(
                                           onTap: () {
-                                            goToEditProfile(customer);
+                                            goToEditProfile(doctor);
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(
@@ -429,7 +423,7 @@ class _ProfileState extends State<Profile> {
                                         width: 120,
                                         height: 120,
                                         imageUrl:
-                                            'http://iconhomehealth.ca/assets/images/' + customer.data[0].doctorPhoto,
+                                            'http://iconhomehealth.ca/assets/images/' + doctor.data[0].doctorPhoto,
                                         //"https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1",
                                         fit: BoxFit.cover,
                                         imageBuilder: (BuildContext context, ImageProvider<dynamic> imageProvider) {
@@ -498,17 +492,16 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  void goToEditProfile(customer) async {
+  void goToEditProfile(doctor) async {
     var result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => EditProfile(
-          customer: customer,
+          doctor: doctor,
         ),
       ),
     );
     if (result == "true") {
-      //Utils.showToast(context, "claal");
       setState(() {});
     }
   }

@@ -1,16 +1,13 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:untitled3/models/customers.dart';
+import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
+import 'package:untitled3/screens/doctor/home.dart';
 import 'package:untitled3/screens/forgot_password.dart';
 import 'package:untitled3/screens/onboard.dart';
 import 'package:untitled3/screens/patient/signup.dart';
-import 'package:untitled3/network/api_blocs.dart';
-import 'package:http/http.dart' as http;
 import 'package:untitled3/utilities/shared_preference/save_pref.dart';
 import 'package:untitled3/utilities/utils.dart';
 
@@ -176,8 +173,7 @@ class _LoginState extends State<Login> {
                                     onTap: () {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ForgotPasswordScreen()),
+                                        MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
                                       );
                                     },
                                     child: Text(
@@ -202,7 +198,7 @@ class _LoginState extends State<Login> {
                               onTap: () async {
                                 Map<String, dynamic> params = {
                                   "email": emailController.text,
-                                  "password": pwdController.text
+                                  "password": pwdController.text,
                                 };
                                 if (isValid()) {
                                   isVisible = true;
@@ -212,19 +208,37 @@ class _LoginState extends State<Login> {
                                   print('Response body: ${customer.code}');
                                   if (customer.code == 200) {
                                     Utils.showToast(context, 'Login Success');
-                                    SavePreference.addStringToSF('id', customer.data[0].customerId);
-                                    SavePreference.addStringToSF('email', customer.data[0].customerEmail);
-                                    SavePreference.addStringToSF('name', customer.data[0].customerName);
-                                    Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) => OnBoard(
-                                            id:customer.data[0].customerId.toString(),
-                                            name:customer.data[0].customerName.toString(),
+                                    if (res['user'] == 'Customer') {
+                                      SavePreference.addStringToSF('id', customer.data[0].customerId);
+                                      SavePreference.addStringToSF('email', customer.data[0].customerEmail);
+                                      SavePreference.addStringToSF('name', customer.data[0].customerName);
+                                      SavePreference.addStringToSF('user_type', res['user'].toString());
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) => OnBoard(
+                                            id: customer.data[0].customerId.toString(),
+                                            name: customer.data[0].customerName.toString(),
+                                          ),
                                         ),
-                                      ),
-                                          (route) => false,
-                                    );
+                                        (route) => false,
+                                      );
+                                    } else if (res['user'] == 'Therapist') {
+                                      SavePreference.addStringToSF('id', res['doctorID'].toString());
+                                      SavePreference.addStringToSF('email', res['doctorEmail'].toString());
+                                      SavePreference.addStringToSF('name', res['doctorName'].toString());
+                                      SavePreference.addStringToSF('user_type', res['user'].toString());
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) => Home(
+                                            id: res['doctorID'].toString(),
+                                            name: res['doctorName'].toString(),
+                                          ),
+                                        ),
+                                        (route) => false,
+                                      );
+                                    }
                                   } else {
                                     Utils.showToast(
                                         context, 'Login Failed: ${res['validation-errors']['wrong-credentials']}');

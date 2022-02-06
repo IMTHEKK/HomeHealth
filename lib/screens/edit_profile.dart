@@ -43,8 +43,7 @@ class _EditProfileState extends State<EditProfile> {
     } else if (!Utils.validateEmail(emailController.text.toString())) {
       Utils.showToast(context, "Please enter valid email");
       return false;
-    } else if (phoneController.text.toString().isEmpty ||
-        phoneController.text.length > 10) {
+    } else if (phoneController.text.toString().isEmpty) {
       Utils.showToast(context, "Please enter valid phone");
       return false;
     } else if (dobController.text.toString().isEmpty) {
