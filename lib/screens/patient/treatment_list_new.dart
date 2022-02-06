@@ -23,7 +23,7 @@ class _TestimonialsListState extends State<TestimonialsList> {
     return FutureBuilder(
       future: commonBloc.hitGetApi(
           ///  'https://run.mocky.io/v3/eb5f43d1-0e08-48c1-be04-292dae6b8138'),
-          ApiUrl.treatment_list + '?cs_id=' + '37'), //widget.cId),
+          ApiUrl.treatment_list + '?cs_id=' + widget.cId), //widget.cId),
       builder: (context, AsyncSnapshot snap) {
         if (snap.data == null) {
           return Container(
