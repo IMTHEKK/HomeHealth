@@ -7,7 +7,9 @@ import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/utilities/utils.dart';
 
 class ReviewScreen extends StatefulWidget {
-  const ReviewScreen({Key? key}) : super(key: key);
+  final cId, aId, dId;
+
+  const ReviewScreen({Key? key, this.cId, this.aId, this.dId}) : super(key: key);
 
   @override
   _ReviewScreenState createState() => _ReviewScreenState();
@@ -16,6 +18,7 @@ class ReviewScreen extends StatefulWidget {
 class _ReviewScreenState extends State<ReviewScreen> {
   var bodyController = TextEditingController();
   bool isVisible = false;
+  var r;
 
   bool isValid() {
     if (bodyController.text.toString().isEmpty) {
@@ -100,7 +103,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                             children: [
                               SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                               Padding(
-                                padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.07),
+                                padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.07),
                                 child: /*RatingBarIndicator(
                                   rating:5,
                                   itemBuilder: (context, index) => Icon(
@@ -111,7 +114,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                                   itemSize: 20.0,
                                   direction: Axis.horizontal,
                                 ),*/
-                                RatingBar.builder(
+                                    RatingBar.builder(
                                   initialRating: 3,
                                   minRating: 1,
                                   direction: Axis.horizontal,
@@ -124,6 +127,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                                   ),
                                   onRatingUpdate: (rating) {
                                     print(rating);
+                                    r = rating;
                                   },
                                 ),
                               ),
@@ -165,19 +169,22 @@ class _ReviewScreenState extends State<ReviewScreen> {
                                     isVisible = true;
                                     setState(() {});
                                     Map<String, dynamic> params = {
-                                      'full-name': bodyController.text,
+                                      'customer_id': widget.cId,
+                                      'doctor_id': widget.dId,
+                                      'appointment_id': widget.aId,
+                                      'ratings': r.toString(),
+                                      'comments': bodyController.text.toString()
                                     };
 
                                     if (isValid()) {
-                                      var res = await commonBloc.hitPostApi(params, ApiUrl.customer_signup);
+                                      var res = await commonBloc.hitPostApi(params, ApiUrl.create_testimonial);
                                       if (res['code'] == 200) {
                                         Utils.showToast(context, '${res['message']}');
                                         Navigator.pop(context);
                                       } else if (res['code'] == 400) {
-                                        Utils.showToast(
-                                            context,'${res['validation-errors']}');
+                                        Utils.showToast(context, '${res['validation-errors']}');
                                       } else {
-                                        Utils.showToast(context, 'User Registration failed');
+                                        Utils.showToast(context, 'review posting failed');
                                       }
                                     }
                                     isVisible = false;

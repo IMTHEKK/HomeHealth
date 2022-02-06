@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:untitled3/screens/help.dart';
-import 'package:untitled3/screens/profile.dart';
 import 'package:untitled3/screens/patient/search1.dart';
 import 'package:untitled3/screens/patient/treatment_list_new.dart';
-
-import 'doctor/home.dart';
+import 'package:untitled3/screens/profile.dart';
 
 class OnBoard extends StatefulWidget {
-  final id,name;
+  final id, name;
 
-  const OnBoard({Key? key, this.id,this.name}) : super(key: key);
+  const OnBoard({Key? key, this.id, this.name}) : super(key: key);
 
   @override
   _OnBoardState createState() => _OnBoardState();
@@ -27,9 +25,9 @@ class _OnBoardState extends State<OnBoard> {
   @override
   Widget build(BuildContext context) {
     List _screens = [
-      Home(),
-      //SearchPage1(cId: widget.id,name:widget.name),
-      TestimonialsList(cId: widget.id),
+      //Home(),
+      SearchPage1(cId: widget.id, name: widget.name),
+      TreatmentList(cId: widget.id),
       HelpScreen(),
       Profile(id: widget.id),
     ];

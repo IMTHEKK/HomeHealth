@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:untitled3/models/customers.dart';
+import 'package:untitled3/models/testimonial_list.dart';
 import 'package:untitled3/models/therapist_details.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
-import 'package:untitled3/screens/patient/appointment_form.dart';
 import 'package:untitled3/screens/patient/appointment_form1.dart';
+import 'package:untitled3/screens/patient/see_all_reviews.dart';
 
 class DoctorDetailScreen extends StatefulWidget {
   final doctorId;
@@ -121,30 +125,40 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                //Text('* * * * *'),
-                                RatingBarIndicator(
-                                  rating: double.parse(therapistDetails.data[0].doctorRatings.toString()),
-                                  itemBuilder: (context, index) => Icon(
-                                    Icons.star,
-                                    color: Colors.blue,
-                                  ),
-                                  itemCount: 5,
-                                  itemSize: 20.0,
-                                  direction: Axis.horizontal,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SeeAllReviews(dId: widget.doctorId),
                                 ),
-                                SizedBox(height: 8),
-                                Text(
-                                  'See all comments',
-                                  style: TextStyle(
-                                    color: Colors.grey,
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  //Text('* * * * *'),
+                                  RatingBarIndicator(
+                                    rating: double.parse(therapistDetails.data[0].doctorRatings.toString()),
+                                    itemBuilder: (context, index) => Icon(
+                                      Icons.star,
+                                      color: Colors.blue,
+                                    ),
+                                    itemCount: 5,
+                                    itemSize: 20.0,
+                                    direction: Axis.horizontal,
                                   ),
-                                ),
-                              ],
+                                  SizedBox(height: 8),
+                                  Text(
+                                    'See all comments',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -281,7 +295,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                 // AppointmentForm(dId: therapistDetails.data[0].doctorId, cId: widget.cId),
+                                  // AppointmentForm(dId: therapistDetails.data[0].doctorId, cId: widget.cId),
                                   AppointmentForm1(dId: therapistDetails.data[0].doctorId, cId: widget.cId),
                             ),
                           );
@@ -319,6 +333,126 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                           ),
                         ),
                       ),
+                    ),
+                    FutureBuilder(
+                      future: commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?doctor_id=' + widget.doctorId),
+                      builder: (context, AsyncSnapshot snap) {
+                        if (snap.data == null) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          if (snap.data['code'] == 200) {
+                            Testimonials testimonialsList = testimonialsFromJson(json.encode(snap.data));
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: testimonialsList.data.length,
+                              itemBuilder: (context, index) {
+                                return FutureBuilder(
+                                  future: commonBloc.hitGetApi(ApiUrl.view_profile +
+                                      '?cs_id=' +
+                                      testimonialsList.data[index].customerId.toString()),
+                                  builder: (context, AsyncSnapshot sn) {
+                                    if (sn.data == null) {
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    } else {
+                                      if (snap.data['code'] == 200) {
+                                        Customer customer = customerFromJson(json.encode(sn.data));
+                                        return Container(
+                                          margin: EdgeInsets.only(
+                                            top: MediaQuery.of(context).size.height * 0.01,
+                                            bottom: MediaQuery.of(context).size.height * 0.01,
+                                            left: MediaQuery.of(context).size.width * 0.05,
+                                            right: MediaQuery.of(context).size.width * 0.05,
+                                          ),
+                                          padding: EdgeInsets.only(
+                                            top: MediaQuery.of(context).size.height * 0.02,
+                                            bottom: MediaQuery.of(context).size.height * 0.02,
+                                            left: MediaQuery.of(context).size.width * 0.05,
+                                            right: MediaQuery.of(context).size.width * 0.05,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Container(
+                                                  width: MediaQuery.of(context).size.width * 0.22,
+                                                  height: MediaQuery.of(context).size.width * 0.22,
+                                                  decoration: new BoxDecoration(
+                                                      border: Border.all(
+                                                        color: Colors.blue,
+                                                      ),
+                                                      shape: BoxShape.circle,
+                                                      image: new DecorationImage(
+                                                          fit: BoxFit.fill,
+                                                          image: new NetworkImage(
+                                                            //  "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1"
+                                                            'http://iconhomehealth.ca/assets/images/' +
+                                                                customer.data[0].customerPhoto,
+                                                          )))),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  RatingBarIndicator(
+                                                    rating:
+                                                        double.parse(testimonialsList.data[0].ratings.toString()),
+                                                    itemBuilder: (context, index) => Icon(
+                                                      Icons.star,
+                                                      color: Colors.blue,
+                                                    ),
+                                                    itemCount: 5,
+                                                    itemSize: 20.0,
+                                                    direction: Axis.horizontal,
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  Text(
+                                                    testimonialsList.data[0].comments, //'Dr. David Gilmour',
+                                                    style: TextStyle(
+                                                        color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 16),
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  SizedBox(
+                                                    width: MediaQuery.of(context).size.width * 0.4,
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: Text(
+                                                            'Reviewed by: ' + customer.data[0].customerName,
+                                                            style: TextStyle(
+                                                              color: Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  Text(
+                                                    testimonialsList.data[0].createdAt,
+                                                    style: TextStyle(
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      } else {
+                                        return Text('error');
+                                      }
+                                    } //do whatever you want
+                                  },
+                                );
+                              },
+                            );
+                          } else {
+                            return Text('error');
+                          }
+                        } //do whatever you want
+                      },
                     ),
                   ],
                 ),

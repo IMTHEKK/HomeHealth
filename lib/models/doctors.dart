@@ -43,6 +43,10 @@ class Datum {
     required this.totalPatients,
     required this.doctorPhoto,
     required this.doctorRatings,
+    required this.doctorEmail,
+    required this.doctorPassword,
+    required this.doctorPhone,
+    required this.doctorDob,
   });
 
   String doctorId;
@@ -54,6 +58,10 @@ class Datum {
   String totalPatients;
   String doctorPhoto;
   String doctorRatings;
+  String doctorEmail;
+  String doctorPassword;
+  String doctorPhone;
+  String doctorDob;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         doctorId: json['doctorID'],
@@ -65,6 +73,10 @@ class Datum {
         totalPatients: json['totalPatients'],
         doctorPhoto: json['doctorPhoto'],
         doctorRatings: json['doctorRatings'],
+        doctorEmail: json['doctorEmail'],
+        doctorPassword: json['doctorPassword'],
+        doctorPhone: json['doctorPhone'],
+        doctorDob: json['doctorDOB'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -77,5 +89,9 @@ class Datum {
         'totalPatients': totalPatients,
         'doctorPhoto': doctorPhoto,
         'doctorRatings': doctorRatings,
+        'doctorEmail': doctorEmail,
+        'doctorPassword': doctorPassword,
+        'doctorPhone': doctorPhone,
+        'doctorDOB': doctorDob,
       };
 }

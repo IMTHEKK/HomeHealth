@@ -277,8 +277,9 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                               SizedBox(width: 10),
                                               Center(
                                                 child: Text(
-                                                  treatmentList.data[0]['appointment_date'].toString()
-                                                +'\t\t' + snap.data['timeschedule'].toString(),
+                                                  treatmentList.data[0]['appointment_date'].toString() +
+                                                      '\t\t' +
+                                                      snap.data['timeschedule'].toString(),
 
 //                                                  "05 Jan,2022 | 3:30 PM",
                                                   style: TextStyle(

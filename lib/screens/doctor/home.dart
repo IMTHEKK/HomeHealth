@@ -5,7 +5,9 @@ import 'package:untitled3/screens/doctor/my_therapies.dart';
 import 'package:untitled3/screens/doctor/profile.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final id, name;
+
+  const Home({Key? key, this.id, this.name}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -52,9 +54,10 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Profile(
-                                    id: '2',
-                                  )),
+                            builder: (context) => Profile(
+                              id: widget.id,
+                            ),
+                          ),
                         );
                       },
                       child: Container(
@@ -159,7 +162,7 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -211,7 +214,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     GestureDetector(
-                      onTap:(){
+                      onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(

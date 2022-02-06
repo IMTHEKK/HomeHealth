@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:untitled3/screens/doctor/home.dart';
 import 'package:untitled3/screens/onboard.dart';
 import 'package:untitled3/screens/selection.dart';
 import 'package:untitled3/utilities/shared_preference/get_prefer.dart';
@@ -20,29 +21,44 @@ class _SplashState extends State<Splash> {
 
   Future<void> navigationToLoginPage() async {
     await GetPreference().getStringValuesSF('id').then((value) async {
-      await GetPreference().getStringValuesSF('name').then((value1) {
-        if (value != null &&
-            value.toString().trim().isNotEmpty &&
-            value1 != null &&
-            value1.toString().trim().isNotEmpty)
-        {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => OnBoard(
-                id: value.toString(),
-                name: value1.toString(),
+      await GetPreference().getStringValuesSF('name').then((value1) async {
+        await GetPreference().getStringValuesSF('user_type').then((value2) {
+          if (value != null &&
+              value.toString().trim().isNotEmpty &&
+              value1 != null &&
+              value1.toString().trim().isNotEmpty &&
+              value2 != null &&
+              value2.toString().trim().isNotEmpty) {
+            if (value2 == 'Customer') {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OnBoard(
+                    id: value.toString(),
+                    name: value1.toString(),
+                  ),
+                ),
+              );
+            } else if (value2 == 'Therapist') {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Home(
+                    id: value.toString(),
+                    name: value1.toString(),
+                  ),
+                ),
+              );
+            }
+          } else {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Selection(),
               ),
-            ),
-          );
-        } else {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Selection(),
-            ),
-          );
-        }
+            );
+          }
+        });
       });
     });
   }

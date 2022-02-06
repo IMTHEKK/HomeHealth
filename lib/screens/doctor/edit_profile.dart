@@ -1,24 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:async/async.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:untitled3/models/customers.dart';
+import 'package:path/path.dart' as path;
+import 'package:untitled3/models/doctors.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/utilities/utils.dart';
-import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as path;
 
 class EditProfile extends StatefulWidget {
-  final Customer customer;
+  final Doctor doctor;
 
-  EditProfile({Key? key, required this.customer}) : super(key: key);
+  EditProfile({Key? key, required this.doctor}) : super(key: key);
 
   @override
   State<EditProfile> createState() => _EditProfileState();
@@ -43,8 +43,7 @@ class _EditProfileState extends State<EditProfile> {
     } else if (!Utils.validateEmail(emailController.text.toString())) {
       Utils.showToast(context, "Please enter valid email");
       return false;
-    } else if (phoneController.text.toString().isEmpty ||
-        phoneController.text.length > 10) {
+    } else if (phoneController.text.toString().isEmpty) {
       Utils.showToast(context, "Please enter valid phone");
       return false;
     } else if (dobController.text.toString().isEmpty) {
@@ -57,15 +56,14 @@ class _EditProfileState extends State<EditProfile> {
     return true;
   }
 
-
   void _pickDateDialog() {
     showDatePicker(
-        context: context,
-        initialDate: _selectedDate,
-        //which date will display when user open the picker
-        firstDate: DateTime(1950),
-        //what will be the previous supported year in picker
-        lastDate: currentDate) //what will be the up to supported date in picker
+            context: context,
+            initialDate: _selectedDate,
+            //which date will display when user open the picker
+            firstDate: DateTime(1950),
+            //what will be the previous supported year in picker
+            lastDate: currentDate) //what will be the up to supported date in picker
         .then((pickedDate) {
       //then usually do the future job
       if (pickedDate == null) {
@@ -92,15 +90,13 @@ class _EditProfileState extends State<EditProfile> {
     isVisible = true;
     setState(() {});
 
-    var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     // get file length
     var length = await imageFile.length();
 
     // string to uri
     //Map<String, String> headers = {"Authorization": "IMAGINAGLOBAL123"};
-    var uri = Uri.parse(
-        ApiUrl.edit_profile + '?cs_id=' + widget.customer.data[0].customerId);
+    var uri = Uri.parse(ApiUrl.edit_profile + '?th_id=' + widget.doctor.data[0].doctorId);
 
     // create multipart request
     var request;
@@ -109,7 +105,7 @@ class _EditProfileState extends State<EditProfile> {
 
       // multipart that takes file
       var multipartFile = new http.MultipartFile(
-        'customerPhoto', stream, length,
+        'doctorPhoto', stream, length,
         filename: path.basename(imageFile.path),
         //contentType: new MediaType('image', 'jpeg'),
       );
@@ -122,7 +118,7 @@ class _EditProfileState extends State<EditProfile> {
       request.fields['phone-number'] = phoneController.text;
       request.fields['address'] = addressController.text;
       request.fields['dob'] = dobController.text;
-      request.fields['password'] = widget.customer.data[0].customerPassword;
+      request.fields['password'] = widget.doctor.data[0].doctorPassword;
     } on Exception catch (exception) {
       print(exception);
     } catch (error) {
@@ -145,7 +141,7 @@ class _EditProfileState extends State<EditProfile> {
         } else if (data['code'] == 400) {
           Utils.showToast(context, '${value['validation-errors']}');
         } else {
-          Utils.showToast(context, 'User update failed');
+          Utils.showToast(context, 'Doctor update failed');
         }
       });
     } else {
@@ -164,26 +160,25 @@ class _EditProfileState extends State<EditProfile> {
     //final bytes = imageFile.readAsBytesSync();
     //var img64 = base64Encode(bytes);
     Map<String, dynamic> params = {
-      // 'customerPhoto':imageFile!=null?img64:widget.customer.data[0].customerPhoto.toString(),
+      // 'doctorPhoto':imageFile!=null?img64:widget.doctor.data[0].doctorPhoto.toString(),
       'full-name': fullNameController.text,
       'email': emailController.text,
       'phone-number': phoneController.text,
       'address': addressController.text,
       'dob': dobController.text,
-      'password': widget.customer.data[0].customerPassword,
+      'password': widget.doctor.data[0].doctorPassword,
     };
     if (isValid()) {
       isVisible = true;
       setState(() {});
-      var res = await commonBloc.hitPostApi(params,
-          ApiUrl.edit_profile + '?cs_id=' + widget.customer.data[0].customerId);
+      var res = await commonBloc.hitPostApi(params, ApiUrl.edit_profile + '?th_id=' + widget.doctor.data[0].doctorId);
       if (res['code'] == 200) {
         Utils.showToast(context, 'Details uploaded Successfully');
         Navigator.pop(context, "true");
       } else if (res['code'] == 400) {
         Utils.showToast(context, '${res['validation-errors']}');
       } else {
-        Utils.showToast(context, 'User update failed');
+        Utils.showToast(context, 'Doctor update failed');
       }
     }
     isVisible = false;
@@ -192,11 +187,11 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
-    fullNameController.text = widget.customer.data[0].customerName;
-    emailController.text = widget.customer.data[0].customerEmail;
-    phoneController.text = widget.customer.data[0].customerPhone;
-    dobController.text = widget.customer.data[0].customerDob;
-    addressController.text = widget.customer.data[0].customerAddress;
+    fullNameController.text = widget.doctor.data[0].doctorName;
+    emailController.text = widget.doctor.data[0].doctorEmail;
+    phoneController.text = widget.doctor.data[0].doctorPhone;
+    dobController.text = widget.doctor.data[0].doctorDob as String;
+    addressController.text = widget.doctor.data[0].doctorAddress;
     super.initState();
   }
 
@@ -242,8 +237,7 @@ class _EditProfileState extends State<EditProfile> {
                                 },
                                 child: Container(
                                   margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width *
-                                        0.05,
+                                    left: MediaQuery.of(context).size.width * 0.05,
                                   ),
                                   child: Icon(
                                     Icons.arrow_back,
@@ -254,16 +248,11 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                               Expanded(
                                 child: Container(
-                                  margin: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width *
-                                          0.22),
+                                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.22),
                                   // alignment: Alignment.center,
                                   child: Text(
                                     'Edit profile',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 22),
+                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
                                   ),
                                 ),
                               ),
@@ -282,41 +271,28 @@ class _EditProfileState extends State<EditProfile> {
                               Card(
                                 shape: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(38),
-                                    borderSide:
-                                        BorderSide(color: Colors.transparent)),
+                                    borderSide: BorderSide(color: Colors.transparent)),
                                 color: Colors.white,
                                 child: Column(
                                   children: [
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.12),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.12),
                                     Container(
                                       margin: EdgeInsets.only(
-                                        left:
-                                            MediaQuery.of(context).size.height *
-                                                0.03,
-                                        right:
-                                            MediaQuery.of(context).size.height *
-                                                0.03,
+                                        left: MediaQuery.of(context).size.height * 0.03,
+                                        right: MediaQuery.of(context).size.height * 0.03,
                                       ),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
                                               Icon(
                                                 Icons.person,
                                                 color: Colors.grey,
                                               ),
                                               SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.01,
+                                                width: MediaQuery.of(context).size.height * 0.01,
                                               ),
                                               Text('Full Name'),
                                             ],
@@ -329,36 +305,24 @@ class _EditProfileState extends State<EditProfile> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.04),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                                     Container(
                                       margin: EdgeInsets.only(
-                                        left:
-                                            MediaQuery.of(context).size.height *
-                                                0.03,
-                                        right:
-                                            MediaQuery.of(context).size.height *
-                                                0.03,
+                                        left: MediaQuery.of(context).size.height * 0.03,
+                                        right: MediaQuery.of(context).size.height * 0.03,
                                       ),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
                                               Icon(
                                                 Icons.mail,
                                                 color: Colors.grey,
                                               ),
                                               SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.01,
+                                                width: MediaQuery.of(context).size.height * 0.01,
                                               ),
                                               Text('Email Address'),
                                             ],
@@ -371,36 +335,24 @@ class _EditProfileState extends State<EditProfile> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.04),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                                     Container(
                                       margin: EdgeInsets.only(
-                                        left:
-                                            MediaQuery.of(context).size.height *
-                                                0.03,
-                                        right:
-                                            MediaQuery.of(context).size.height *
-                                                0.03,
+                                        left: MediaQuery.of(context).size.height * 0.03,
+                                        right: MediaQuery.of(context).size.height * 0.03,
                                       ),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
                                               Icon(
                                                 Icons.phone,
                                                 color: Colors.grey,
                                               ),
                                               SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.01,
+                                                width: MediaQuery.of(context).size.height * 0.01,
                                               ),
                                               Text('Phone Number'),
                                             ],
@@ -413,26 +365,17 @@ class _EditProfileState extends State<EditProfile> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.04),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                                     Container(
                                       margin: EdgeInsets.only(
-                                        left:
-                                            MediaQuery.of(context).size.height *
-                                                0.03,
-                                        right:
-                                            MediaQuery.of(context).size.height *
-                                                0.03,
+                                        left: MediaQuery.of(context).size.height * 0.03,
+                                        right: MediaQuery.of(context).size.height * 0.03,
                                       ),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
                                               Container(
                                                 height: 24,
@@ -443,10 +386,7 @@ class _EditProfileState extends State<EditProfile> {
                                                 ),
                                               ),
                                               SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.01,
+                                                width: MediaQuery.of(context).size.height * 0.01,
                                               ),
                                               Text('Date of Birth'),
                                             ],
@@ -459,36 +399,24 @@ class _EditProfileState extends State<EditProfile> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.04),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                                     Container(
                                       margin: EdgeInsets.only(
-                                        left:
-                                            MediaQuery.of(context).size.height *
-                                                0.03,
-                                        right:
-                                            MediaQuery.of(context).size.height *
-                                                0.03,
+                                        left: MediaQuery.of(context).size.height * 0.03,
+                                        right: MediaQuery.of(context).size.height * 0.03,
                                       ),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
                                               Icon(
                                                 Icons.location_on,
                                                 color: Colors.grey,
                                               ),
                                               SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.01,
+                                                width: MediaQuery.of(context).size.height * 0.01,
                                               ),
                                               Text('Address'),
                                             ],
@@ -501,22 +429,13 @@ class _EditProfileState extends State<EditProfile> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.04),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                                     Container(
                                       margin: EdgeInsets.only(
-                                        left:
-                                            MediaQuery.of(context).size.width *
-                                                0.1,
-                                        right:
-                                            MediaQuery.of(context).size.width *
-                                                0.1,
+                                        left: MediaQuery.of(context).size.width * 0.1,
+                                        right: MediaQuery.of(context).size.width * 0.1,
                                       ),
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.06,
+                                      height: MediaQuery.of(context).size.height * 0.06,
                                       width: MediaQuery.of(context).size.width,
                                       child: GestureDetector(
                                         onTap: () async {
@@ -536,12 +455,10 @@ class _EditProfileState extends State<EditProfile> {
                                             border: Border.all(
                                               color: Colors.transparent,
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(30.0),
+                                            borderRadius: BorderRadius.circular(30.0),
                                           ),
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             children: <Widget>[
                                               Center(
                                                 child: Text(
@@ -559,10 +476,7 @@ class _EditProfileState extends State<EditProfile> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.04),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                                   ],
                                 ),
                               ),
@@ -573,8 +487,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.13),
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.13),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -582,12 +495,9 @@ class _EditProfileState extends State<EditProfile> {
                           children: <Widget>[
                             InkWell(
                               onTap: () async {
-                                final pickedImage = await ImagePicker()
-                                    .getImage(source: ImageSource.gallery);
+                                final pickedImage = await ImagePicker().getImage(source: ImageSource.gallery);
                                 setState(() {
-                                  imageFile = pickedImage != null
-                                      ? File(pickedImage.path)
-                                      : null;
+                                  imageFile = pickedImage != null ? File(pickedImage.path) : null;
                                   //var imgPath=pickedImage.path;
                                 });
                               },
@@ -607,23 +517,17 @@ class _EditProfileState extends State<EditProfile> {
                                       ? CachedNetworkImage(
                                           width: 120,
                                           height: 120,
-                                          imageUrl:
-                                              'http://iconhomehealth.ca/assets/images/' +
-                                                  widget.customer.data[0]
-                                                      .customerPhoto,
+                                          imageUrl: 'http://iconhomehealth.ca/assets/images/' +
+                                              widget.doctor.data[0].doctorPhoto,
                                           //"https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1",
                                           fit: BoxFit.cover,
-                                          imageBuilder: (BuildContext context,
-                                              ImageProvider<dynamic>
-                                                  imageProvider) {
+                                          imageBuilder: (BuildContext context, ImageProvider<dynamic> imageProvider) {
                                             return Image(
-                                              image: imageProvider
-                                                  as ImageProvider<Object>,
+                                              image: imageProvider as ImageProvider<Object>,
                                               fit: BoxFit.cover,
                                             );
                                           },
-                                          placeholder: (context, url) =>
-                                              ClipRRect(
+                                          placeholder: (context, url) => ClipRRect(
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(120.0),
                                             ),
@@ -635,8 +539,7 @@ class _EditProfileState extends State<EditProfile> {
                                               ),
                                             ),
                                           ),
-                                          errorWidget: (context, url, error) =>
-                                              ClipRRect(
+                                          errorWidget: (context, url, error) => ClipRRect(
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(120.0),
                                             ),

@@ -13,15 +13,11 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   var emailController = TextEditingController();
-  var pwdController = TextEditingController();
   bool isVisible = false;
 
   bool isValid() {
     if (!Utils.validateEmail(emailController.text.toString())) {
       Utils.showToast(context, "Please enter valid email");
-      return false;
-    } else if (pwdController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter your Password");
       return false;
     }
     return true;
@@ -131,7 +127,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   isVisible = true;
                                   setState(() {});
                                   var res = await commonBloc.hitPostApi(params, ApiUrl.forgot_pwd);
-                                  if (res.code == 200) {
+                                  if (res['code'] == 200) {
                                     Utils.showToast(context, 'OTP Send Successfully');
                                     Navigator.push(
                                       context,
