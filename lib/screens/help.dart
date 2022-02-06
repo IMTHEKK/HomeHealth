@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:untitled3/models/help_model.dart';
+import 'package:untitled3/network/api_blocs.dart';
+import 'package:untitled3/network/api_urls.dart';
 
 class HelpScreen extends StatefulWidget {
   const HelpScreen({Key? key}) : super(key: key);
@@ -10,120 +13,123 @@ class HelpScreen extends StatefulWidget {
 class _HelpScreenState extends State<HelpScreen> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: SafeArea(
-        top: false,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 0.045,
-                right: MediaQuery.of(context).size.width * 0.045,
-                top: MediaQuery.of(context).size.height * 0.04,
-              ),
+    return FutureBuilder(
+      future: commonBloc.hitGetApi(ApiUrl.help),
+      builder: (context, AsyncSnapshot snap) {
+        if (snap.data == null) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          HelpModel helpModel = HelpModel.fromJson(snap.data);
+          return SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: SafeArea(
+              top: false,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Support',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 22,
+                  Container(
+                    margin: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.045,
+                      right: MediaQuery.of(context).size.width * 0.045,
+                      top: MediaQuery.of(context).size.height * 0.04,
                     ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.04,
-                  ),
-                  Center(
-                    child: Container(
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.01,
-                      ),
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      height: MediaQuery.of(context).size.width * 0.35,
-                      child: Image.asset('images/logo.png'),
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.04,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Call Us Now: ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Support',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 22,
+                          ),
                         ),
-                      ),
-                      Text('\t01 2435796283'),
-                    ],
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.03,
-                  ),
-                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    Text(
-                      'Write to Us: ',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      ' support@homeiconhealth.ca',
-                    ),
-                  ]),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Address:',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                        Center(
+                          child: Container(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.01,
+                            ),
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            height: MediaQuery.of(context).size.width * 0.35,
+                            child: Image.asset('images/logo.png'),
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.65,
-                        child: Row(
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Expanded(
-                                child: Text(
-                              'ABC Society, XYZ Apartment, India, 251436 IN',
-                              textAlign: TextAlign.right,
-                            )),
+                            Text(
+                              'Call Us Now: ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text('\t' + helpModel.data.support.contactNumber /*01 2435796283'*/),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.04,
-                  ),
-                  Text(
-                    'FAQ\'s',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                          Text(
+                            'Write to Us: ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            ' ' + helpModel.data.support.email, //' support@homeiconhealth.ca',
+                          ),
+                        ]),
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Address:',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.65,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                    helpModel.data.support.address,
+                                    //'ABC Society, XYZ Apartment, India, 251436 IN',
+                                    textAlign: TextAlign.right,
+                                  )),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                        Text(
+                          'FAQ\'s',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
                     ),
+                  ),
+                  ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) => DataPopUp(data[index]),
+                    itemCount: data.length,
                   ),
                 ],
               ),
             ),
-            ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) => DataPopUp(data[index]),
-              itemCount: data.length,
-            ),
-          ],
-        ),
-      ),
+          );
+        }
+      },
     );
   }
 }

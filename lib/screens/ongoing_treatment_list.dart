@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled3/screens/ongoing_treatment.dart';
+import 'package:untitled3/screens/patient/ongoing_treatment.dart';
 
 class OngoingTreatmentList extends StatefulWidget {
   const OngoingTreatmentList({Key? key}) : super(key: key);

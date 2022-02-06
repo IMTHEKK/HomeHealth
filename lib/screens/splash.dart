@@ -19,22 +19,31 @@ class _SplashState extends State<Splash> {
   }
 
   Future<void> navigationToLoginPage() async {
-    await GetPreference().getStringValuesSF('id').then((value) {
-      if (value != null && value.toString().trim().isNotEmpty) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OnBoard(id: value.toString()),
-          ),
-        );
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Selection(),
-          ),
-        );
-      }
+    await GetPreference().getStringValuesSF('id').then((value) async {
+      await GetPreference().getStringValuesSF('name').then((value1) {
+        if (value != null &&
+            value.toString().trim().isNotEmpty &&
+            value1 != null &&
+            value1.toString().trim().isNotEmpty)
+        {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OnBoard(
+                id: value.toString(),
+                name: value1.toString(),
+              ),
+            ),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Selection(),
+            ),
+          );
+        }
+      });
     });
   }
 

@@ -1,25 +1,17 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:untitled3/models/customers.dart';
-import 'package:untitled3/network/api_urls.dart';
-import 'package:untitled3/screens/forgot_password.dart';
-import 'package:untitled3/screens/onboard.dart';
-import 'package:untitled3/screens/patient/signup.dart';
 import 'package:untitled3/network/api_blocs.dart';
-import 'package:http/http.dart' as http;
-import 'package:untitled3/utilities/shared_preference/save_pref.dart';
+import 'package:untitled3/network/api_urls.dart';
+import 'package:untitled3/screens/verify_otp.dart';
 import 'package:untitled3/utilities/utils.dart';
 
-class Login extends StatefulWidget {
+class ForgotPasswordScreen extends StatefulWidget {
   @override
-  State<Login> createState() => _LoginState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _LoginState extends State<Login> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   var emailController = TextEditingController();
   var pwdController = TextEditingController();
   bool isVisible = false;
@@ -90,12 +82,13 @@ class _LoginState extends State<Login> {
                         children: [
                           SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                           Text(
-                            'Login Account',
+                            'Forgot Password Screen',
                             style: TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
                               color: Colors.blue,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                           SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                           Container(
@@ -112,7 +105,7 @@ class _LoginState extends State<Login> {
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintStyle: TextStyle(color: Colors.grey[800]),
-                                    hintText: "Email or Username",
+                                    hintText: "Email",
                                     fillColor: Colors.white70),
                               ),
                               trailing: Icon(Icons.mail),
@@ -120,75 +113,6 @@ class _LoginState extends State<Login> {
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
                               right: MediaQuery.of(context).size.width * 0.07,
-                            ),
-                          ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                          Container(
-                            decoration: BoxDecoration(
-                              // color: Colors.blue,
-                              border: Border.all(
-                                color: Colors.black12,
-                              ),
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: ListTile(
-                              title: TextField(
-                                controller: pwdController,
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                    /*  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),*/
-                                    //filled: true,
-                                    border: InputBorder.none,
-                                    hintStyle: TextStyle(color: Colors.grey[800]),
-                                    hintText: "Password",
-                                    fillColor: Colors.white70),
-                              ),
-                              trailing: Container(
-                                  height: 24,
-                                  width: 24,
-                                  child: Image.asset('images/security.png')), //Icon(Icons.admin_panel_settings),
-                            ),
-                            margin: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.07,
-                              right: MediaQuery.of(context).size.width * 0.07,
-                            ),
-                          ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                          Container(
-                            margin: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.04,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Checkbox(
-                                  onChanged: (bool? value) {},
-                                  value: true,
-                                ),
-                                Text('Save Password'),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Container(
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ForgotPasswordScreen()),
-                                      );
-                                    },
-                                    child: Text(
-                                      'Forgot Password?',
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
                             ),
                           ),
                           SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -202,32 +126,25 @@ class _LoginState extends State<Login> {
                               onTap: () async {
                                 Map<String, dynamic> params = {
                                   "email": emailController.text,
-                                  "password": pwdController.text
                                 };
                                 if (isValid()) {
                                   isVisible = true;
                                   setState(() {});
-                                  var res = await commonBloc.hitPostApi(params, ApiUrl.login);
-                                  Customer customer = Customer.fromJson(res);
-                                  print('Response body: ${customer.code}');
-                                  if (customer.code == 200) {
-                                    Utils.showToast(context, 'Login Success');
-                                    SavePreference.addStringToSF('id', customer.data[0].customerId);
-                                    SavePreference.addStringToSF('email', customer.data[0].customerEmail);
-                                    SavePreference.addStringToSF('name', customer.data[0].customerName);
-                                    Navigator.pushAndRemoveUntil(
+                                  var res = await commonBloc.hitPostApi(params, ApiUrl.forgot_pwd);
+                                  if (res.code == 200) {
+                                    Utils.showToast(context, 'OTP Send Successfully');
+                                    Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (BuildContext context) => OnBoard(
-                                            id:customer.data[0].customerId.toString(),
-                                            name:customer.data[0].customerName.toString(),
+                                        builder: (context) => VerifyOTP(
+                                          otpType: res['data']['otp_type'],
+                                          userId: res['data']['user_id'],
+                                          userType: res['data']['user_type'],
                                         ),
                                       ),
-                                          (route) => false,
                                     );
                                   } else {
-                                    Utils.showToast(
-                                        context, 'Login Failed: ${res['validation-errors']['wrong-credentials']}');
+                                    Utils.showToast(context, 'Error: ${res['validation-errors']['wrong-credentials']}');
                                   }
                                   isVisible = false;
                                   setState(() {});
@@ -246,7 +163,7 @@ class _LoginState extends State<Login> {
                                   children: <Widget>[
                                     Center(
                                       child: Text(
-                                        "Login to account",
+                                        "Send OTP",
                                         style: TextStyle(
                                           color: Colors.white,
                                           // fontFamily: 'Montserrat',
@@ -260,29 +177,6 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('Don\'t have an account?'),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pushReplacement<void, void>(
-                                    context,
-                                    MaterialPageRoute<void>(
-                                      builder: (BuildContext context) => SignUp(),
-                                    ),
-                                  );
-                                },
-                                child: Text(
-                                  '\tSign up',
-                                  style: TextStyle(
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                              )
-                            ],
                           ),
                           SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                         ],

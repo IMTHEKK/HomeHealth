@@ -1,18 +1,15 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled3/screens/appointment_list.dart';
 
-class OnGoingTreatment extends StatefulWidget {
-  const OnGoingTreatment({Key? key}) : super(key: key);
+class AppointmentDetails extends StatefulWidget {
+  const AppointmentDetails({Key? key}) : super(key: key);
 
   @override
-  _OnGoingTreatmentState createState() => _OnGoingTreatmentState();
+  _AppointmentDetailsState createState() => _AppointmentDetailsState();
 }
 
-class _OnGoingTreatmentState extends State<OnGoingTreatment> {
+class _AppointmentDetailsState extends State<AppointmentDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,16 +19,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
         child: SingleChildScrollView(
           child: Stack(
             children: [
-              /*  Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.0),
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: <Color>[Color(0xff8db8e1), Color(0xff1a9cdb)])),
-              ),*/
               Container(
-                //color: Colors.red,
                 height: MediaQuery.of(context).size.height * 0.4,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
@@ -59,7 +47,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
               ),
               Container(
                 margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.08,
+                  top: MediaQuery.of(context).size.height * 0.025,
                   left: MediaQuery.of(context).size.width * 0.04,
                   right: MediaQuery.of(context).size.width * 0.04,
                   bottom: MediaQuery.of(context).size.width * 0.04,
@@ -82,8 +70,8 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                             imageUrl:
                                 'https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1',
                             fit: BoxFit.cover,
-                            imageBuilder:
-                                (BuildContext context, ImageProvider<dynamic> imageProvider) {
+                            imageBuilder: (BuildContext context,
+                                ImageProvider<dynamic> imageProvider) {
                               return Image(
                                 image: imageProvider as ImageProvider<Object>,
                                 fit: BoxFit.cover,
@@ -102,8 +90,10 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                     ),
                     Text(
                       'John Deo',
-                      style:
-                          TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.01,
@@ -143,14 +133,14 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                 // fontFamily: 'Montserrat',
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
-                                letterSpacing: 0,
+                                letterSpacing: 1,
                               ),
                             ),
                           )
                         ],
                       ),
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                     Card(
                       shape: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -158,7 +148,9 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                       color: Colors.white,
                       child: Column(
                         children: [
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.04),
                           Container(
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
@@ -208,13 +200,18 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                             children: [
                               Container(
                                 padding: EdgeInsets.only(
-                                  right: MediaQuery.of(context).size.width * 0.01,
-                                  left: MediaQuery.of(context).size.width * 0.06,
-                                  top: MediaQuery.of(context).size.height * 0.02,
-                                  bottom: MediaQuery.of(context).size.height * 0.02,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.01,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.06,
+                                  top:
+                                      MediaQuery.of(context).size.height * 0.02,
+                                  bottom:
+                                      MediaQuery.of(context).size.height * 0.02,
                                 ),
                                 margin: EdgeInsets.only(
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                                 width: MediaQuery.of(context).size.width * 0.6,
                                 decoration: BoxDecoration(
@@ -232,10 +229,11 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "Session date \& time",
+                                          "Next session date \& time",
                                           style: TextStyle(
                                             color: Colors.white,
                                             // fontFamily: 'Montserrat',
@@ -248,19 +246,14 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                     ),
                                     SizedBox(height: 5),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
-                                        Container(
-                                          height: 18,
-                                          width: 18,
-                                          child: Image.asset('images/calendar1.png',
-                                              color: Colors.white),
-                                        ),
-                                        /*          Icon(
+                                        Icon(
                                           Icons.calendar_today_sharp,
                                           color: Colors.white,
                                           size: 18,
-                                        ),*/
+                                        ),
                                         SizedBox(width: 10),
                                         Center(
                                           child: Text(
@@ -281,7 +274,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          /*SizedBox(
                             height: MediaQuery.of(context).size.height * 0.04,
                           ),
                           Container(
@@ -292,15 +285,10 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Container(
-                                  height: 24,
-                                  width: 24,
-                                  child: Image.asset('images/treatment_prog.png'),
-                                ),
-                                /* Icon(
+                                Icon(
                                   Icons.assignment_ind_sharp,
                                   color: Colors.blue,
-                                ),*/
+                                ),
                                 SizedBox(
                                   width: 10,
                                 ),
@@ -320,7 +308,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.02,
                           ),
-                          /*Container(
+                          Container(
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.12,
                               right: MediaQuery.of(context).size.width * 0.07,
@@ -330,10 +318,12 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      height: 18,
-                                      width: 18,
-                                      child: Image.asset('images/calendar1.png'),),       SizedBox(width: 8),
+                                    Icon(
+                                      Icons.calendar_today_sharp,
+                                      color: Color(0xff0098db),
+                                      size: 18,
+                                    ),
+                                    SizedBox(width: 8),
                                     Center(
                                       child: Text(
                                         "05 Jan,2022 | 3:30 PM",
@@ -383,10 +373,11 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: [
-                                            Container(
-                                              height: 18,
-                                              width: 18,
-                                              child: Image.asset('images/comment.png',color:Colors.white),),       SizedBox(width: 8),
+                                            Icon(
+                                              Icons.chat,
+                                              color: Colors.white,
+                                              size: 18,
+                                            ),
                                             SizedBox(width: 8),
                                             Center(
                                               child: Text(
@@ -411,10 +402,9 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                           left: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.32,
+                                              0.28,
                                         ),
-                                        child:
-                                        Center(
+                                        child: Center(
                                           child: SizedBox(
                                             width: 25,
                                             height: 25,
@@ -438,10 +428,10 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                 ),
                               ],
                             ),
-                          ),
+                          ),*/
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.02,
-                          ),*/
+                          ),
                           Container(
                             padding: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.04,
@@ -481,8 +471,10 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                               ],
                             ),
                           ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                          /*Container(
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
+                          Container(
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
                               right: MediaQuery.of(context).size.width * 0.07,
@@ -497,11 +489,11 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                 Text('is the complete therapy'),
                               ],
                             ),
-                          ),*/
-                          /*     SizedBox(
+                          ),
+                          SizedBox(
                               height:
                                   MediaQuery.of(context).size.height * 0.02),
-                         Container(
+                          Container(
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
                               right: MediaQuery.of(context).size.width * 0.07,
@@ -509,10 +501,10 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.push(
+                               /* Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => AppointmentList()));
+                                        builder: (context) => AppointmentList()));*/
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -542,57 +534,23 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                               ),
                             ),
                           ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.06),*/
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.06),
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
-                          ),
-                          onPressed: null,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: IconButton(
-                        icon: Icon(
-                          CupertinoIcons.ellipsis,
-                          color: Colors.white,
-                        ),
-                        onPressed: null,
-                      ),
-                    ),
-                    //  Icon(Icons.)
-                  ],
-                ),
-              ),
-/*
               InkWell(
                 onTap: () {
                   Navigator.pop(context);
                 },
                 child: Container(
                   margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.03,
-                    top: MediaQuery.of(context).size.height * 0.05,
+                    left: MediaQuery.of(context).size.width * 0.08,
+                    top: MediaQuery.of(context).size.height * 0.02,
                   ),
                   child: Icon(
                     Icons.arrow_back,
@@ -604,17 +562,17 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
               InkWell(
                 onTap: () {
                   // Navigator.pop(context);
-*/ /*
+/*
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => AppointmentList()));
-*/ /*
+*/
                 },
                 child: Container(
                   margin: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width * 0.86,
-                    top: MediaQuery.of(context).size.height * 0.05,
+                    top: MediaQuery.of(context).size.height * 0.02,
                   ),
                   child: Icon(
                     Icons.menu,
@@ -622,7 +580,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                     color: Colors.white,
                   ),
                 ),
-              ),*/
+              ),
             ],
           ),
         ),

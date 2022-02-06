@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:untitled3/screens/availability_settings.dart';
 import 'package:untitled3/screens/help.dart';
-import 'package:untitled3/screens/home.dart';
-import 'package:untitled3/screens/ongoing_treatment.dart';
-import 'package:untitled3/screens/ongoing_treatment_list.dart';
 import 'package:untitled3/screens/profile.dart';
-import 'package:untitled3/screens/search.dart';
-import 'package:untitled3/screens/search1.dart';
-import 'package:untitled3/screens/testimonials_list.dart';
+import 'package:untitled3/screens/patient/search1.dart';
+import 'package:untitled3/screens/patient/treatment_list_new.dart';
+
+import 'doctor/home.dart';
 
 class OnBoard extends StatefulWidget {
-  final id;
+  final id,name;
 
-  const OnBoard({Key? key, this.id}) : super(key: key);
+  const OnBoard({Key? key, this.id,this.name}) : super(key: key);
 
   @override
   _OnBoardState createState() => _OnBoardState();
@@ -30,14 +27,9 @@ class _OnBoardState extends State<OnBoard> {
   @override
   Widget build(BuildContext context) {
     List _screens = [
-      //Home(id: widget.id),
-      //DoctorDetailScreen(),
-      SearchPage1(cId: widget.id),
-      //Text('search'),
+      Home(),
+      //SearchPage1(cId: widget.id,name:widget.name),
       TestimonialsList(cId: widget.id),
-      // OngoingTreatmentList(),
-      //AppointmentList(),
-      //AvailabilitySettings(),
       HelpScreen(),
       Profile(id: widget.id),
     ];

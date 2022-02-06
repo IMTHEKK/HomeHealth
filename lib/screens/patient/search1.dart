@@ -8,9 +8,9 @@ import 'package:untitled3/screens/doctor_detail.dart';
 import 'package:untitled3/screens/search.dart';
 
 class SearchPage1 extends StatefulWidget {
-  final cId;
+  final cId, name;
 
-  const SearchPage1({Key? key, this.cId}) : super(key: key);
+  const SearchPage1({Key? key, this.cId,this.name}) : super(key: key);
 
   @override
   State<SearchPage1> createState() => _SearchPage1State();
@@ -102,7 +102,7 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                             bottom: MediaQuery.of(context).size.height * 0.02,
                           ),
                           child: Text(
-                            'Good Morning, John Deo',
+                            'Good Morning, '+widget.name,
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.white,
@@ -222,7 +222,7 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage(name: widget.name,)));
                         },
                         child: Container(
                           padding: EdgeInsets.only(

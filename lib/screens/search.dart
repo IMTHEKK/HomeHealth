@@ -8,9 +8,9 @@ import 'package:untitled3/screens/availability_settings.dart';
 import 'package:untitled3/screens/doctor_detail.dart';
 
 class SearchPage extends StatefulWidget {
-  final cId;
+  final cId,name;
 
-  const SearchPage({Key? key, this.cId}) : super(key: key);
+  const SearchPage({Key? key, this.cId,this.name}) : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -114,7 +114,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                             bottom: MediaQuery.of(context).size.height * 0.02,
                           ),
                           child: Text(
-                            'Welcome, John Deo',
+                            'Welcome, '+widget.name,
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.white,

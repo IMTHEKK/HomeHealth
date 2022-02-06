@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled3/screens/login.dart';
-import 'package:untitled3/screens/signup.dart';
+import 'package:untitled3/screens/patient/signup.dart';
 import 'package:untitled3/screens/signup_therapist.dart';
 
 class Selection extends StatelessWidget {

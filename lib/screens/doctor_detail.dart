@@ -4,7 +4,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:untitled3/models/therapist_details.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
-import 'package:untitled3/screens/appointment_form.dart';
+import 'package:untitled3/screens/patient/appointment_form.dart';
+import 'package:untitled3/screens/patient/appointment_form1.dart';
 
 class DoctorDetailScreen extends StatefulWidget {
   final doctorId;
@@ -280,7 +281,8 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  AppointmentForm(dId: therapistDetails.data[0].doctorId, cId: widget.cId),
+                                 // AppointmentForm(dId: therapistDetails.data[0].doctorId, cId: widget.cId),
+                                  AppointmentForm1(dId: therapistDetails.data[0].doctorId, cId: widget.cId),
                             ),
                           );
                         },

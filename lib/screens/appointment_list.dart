@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled3/screens/appointment_details.dart';
+import 'package:untitled3/screens/patient/appointment_details.dart';
 import 'package:untitled3/screens/ongoing_treatment_list.dart';
 
 class AppointmentList extends StatefulWidget {
