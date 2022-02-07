@@ -4,15 +4,9 @@ class MyTherapiesModel {
   late List<MyTherapiesList> _data;
 
   MyTherapiesModel({required String status,required  int code, required List<MyTherapiesList> data}) {
-    if (status != null) {
-      this._status = status;
-    }
-    if (code != null) {
-      this._code = code;
-    }
-    if (data != null) {
-      this._data = data;
-    }
+    this._status = status;
+    this._code = code;
+    this._data = data;
   }
 
   String get status => _status;
@@ -33,7 +27,7 @@ class MyTherapiesModel {
     if (json['data'] != null) {
       _data = <MyTherapiesList>[];
       json['data'].forEach((v) {
-        _data!.add(new MyTherapiesList.fromJson(v));
+        _data.add(new MyTherapiesList.fromJson(v));
       });
     }
   }
@@ -43,7 +37,7 @@ class MyTherapiesModel {
     data['status'] = this._status;
     data['code'] = this._code;
     if (this._data != null) {
-      data['data'] = this._data!.map((v) => v.toJson()).toList();
+      data['data'] = this._data.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -168,14 +162,14 @@ class MyTherapiesList {
     _bookingId = json['booking_id'];
     _patientName = json['patient_name'];
     _therapy = json['therapy'];
-    _gender = json['gender'];
+    _gender = json['gender'].toString();
     _age = json['age'];
     _bookingTime = json['bookingTime'];
     _appointmentDate = json['appointment_date'];
     _appointmentTime = json['appointment_time'];
     _patientConcern = json['patient_concern'];
     _status = json['status'];
-    _doctorID = json['doctorID'];
+    _doctorID = json['doctorID'].toString();
     _customerID = json['customerID'].toString();
   }
 

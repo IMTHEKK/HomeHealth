@@ -108,7 +108,7 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MyTherapies(),
+                            builder: (context) => MyTherapies(id: widget.id,),
                           ),
                         );
                       },

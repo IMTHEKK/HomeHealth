@@ -5,7 +5,9 @@ import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 
 class MyTherapies extends StatefulWidget {
-  const MyTherapies({Key? key}) : super(key: key);
+  final id;
+
+  const MyTherapies({Key? key, this.id}) : super(key: key);
 
   @override
   _MyTherapiesState createState() => _MyTherapiesState();
@@ -86,7 +88,7 @@ class _MyTherapiesState extends State<MyTherapies> {
                   future: commonBloc.hitGetApi(
 
                       ///  'https://run.mocky.io/v3/eb5f43d1-0e08-48c1-be04-292dae6b8138'),
-                      ApiUrl.treatment_list + '?th_id=' + "2"), //widget.cId),
+                      ApiUrl.treatment_list + '?th_id=' + widget.id.toString()), //widget.cId),
                   builder: (context, AsyncSnapshot snap) {
                     if (snap.data == null) {
                       return Container(
