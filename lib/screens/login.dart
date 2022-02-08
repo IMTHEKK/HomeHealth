@@ -224,16 +224,16 @@ class _LoginState extends State<Login> {
                                         (route) => false,
                                       );
                                     } else if (res['user'] == 'Therapist') {
-                                      SavePreference.addStringToSF('id', res['doctorID'].toString());
-                                      SavePreference.addStringToSF('email', res['doctorEmail'].toString());
-                                      SavePreference.addStringToSF('name', res['doctorName'].toString());
+                                      SavePreference.addStringToSF('id', res['data'][0]["doctorID"].toString());
+                                      SavePreference.addStringToSF('email', res['data'][0]["doctorEmail"].toString());
+                                      SavePreference.addStringToSF('name', res['data'][0]["doctorName"].toString());
                                       SavePreference.addStringToSF('user_type', res['user'].toString());
                                       Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
                                           builder: (BuildContext context) => Home(
-                                            id: res['doctorID'].toString(),
-                                            name: res['doctorName'].toString(),
+                                            id: res['data'][0]["doctorID"].toString(),
+                                            name: res['data'][0]["doctorName"].toString(),
                                           ),
                                         ),
                                         (route) => false,

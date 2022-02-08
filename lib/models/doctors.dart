@@ -64,19 +64,19 @@ class Datum {
   String doctorDob;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        doctorId: json['doctorID'],
-        doctorName: json['doctorName'],
-        doctorType: json['doctorType'],
-        doctorAddress: json['doctorAddress'],
-        description: json['description'],
-        doctorExp: json['doctorExp'],
-        totalPatients: json['totalPatients'],
-        doctorPhoto: json['doctorPhoto'],
-        doctorRatings: json['doctorRatings'],
-        doctorEmail: json['doctorEmail'],
-        doctorPassword: json['doctorPassword'],
-        doctorPhone: json['doctorPhone'],
-        doctorDob: json['doctorDOB'],
+        doctorId: json['doctorID'].toString(),
+        doctorName: json['doctorName'].toString(),
+        doctorType: json['doctorType'].toString(),
+        doctorAddress: json['doctorAddress'].toString(),
+        description: json['description'].toString(),
+        doctorExp: json['doctorExp'].toString(),
+        totalPatients: json['totalPatients'].toString(),
+        doctorPhoto: json['doctorPhoto'].toString(),
+        doctorRatings: json['doctorRatings'].toString(),
+        doctorEmail: json['doctorEmail'].toString(),
+        doctorPassword: json['doctorPassword'].toString(),
+        doctorPhone: json['doctorPhone'].toString(),
+        doctorDob: json['doctorDOB'].toString(),
       );
 
   Map<String, dynamic> toJson() => {

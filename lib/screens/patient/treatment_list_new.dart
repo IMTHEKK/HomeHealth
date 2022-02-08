@@ -64,7 +64,104 @@ class _TreatmentListState extends State<TreatmentList> {
                       );
                     }
                   },
-                  child: treatmentList.data[index].status.toString() == '0'
+                  child: Container(
+                          margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.01,
+                            bottom: MediaQuery.of(context).size.height * 0.01,
+                            left: MediaQuery.of(context).size.width * 0.05,
+                            right: MediaQuery.of(context).size.width * 0.05,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
+                            ),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.02,
+                            bottom: MediaQuery.of(context).size.height * 0.02,
+                            left: MediaQuery.of(context).size.width * 0.05,
+                            right: MediaQuery.of(context).size.width * 0.05,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                treatmentList.data[index].firstName.toString() +
+                                    '\t' + //'John Deo',
+                                    treatmentList.data[index].lastName.toString(), //'John Deo',
+                                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                treatmentList.data[index].medications.toString(), //'Physiotherapist',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  /*
+                          Icon(Icons.add_location_outlined),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.03,
+                          ),*/
+                                  Expanded(
+                                    child: Text(
+                                      'bookingTime: ' + treatmentList.data[index].bookingTime.toString(),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                /*'Gender: ' +
+                              treatmentList.data[index]['gender'].toString() +
+                              '\t\t' +*/
+                                'DOB: ' + treatmentList.data[index].dob.toString(),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                'Appointment date: ' + treatmentList.data[index].appointmentDate.toString(),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                'Medical Conditions: ' + treatmentList.data[index].medicalConditions,
+                              ),
+                              /*Row(
+                        children: [
+                          RatingBarIndicator(
+                            //     rating: double.parse(treatmentList.data[index].doctorRatings),
+                            rating: 2.75,
+                            itemBuilder: (context, index) => Icon(
+                              Icons.star,
+                              color: Colors.blue,
+                            ),
+                            itemCount: 5,
+                            itemSize: 20.0,
+                            direction: Axis.horizontal,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(treatmentList.data[index].doctorRatings, ),
+                        ],
+                      ),*/
+                            ],
+                          ),
+                        ),
+                );
+              },
+            );
+          } else {
+            return Center(child: Text("No Treatments Available"));
+          }
+        } //do whatever you want
+      },
+    );
+  }
+}
+/*
+* treatmentList.data[index].status.toString() == '0'
                       ? FutureBuilder(
                           future: commonBloc.hitGetApi(ApiUrl.therapist_details +
                               '?th_id=' +
@@ -209,99 +306,5 @@ class _TreatmentListState extends State<TreatmentList> {
                             } //do whatever you want
                           },
                         )
-                      : Container(
-                          margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.01,
-                            bottom: MediaQuery.of(context).size.height * 0.01,
-                            left: MediaQuery.of(context).size.width * 0.05,
-                            right: MediaQuery.of(context).size.width * 0.05,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                            ),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.02,
-                            bottom: MediaQuery.of(context).size.height * 0.02,
-                            left: MediaQuery.of(context).size.width * 0.05,
-                            right: MediaQuery.of(context).size.width * 0.05,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                treatmentList.data[index].firstName.toString() +
-                                    '\t' + //'John Deo',
-                                    treatmentList.data[index].lastName.toString(), //'John Deo',
-                                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-                              ),
-                              SizedBox(height: 10),
-                              Text(
-                                treatmentList.data[index].medications.toString(), //'Physiotherapist',
-                                style: TextStyle(color: Colors.blue),
-                              ),
-                              SizedBox(height: 10),
-                              Row(
-                                children: [
-                                  /*
-                          Icon(Icons.add_location_outlined),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.03,
-                          ),*/
-                                  Expanded(
-                                    child: Text(
-                                      'bookingTime: ' + treatmentList.data[index].bookingTime.toString(),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(height: 10),
-                              Text(
-                                /*'Gender: ' +
-                              treatmentList.data[index]['gender'].toString() +
-                              '\t\t' +*/
-                                'DOB: ' + treatmentList.data[index].dob.toString(),
-                              ),
-                              SizedBox(height: 10),
-                              Text(
-                                'Appointment date: ' + treatmentList.data[index].appointmentDate.toString(),
-                              ),
-                              SizedBox(height: 10),
-                              Text(
-                                'Medical Conditions: ' + treatmentList.data[index].medicalConditions,
-                              ),
-                              /*Row(
-                        children: [
-                          RatingBarIndicator(
-                            //     rating: double.parse(treatmentList.data[index].doctorRatings),
-                            rating: 2.75,
-                            itemBuilder: (context, index) => Icon(
-                              Icons.star,
-                              color: Colors.blue,
-                            ),
-                            itemCount: 5,
-                            itemSize: 20.0,
-                            direction: Axis.horizontal,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(treatmentList.data[index].doctorRatings, ),
-                        ],
-                      ),*/
-                            ],
-                          ),
-                        ),
-                );
-              },
-            );
-          } else {
-            return Center(child: Text(snap.data['status']));
-          }
-        } //do whatever you want
-      },
-    );
-  }
-}
+                      :
+* */

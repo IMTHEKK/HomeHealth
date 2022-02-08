@@ -15,7 +15,8 @@ class DoctorDetailScreen extends StatefulWidget {
   final doctorId;
   final cId;
 
-  const DoctorDetailScreen({Key? key, this.doctorId, this.cId}) : super(key: key);
+  const DoctorDetailScreen({Key? key, this.doctorId, this.cId})
+      : super(key: key);
 
   @override
   _DoctorDetailScreenState createState() => _DoctorDetailScreenState();
@@ -27,7 +28,8 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
     return Scaffold(
       //backgroundColor: Colors.white70,
       body: FutureBuilder(
-        future: commonBloc.hitGetApi(ApiUrl.therapist_details + "?th_id=" + widget.doctorId),
+        future: commonBloc
+            .hitGetApi(ApiUrl.therapist_details + "?th_id=" + widget.doctorId),
         builder: (context, AsyncSnapshot snap) {
           if (snap.data == null) {
             return Container(
@@ -36,7 +38,8 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
               ),
             );
           } else {
-            TherapistDetails therapistDetails = TherapistDetails.fromJson(snap.data);
+            TherapistDetails therapistDetails =
+                TherapistDetails.fromJson(snap.data);
             return SingleChildScrollView(
               child: SafeArea(
                 top: false,
@@ -80,13 +83,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: IconButton(
-                                  icon: Icon(
-                                    CupertinoIcons.ellipsis,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed: null,
-                                ),
+                                child: Container(),
                               ),
                               //  Icon(Icons.)
                             ],
@@ -109,7 +106,8 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  therapistDetails.data[0].doctorName, //'Aaron J. Hogan',
+                                  therapistDetails.data[0].doctorName,
+                                  //'Aaron J. Hogan',
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -117,7 +115,8 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  therapistDetails.data[0].doctorType, //'Psychotherapist',
+                                  therapistDetails.data[0].doctorType,
+                                  //'Psychotherapist',
                                   style: TextStyle(
                                     color: Colors.blue,
                                   ),
@@ -130,7 +129,8 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => SeeAllReviews(dId: widget.doctorId),
+                                  builder: (context) =>
+                                      SeeAllReviews(dId: widget.doctorId),
                                 ),
                               );
                             },
@@ -141,7 +141,9 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                 children: [
                                   //Text('* * * * *'),
                                   RatingBarIndicator(
-                                    rating: double.parse(therapistDetails.data[0].doctorRatings.toString()),
+                                    rating: double.parse(therapistDetails
+                                        .data[0].doctorRatings
+                                        .toString()),
                                     itemBuilder: (context, index) => Icon(
                                       Icons.star,
                                       color: Colors.blue,
@@ -164,7 +166,8 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.015),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.015),
                     Container(
                       margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.07,
@@ -182,7 +185,8 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    therapistDetails.data[0].doctorAddress, /*'MA, New York'*/
+                                    therapistDetails.data[0]
+                                        .doctorAddress, /*'MA, New York'*/
                                   ),
                                 ),
                               ],
@@ -191,7 +195,8 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.015),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.015),
                     Container(
                       // height: MediaQuery.of(context).size.height * 0.6,
                       margin: EdgeInsets.only(
@@ -214,11 +219,13 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                 left: MediaQuery.of(context).size.width * 0.04,
                                 right: MediaQuery.of(context).size.width * 0.04,
                                 top: MediaQuery.of(context).size.height * 0.008,
-                                bottom: MediaQuery.of(context).size.height * 0.008,
+                                bottom:
+                                    MediaQuery.of(context).size.height * 0.008,
                               ),
                               child: Center(
                                 child: Text(
-                                  therapistDetails.data[0].doctorExp + ' years\nExperience',
+                                  therapistDetails.data[0].doctorExp +
+                                      ' years\nExperience',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,
@@ -227,7 +234,8 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: MediaQuery.of(context).size.width * 0.025),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.025),
                           Container(
                             width: MediaQuery.of(context).size.width * 0.25,
                             decoration: BoxDecoration(
@@ -239,11 +247,13 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                 left: MediaQuery.of(context).size.width * 0.04,
                                 right: MediaQuery.of(context).size.width * 0.04,
                                 top: MediaQuery.of(context).size.height * 0.008,
-                                bottom: MediaQuery.of(context).size.height * 0.008,
+                                bottom:
+                                    MediaQuery.of(context).size.height * 0.008,
                               ),
                               child: Center(
                                 child: Text(
-                                  therapistDetails.data[0].totalPatients + '\nPatients',
+                                  therapistDetails.data[0].totalPatients +
+                                      '\nPatients',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,
@@ -255,7 +265,8 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.025),
                     Padding(
                       padding: EdgeInsets.only(
                         top: MediaQuery.of(context).size.height * 0.01,
@@ -296,7 +307,9 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
                                   // AppointmentForm(dId: therapistDetails.data[0].doctorId, cId: widget.cId),
-                                  AppointmentForm1(dId: therapistDetails.data[0].doctorId, cId: widget.cId),
+                                  AppointmentForm1(
+                                      dId: therapistDetails.data[0].doctorId,
+                                      cId: widget.cId),
                             ),
                           );
                         },
@@ -306,7 +319,10 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               gradient: LinearGradient(
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
-                                  colors: <Color>[Color(0xff8db8e1), Color(0xff1a9cdb)])),
+                                  colors: <Color>[
+                                    Color(0xff8db8e1),
+                                    Color(0xff1a9cdb)
+                                  ])),
                           /*decoration: BoxDecoration(
                         color: Colors.blue,
                         border: Border.all(
@@ -335,7 +351,9 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                       ),
                     ),
                     FutureBuilder(
-                      future: commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?doctor_id=' + widget.doctorId),
+                      future: commonBloc.hitGetApi(ApiUrl.get_testimonial_list +
+                          '?doctor_id=' +
+                          widget.doctorId),
                       builder: (context, AsyncSnapshot snap) {
                         if (snap.data == null) {
                           return Center(
@@ -343,15 +361,18 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                           );
                         } else {
                           if (snap.data['code'] == 200) {
-                            Testimonials testimonialsList = testimonialsFromJson(json.encode(snap.data));
+                            Testimonials testimonialsList =
+                                testimonialsFromJson(json.encode(snap.data));
                             return ListView.builder(
                               shrinkWrap: true,
                               itemCount: testimonialsList.data.length,
                               itemBuilder: (context, index) {
                                 return FutureBuilder(
-                                  future: commonBloc.hitGetApi(ApiUrl.view_profile +
+                                  future: commonBloc.hitGetApi(ApiUrl
+                                          .view_profile +
                                       '?cs_id=' +
-                                      testimonialsList.data[index].customerId.toString()),
+                                      testimonialsList.data[index].customerId
+                                          .toString()),
                                   builder: (context, AsyncSnapshot sn) {
                                     if (sn.data == null) {
                                       return Center(
@@ -359,26 +380,58 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                       );
                                     } else {
                                       if (snap.data['code'] == 200) {
-                                        Customer customer = customerFromJson(json.encode(sn.data));
+                                        Customer customer = customerFromJson(
+                                            json.encode(sn.data));
                                         return Container(
                                           margin: EdgeInsets.only(
-                                            top: MediaQuery.of(context).size.height * 0.01,
-                                            bottom: MediaQuery.of(context).size.height * 0.01,
-                                            left: MediaQuery.of(context).size.width * 0.05,
-                                            right: MediaQuery.of(context).size.width * 0.05,
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.01,
+                                            bottom: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.01,
+                                            left: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.05,
+                                            right: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.05,
                                           ),
                                           padding: EdgeInsets.only(
-                                            top: MediaQuery.of(context).size.height * 0.02,
-                                            bottom: MediaQuery.of(context).size.height * 0.02,
-                                            left: MediaQuery.of(context).size.width * 0.05,
-                                            right: MediaQuery.of(context).size.width * 0.05,
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.02,
+                                            bottom: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.02,
+                                            left: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.05,
+                                            right: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.05,
                                           ),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
                                             children: [
                                               Container(
-                                                  width: MediaQuery.of(context).size.width * 0.22,
-                                                  height: MediaQuery.of(context).size.width * 0.22,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.22,
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.22,
                                                   decoration: new BoxDecoration(
                                                       border: Border.all(
                                                         color: Colors.blue,
@@ -389,15 +442,21 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                                           image: new NetworkImage(
                                                             //  "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1"
                                                             'http://iconhomehealth.ca/assets/images/' +
-                                                                customer.data[0].customerPhoto,
+                                                                customer.data[0]
+                                                                    .customerPhoto,
                                                           )))),
                                               Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   RatingBarIndicator(
-                                                    rating:
-                                                        double.parse(testimonialsList.data[0].ratings.toString()),
-                                                    itemBuilder: (context, index) => Icon(
+                                                    rating: double.parse(
+                                                        testimonialsList
+                                                            .data[0].ratings
+                                                            .toString()),
+                                                    itemBuilder:
+                                                        (context, index) =>
+                                                            Icon(
                                                       Icons.star,
                                                       color: Colors.blue,
                                                     ),
@@ -407,20 +466,32 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                                   ),
                                                   SizedBox(height: 10),
                                                   Text(
-                                                    testimonialsList.data[0].comments, //'Dr. David Gilmour',
+                                                    testimonialsList
+                                                        .data[0].comments,
+                                                    //'Dr. David Gilmour',
                                                     style: TextStyle(
-                                                        color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 16),
+                                                        color: Colors.blue,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 16),
                                                   ),
                                                   SizedBox(height: 10),
                                                   SizedBox(
-                                                    width: MediaQuery.of(context).size.width * 0.4,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.4,
                                                     child: Row(
                                                       children: [
                                                         Expanded(
                                                           child: Text(
-                                                            'Reviewed by: ' + customer.data[0].customerName,
+                                                            'Reviewed by: ' +
+                                                                customer.data[0]
+                                                                    .customerName,
                                                             style: TextStyle(
-                                                              color: Colors.grey,
+                                                              color:
+                                                                  Colors.grey,
                                                             ),
                                                           ),
                                                         ),
@@ -429,7 +500,8 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                                   ),
                                                   SizedBox(height: 10),
                                                   Text(
-                                                    testimonialsList.data[0].createdAt,
+                                                    testimonialsList
+                                                        .data[0].createdAt,
                                                     style: TextStyle(
                                                       color: Colors.grey,
                                                     ),
@@ -449,7 +521,14 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               },
                             );
                           } else {
-                            return Text('error');
+                            return Container(
+                              margin: EdgeInsets.only(
+                                bottom: MediaQuery.of(context).size.height * 0.03,
+                              ),
+                              child: Text(
+                                snap.data['validation-errors'],
+                              ),
+                            );
                           }
                         } //do whatever you want
                       },

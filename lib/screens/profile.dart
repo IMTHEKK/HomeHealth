@@ -64,33 +64,10 @@ class _ProfileState extends State<Profile> {
                               margin: EdgeInsets.only(
                                 top: MediaQuery.of(context).size.height * 0.03,
                               ),
-                              child: Row(
+                              child: Stack(
                                 children: [
-                                  InkWell(
-                                    onTap: () {
-                                      //                                Navigator.pop(context);
-                                    },
+                                  Center(
                                     child: Container(
-                                      margin: EdgeInsets.only(
-                                        left:
-                                            MediaQuery.of(context).size.width *
-                                                0.05,
-                                      ),
-                                      child: Icon(
-                                        Icons.arrow_back,
-                                        size: 32,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.only(
-                                          left: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.28),
-                                      // alignment: Alignment.center,
                                       child: Text(
                                         'Profile',
                                         style: TextStyle(
@@ -646,7 +623,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  void goToEdditProfile(customer) async{
+  void goToEdditProfile(customer) async {
     var result = await Navigator.push(
       context,
       MaterialPageRoute(
@@ -655,11 +632,9 @@ class _ProfileState extends State<Profile> {
         ),
       ),
     );
-    if(result=="true"){
+    if (result == "true") {
       //Utils.showToast(context, "claal");
-      setState(() {
-        
-      });
+      setState(() {});
     }
   }
 }

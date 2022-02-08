@@ -84,15 +84,15 @@ class _OnBoardState extends State<OnBoard> {
               ),
               BottomNavigationBarItem(
                 label: "",
-                activeIcon: Image.asset(
-                  'images/chat.png',
-                  height: 24,
-                  width: 24,
+                activeIcon: Icon(
+                  Icons.help_outline,
+                  size: 24,
+                  color: Colors.white,
                 ),
-                icon: Image.asset(
-                  'images/chat.png',
-                  height: 24,
-                  width: 24,
+                icon: Icon(
+                  Icons.help_outline,
+                  size: 24,
+                  color: Colors.white,
                 ),
               ),
               BottomNavigationBarItem(

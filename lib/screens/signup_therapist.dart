@@ -28,8 +28,6 @@ class _SignUpTherapistState extends State<SignUpTherapist> {
   DateTime _selectedDate = DateTime.now();
   String? dob;
 
-  bool? showValue = false;
-
   bool isValid() {
     if (fullNameController.text.toString().isEmpty) {
       Utils.showToast(context, "Please enter your full name");
@@ -374,26 +372,6 @@ class _SignUpTherapistState extends State<SignUpTherapist> {
                                 margin: EdgeInsets.only(
                                   left: MediaQuery.of(context).size.width * 0.07,
                                   right: MediaQuery.of(context).size.width * 0.07,
-                                ),
-                              ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.04,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Checkbox(
-                                      value: showValue,
-                                      onChanged: (bool? value) {
-                                        setState(() {
-                                          showValue = value;
-                                        });
-                                      },
-                                    ),
-                                    Text('Are you a therapist ?'),
-                                  ],
                                 ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.01),

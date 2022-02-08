@@ -55,7 +55,7 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                           margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               InkWell(
                                 onTap: () {
@@ -63,13 +63,7 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.arrow_back,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: null,
-                                  ),
+                                  child: Container(),
                                 ),
                               ),
                               Center(
@@ -83,13 +77,7 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.menu,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed: null,
-                                ),
+                                child: Container(),
                               ),
                               //  Icon(Icons.)
                             ],
@@ -102,7 +90,7 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                             bottom: MediaQuery.of(context).size.height * 0.02,
                           ),
                           child: Text(
-                            'Good Morning, '+widget.name,
+                            'Hello, '+widget.name,
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.white,
