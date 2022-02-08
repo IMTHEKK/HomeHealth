@@ -10,6 +10,34 @@ class MySchedules extends StatefulWidget {
 }
 
 class _MySchedulesState extends State<MySchedules> {
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
+      .toggledOff; // Can be toggled on/off by longpressing a date
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+  DateTime? _rangeStart;
+  DateTime? _rangeEnd;
+  bool isVisible = false;
+
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    if (!isSameDay(_selectedDay, selectedDay)) {
+      setState(() {
+        _focusedDay = focusedDay;
+        _selectedDay = selectedDay;
+      });
+    }
+  }
+
+  void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
+    setState(() {
+      _selectedDay = null;
+      _focusedDay = focusedDay;
+      _rangeStart = start;
+      _rangeEnd = end;
+      _rangeSelectionMode = RangeSelectionMode.toggledOn;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,12 +132,14 @@ class _MySchedulesState extends State<MySchedules> {
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Select Date and Time',
+                                  Text(
+                                    'Select Date and Time',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                    ),),
+                                    ),
+                                  ),
                                   Container(
                                     height: 24,
                                     width: 24,
@@ -139,9 +169,32 @@ class _MySchedulesState extends State<MySchedules> {
                               ),
                             ),
                             TableCalendar(
-                              firstDay: DateTime.utc(2010, 10, 16),
+                              firstDay: DateTime.now(),
                               lastDay: DateTime.utc(2030, 3, 14),
-                              focusedDay: DateTime.now(),
+                              focusedDay: _focusedDay,
+                              selectedDayPredicate: (day) =>
+                                  isSameDay(_selectedDay, day),
+                              rangeStartDay: _rangeStart,
+                              rangeEndDay: _rangeEnd,
+                              calendarFormat: _calendarFormat,
+                              rangeSelectionMode: _rangeSelectionMode,
+                              startingDayOfWeek: StartingDayOfWeek.monday,
+                              calendarStyle: CalendarStyle(
+                                // Use `CalendarStyle` to customize the UI
+                                outsideDaysVisible: false,
+                              ),
+                              onDaySelected: _onDaySelected,
+                              onRangeSelected: _onRangeSelected,
+                              onFormatChanged: (format) {
+                                if (_calendarFormat != format) {
+                                  setState(() {
+                                    _calendarFormat = format;
+                                  });
+                                }
+                              },
+                              onPageChanged: (focusedDay) {
+                                _focusedDay = focusedDay;
+                              },
                             ),
                           ],
                         ),
@@ -170,12 +223,15 @@ class _MySchedulesState extends State<MySchedules> {
                             child: Column(
                               children: [
                                 Container(
-                                  padding:EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width*0.3,
-                                    right: MediaQuery.of(context).size.width*0.05,
+                                  padding: EdgeInsets.only(
+                                    left:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    right: MediaQuery.of(context).size.width *
+                                        0.05,
                                   ),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Column(
                                         children: [
@@ -197,8 +253,8 @@ class _MySchedulesState extends State<MySchedules> {
                                         ],
                                       ),
                                       Container(
-                                        height:24 ,
-                                        width:24 ,
+                                        height: 24,
+                                        width: 24,
                                         child: SvgPicture.asset(
                                           'images/add_time_slot.svg',
                                           color: Colors.blue,
@@ -210,20 +266,21 @@ class _MySchedulesState extends State<MySchedules> {
                                 ),
                                 SizedBox(
                                   height:
-                                  MediaQuery.of(context).size.height * 0.02,
+                                      MediaQuery.of(context).size.height * 0.02,
                                 ),
                                 Container(
                                   height:
-                                  MediaQuery.of(context).size.height * 0.05,
+                                      MediaQuery.of(context).size.height * 0.05,
                                   child: Row(
                                     //  scrollDirection: Axis.horizontal,
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Container(
                                         margin: EdgeInsets.only(
                                           left: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.01,
                                         ),
                                         decoration: BoxDecoration(
@@ -232,25 +289,25 @@ class _MySchedulesState extends State<MySchedules> {
                                             color: Colors.blue,
                                           ),
                                           borderRadius:
-                                          BorderRadius.circular(8.0),
+                                              BorderRadius.circular(8.0),
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.only(
                                             left: MediaQuery.of(context)
-                                                .size
-                                                .width *
+                                                    .size
+                                                    .width *
                                                 0.02,
                                             right: MediaQuery.of(context)
-                                                .size
-                                                .width *
+                                                    .size
+                                                    .width *
                                                 0.02,
                                             top: MediaQuery.of(context)
-                                                .size
-                                                .height *
+                                                    .size
+                                                    .height *
                                                 0.008,
                                             bottom: MediaQuery.of(context)
-                                                .size
-                                                .height *
+                                                    .size
+                                                    .height *
                                                 0.008,
                                           ),
                                           child: Center(
@@ -268,8 +325,8 @@ class _MySchedulesState extends State<MySchedules> {
                                       Container(
                                         margin: EdgeInsets.only(
                                           left: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.01,
                                         ),
                                         decoration: BoxDecoration(
@@ -278,25 +335,25 @@ class _MySchedulesState extends State<MySchedules> {
                                             color: Colors.blue,
                                           ),
                                           borderRadius:
-                                          BorderRadius.circular(8.0),
+                                              BorderRadius.circular(8.0),
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.only(
                                             left: MediaQuery.of(context)
-                                                .size
-                                                .width *
+                                                    .size
+                                                    .width *
                                                 0.02,
                                             right: MediaQuery.of(context)
-                                                .size
-                                                .width *
+                                                    .size
+                                                    .width *
                                                 0.02,
                                             top: MediaQuery.of(context)
-                                                .size
-                                                .height *
+                                                    .size
+                                                    .height *
                                                 0.008,
                                             bottom: MediaQuery.of(context)
-                                                .size
-                                                .height *
+                                                    .size
+                                                    .height *
                                                 0.008,
                                           ),
                                           child: Center(
@@ -314,8 +371,8 @@ class _MySchedulesState extends State<MySchedules> {
                                       Container(
                                         margin: EdgeInsets.only(
                                           left: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.01,
                                         ),
                                         decoration: BoxDecoration(
@@ -324,25 +381,25 @@ class _MySchedulesState extends State<MySchedules> {
                                             color: Colors.blue,
                                           ),
                                           borderRadius:
-                                          BorderRadius.circular(8.0),
+                                              BorderRadius.circular(8.0),
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.only(
                                             left: MediaQuery.of(context)
-                                                .size
-                                                .width *
+                                                    .size
+                                                    .width *
                                                 0.02,
                                             right: MediaQuery.of(context)
-                                                .size
-                                                .width *
+                                                    .size
+                                                    .width *
                                                 0.02,
                                             top: MediaQuery.of(context)
-                                                .size
-                                                .height *
+                                                    .size
+                                                    .height *
                                                 0.008,
                                             bottom: MediaQuery.of(context)
-                                                .size
-                                                .height *
+                                                    .size
+                                                    .height *
                                                 0.008,
                                           ),
                                           child: Center(
@@ -362,7 +419,7 @@ class _MySchedulesState extends State<MySchedules> {
                                 ),
                                 SizedBox(
                                   height:
-                                  MediaQuery.of(context).size.height * 0.03,
+                                      MediaQuery.of(context).size.height * 0.03,
                                 ),
                                 Container(
                                   padding: EdgeInsets.all(
@@ -370,9 +427,9 @@ class _MySchedulesState extends State<MySchedules> {
                                   ),
                                   margin: EdgeInsets.only(
                                     left:
-                                    MediaQuery.of(context).size.width * 0.2,
+                                        MediaQuery.of(context).size.width * 0.2,
                                     right:
-                                    MediaQuery.of(context).size.width * 0.2,
+                                        MediaQuery.of(context).size.width * 0.2,
                                   ),
                                   decoration: BoxDecoration(
                                     color: Color(0xff0098db),

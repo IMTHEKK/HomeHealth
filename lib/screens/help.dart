@@ -57,15 +57,6 @@ class _HelpScreenState extends State<HelpScreen> {
                                       0.06),
                               child: Stack(
                                 children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        left: MediaQuery.of(context).size.width *
-                                            0.06),
-                                    child: Icon(
-                                      Icons.arrow_back,
-                                      color: Colors.white,
-                                    ),
-                                  ),
                                   Center(
                                     child: Container(
                                       child: Text(

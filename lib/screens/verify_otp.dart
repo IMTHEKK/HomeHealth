@@ -82,7 +82,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
                         children: [
                           SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                           Text(
-                            'Verify OTP Screen',
+                            'Verify OTP',
                             style: TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
@@ -291,7 +291,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                         children: [
                           SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                           Text(
-                            'Reset Password Screen',
+                            'Reset Password',
                             style: TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,

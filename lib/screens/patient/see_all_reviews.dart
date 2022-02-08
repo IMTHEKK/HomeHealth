@@ -87,7 +87,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Comment Screen',
+                                  'Comment',
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.blue,

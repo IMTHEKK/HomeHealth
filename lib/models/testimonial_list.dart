@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-Testimonials testimonialsFromJson(String str) => Testimonials.fromJson(json.decode(str));
+Testimonials testimonialsFromJson(String str) =>
+    Testimonials.fromJson(json.decode(str));
 
 String testimonialsToJson(Testimonials data) => json.encode(data.toJson());
 
@@ -40,6 +41,7 @@ class Datum {
   Datum({
     required this.id,
     required this.customerId,
+    required this.name,
     required this.doctorId,
     required this.appointmentId,
     required this.ratings,
@@ -52,6 +54,7 @@ class Datum {
 
   String id;
   String customerId;
+  String name;
   String doctorId;
   String appointmentId;
   String ratings;
@@ -62,28 +65,30 @@ class Datum {
   String deletedAt;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        id: json['id'] ?? '',
-        customerId: json['customer_id'] ?? '',
-        doctorId: json['doctor_id'] ?? '',
-        appointmentId: json['appointment_id'] ?? '',
+        id: json['ID'] ?? '',
+        customerId: json['customerID'] ?? '',
+        name: json['name'] ?? '',
+        doctorId: json['doctorID'] ?? '',
+        appointmentId: json['appointmentID'] ?? '',
         ratings: json['ratings'] ?? '',
         comments: json['comments'] ?? '',
         status: json['status'] ?? '',
-        createdAt: json['created_at'] ?? '',
-        updatedAt: json['updated_at'] == null ? '' : json['updated_at'],
-        deletedAt: json['deleted_at'] == null ? '' : json['deleted_at'],
+        createdAt: json['createdAt'] ?? '',
+        updatedAt: json['updatedAt'] == null ? '' : json['updatedAt'],
+        deletedAt: json['deletedAt'] == null ? '' : json['deletedAt'],
       );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'customer_id': customerId,
+        'ID': id,
+        'customerID': customerId,
+        'name': name,
         'doctor_id': doctorId,
         'appointment_id': appointmentId,
         'ratings': ratings,
         'comments': comments,
         'status': status,
-        'created_at': createdAt,
-        'updated_at': updatedAt,
-        'deleted_at': deletedAt,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
+        'deletedAt': deletedAt,
       };
 }
