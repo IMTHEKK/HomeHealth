@@ -184,7 +184,7 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                                   ),
                                 ),
                                 Text(
-                                  "Psychotherapist", //Components
+                                  "Physiotherapy", //Components
                                 ),
                               ],
                             ),
@@ -359,7 +359,7 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                     shrinkWrap: true,
                     itemCount: therapistList1.data.length,
                     itemBuilder: (context, index) {
-                      if (therapistList1.data[index].doctorType == "Psychotherapist")
+                      if (therapistList1.data[index].doctorType == "Physiotherapy")
                         return InkWell(
                           onTap: () {
                             Navigator.push(

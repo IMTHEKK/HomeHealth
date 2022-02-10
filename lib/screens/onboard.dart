@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:untitled3/screens/help.dart';
+import 'package:untitled3/screens/appointment_list.dart';
+import 'package:untitled3/screens/patient/help.dart';
 import 'package:untitled3/screens/patient/search1.dart';
 import 'package:untitled3/screens/patient/treatment_list_new.dart';
-import 'package:untitled3/screens/profile.dart';
+import 'package:untitled3/screens/patient/profile.dart';
 
 class OnBoard extends StatefulWidget {
   final id, name;
@@ -27,11 +28,13 @@ class _OnBoardState extends State<OnBoard> {
     List _screens = [
       //Home(),
       SearchPage1(cId: widget.id, name: widget.name),
+      //AppointmentList(),
       TreatmentList(cId: widget.id),
       HelpScreen(),
       Profile(id: widget.id),
     ];
     return Scaffold(
+      backgroundColor: _currentIndex == 3 ? Color(0xff92AFd9) : Colors.white,
       body: _screens[_currentIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
@@ -84,14 +87,16 @@ class _OnBoardState extends State<OnBoard> {
               ),
               BottomNavigationBarItem(
                 label: "",
-                activeIcon: Icon(
-                  Icons.help_outline,
-                  size: 24,
+                activeIcon: Image.asset(
+                  'images/support.png',
+                  height: 24,
+                  width: 24,
                   color: Colors.white,
                 ),
-                icon: Icon(
-                  Icons.help_outline,
-                  size: 24,
+                icon: Image.asset(
+                  'images/support.png',
+                  height: 24,
+                  width: 24,
                   color: Colors.white,
                 ),
               ),

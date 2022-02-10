@@ -350,7 +350,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                         ),
                       ),
                     ),
-                    FutureBuilder(
+                   /* FutureBuilder(
                       future: commonBloc.hitGetApi(ApiUrl.get_testimonial_list +
                           '?doctor_id=' +
                           widget.doctorId),
@@ -532,7 +532,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                           }
                         } //do whatever you want
                       },
-                    ),
+                    ),*/
                   ],
                 ),
                 //),

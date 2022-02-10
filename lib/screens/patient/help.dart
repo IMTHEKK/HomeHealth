@@ -32,8 +32,7 @@ class _HelpScreenState extends State<HelpScreen> {
                     height: MediaQuery.of(context).size.height * 0.30,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(
-                            'images/welcome_background.png'),
+                        image: AssetImage('images/welcome_background.png'),
                         fit: BoxFit.fill,
                       ),
                       borderRadius: BorderRadius.only(
@@ -52,9 +51,7 @@ class _HelpScreenState extends State<HelpScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(
-                                  top: MediaQuery.of(context).size.height *
-                                      0.06),
+                              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.06),
                               child: Stack(
                                 children: [
                                   Center(
@@ -73,25 +70,25 @@ class _HelpScreenState extends State<HelpScreen> {
                                 ],
                               ),
                             ),
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.13),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.13),
                             Card(
-                              margin: EdgeInsets.all(
-                                  MediaQuery.of(context).size.width * 0.05),
+                              margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
                               elevation: 20,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Container(
-                                margin: EdgeInsets.all(10),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.05,
+                                  right: MediaQuery.of(context).size.width * 0.05,
+                                  top: MediaQuery.of(context).size.height * 0.008,
+                                  bottom: MediaQuery.of(context).size.height * 0.008,
+                                ),
                                 color: Colors.white,
                                 child: Column(
                                   children: [
                                     SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.02,
+                                      height: MediaQuery.of(context).size.height * 0.02,
                                     ),
                                     Row(
                                       children: [
@@ -99,15 +96,11 @@ class _HelpScreenState extends State<HelpScreen> {
                                           Icons.call,
                                           color: Colors.blue,
                                         ),
-                                        Text("   " +
-                                            helpModel.data.support
-                                                .contactNumber /*01 2435796283'*/),
+                                        Text("   " + helpModel.data.support.contactNumber /*01 2435796283'*/),
                                       ],
                                     ),
                                     SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.02,
+                                      height: MediaQuery.of(context).size.height * 0.02,
                                     ),
                                     Row(children: [
                                       Icon(
@@ -115,15 +108,11 @@ class _HelpScreenState extends State<HelpScreen> {
                                         color: Colors.blue,
                                       ),
                                       Text(
-                                        "   " +
-                                            helpModel.data.support
-                                                .email, //' support@homeiconhealth.ca',
+                                        "   " + helpModel.data.support.email, //' support@homeiconhealth.ca',
                                       ),
                                     ]),
                                     SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.02,
+                                      height: MediaQuery.of(context).size.height * 0.02,
                                     ),
                                     Row(
                                       children: [
@@ -136,9 +125,7 @@ class _HelpScreenState extends State<HelpScreen> {
                                             children: [
                                               Container(
                                                   child: Text(
-                                                "   " +
-                                                    helpModel
-                                                        .data.support.address,
+                                                "   " + helpModel.data.support.address,
                                                 //'ABC Society, XYZ Apartment, India, 251436 IN',
                                                 textAlign: TextAlign.right,
                                               )),
@@ -148,9 +135,7 @@ class _HelpScreenState extends State<HelpScreen> {
                                       ],
                                     ),
                                     SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.02,
+                                      height: MediaQuery.of(context).size.height * 0.02,
                                     ),
                                   ],
                                 ),
@@ -160,8 +145,7 @@ class _HelpScreenState extends State<HelpScreen> {
                         ),
                       ),
                       Card(
-                        margin: EdgeInsets.all(
-                            MediaQuery.of(context).size.width * 0.05),
+                        margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
                         elevation: 20,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -178,53 +162,54 @@ class _HelpScreenState extends State<HelpScreen> {
                               child: Text(
                                 'FAQ\'s',
                                 style: TextStyle(
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.blue,
-                                  fontSize: 20,
                                 ),
                               ),
                             ),
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width *
-                                        0.01,
-                                    right: MediaQuery.of(context).size.width *
-                                        0.01,
-                                    top: MediaQuery.of(context).size.height *
-                                        0.007,
-                                    bottom: MediaQuery.of(context).size.height *
-                                        0.007,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: Color(0xffd1d1d1)),
-                                    borderRadius: BorderRadius.circular(15.0),
-                                  ),
-                                  child: ExpansionTile(
-                                    iconColor: Colors.blue,
-                                    collapsedIconColor: Colors.blue,
-                                    title: Text(
-                                      helpModel.data.faq[index].question,
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black),
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.03,
+                                right: MediaQuery.of(context).size.width * 0.03,
+                                // top: MediaQuery.of(context).size.height * 0.007,
+                                bottom: MediaQuery.of(context).size.height * 0.007,
+                              ),
+                              child: ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Container(
+                                    margin: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width * 0.01,
+                                      right: MediaQuery.of(context).size.width * 0.01,
+                                      top: MediaQuery.of(context).size.height * 0.007,
+                                      bottom: MediaQuery.of(context).size.height * 0.007,
                                     ),
-                                    children: <Widget>[
-                                      ListTile(
-                                        title: Text(
-                                          helpModel.data.faq[index].answer,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
-                              itemCount: helpModel.data.faq.length,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Color(0xffd1d1d1)),
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    child: ExpansionTile(
+                                      iconColor: Colors.blue,
+                                      collapsedIconColor: Colors.blue,
+                                      title: Text(
+                                        helpModel.data.faq[index].question,
+                                        style:
+                                            TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500, color: Colors.black),
+                                      ),
+                                      children: <Widget>[
+                                        ListTile(
+                                            title: Text(helpModel.data.faq[index].answer,
+                                                style: TextStyle(
+                                                  fontSize: 14.0,
+                                                )))
+                                      ],
+                                    ),
+                                  );
+                                },
+                                itemCount: helpModel.data.faq.length,
+                              ),
                             ),
                           ],
                         ),

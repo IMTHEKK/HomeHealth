@@ -87,7 +87,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Comment',
+                                  'Customers Reviews',
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.blue,
@@ -102,7 +102,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                     ),
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.08,
+                    height: MediaQuery.of(context).size.height * 0.06,
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: Color(0XFFF4F4F5)),
                     margin: EdgeInsets.only(
                       left: MediaQuery.of(context).size.width * 0.05,
@@ -118,7 +118,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                       tabs: [
                         Tab(
                           child: Container(
-                            margin: EdgeInsets.all(0),
+                            margin: EdgeInsets.all(8),
                             child: Center(
                               child: Text(
                                 "Newest First", //Components
@@ -128,9 +128,11 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                         ),
                         Tab(
                           child: Container(
-                            child: Text(
-                              "Negative Ratings First",
-                              textAlign: TextAlign.center,
+                            child: Center(
+                              child: Text(
+                                "Negative First",
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
                         ),
@@ -138,7 +140,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                           child: Container(
                             child: Center(
                               child: Text(
-                                "Positive Rating First",
+                                "Positive First",
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -172,9 +174,8 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                       itemCount: testimonials.data.length,
                       itemBuilder: (context, index) {
                         return FutureBuilder(
-                          future: commonBloc.hitGetApi(ApiUrl.view_profile +
-                              '?cs_id=' +
-                              testimonials.data[index].customerId.toString()),
+                          future: commonBloc.hitGetApi(
+                              ApiUrl.view_profile + '?cs_id=' + testimonials.data[index].customerId.toString()),
                           builder: (context, AsyncSnapshot sn) {
                             if (sn.data == null) {
                               return Center(
@@ -218,8 +219,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           RatingBarIndicator(
-                                            rating:
-                                            double.parse(testimonials.data[0].ratings.toString()),
+                                            rating: double.parse(testimonials.data[0].ratings.toString()),
                                             itemBuilder: (context, index) => Icon(
                                               Icons.star,
                                               color: Colors.blue,
@@ -270,7 +270,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                           },
                         );
 
-                          InkWell(
+                        InkWell(
                           onTap: () {},
                           child: Container(
                             decoration: BoxDecoration(
@@ -322,9 +322,8 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                       itemCount: testimonials.data.length,
                       itemBuilder: (context, index) {
                         return FutureBuilder(
-                          future: commonBloc.hitGetApi(ApiUrl.view_profile +
-                              '?cs_id=' +
-                              testimonials.data[index].customerId.toString()),
+                          future: commonBloc.hitGetApi(
+                              ApiUrl.view_profile + '?cs_id=' + testimonials.data[index].customerId.toString()),
                           builder: (context, AsyncSnapshot sn) {
                             if (sn.data == null) {
                               return Center(
@@ -368,8 +367,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           RatingBarIndicator(
-                                            rating:
-                                            double.parse(testimonials.data[0].ratings.toString()),
+                                            rating: double.parse(testimonials.data[0].ratings.toString()),
                                             itemBuilder: (context, index) => Icon(
                                               Icons.star,
                                               color: Colors.blue,
@@ -472,9 +470,8 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                       itemCount: testimonials.data.length,
                       itemBuilder: (context, index) {
                         return FutureBuilder(
-                          future: commonBloc.hitGetApi(ApiUrl.view_profile +
-                              '?cs_id=' +
-                              testimonials.data[index].customerId.toString()),
+                          future: commonBloc.hitGetApi(
+                              ApiUrl.view_profile + '?cs_id=' + testimonials.data[index].customerId.toString()),
                           builder: (context, AsyncSnapshot sn) {
                             if (sn.data == null) {
                               return Center(
@@ -518,8 +515,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           RatingBarIndicator(
-                                            rating:
-                                            double.parse(testimonials.data[0].ratings.toString()),
+                                            rating: double.parse(testimonials.data[0].ratings.toString()),
                                             itemBuilder: (context, index) => Icon(
                                               Icons.star,
                                               color: Colors.blue,

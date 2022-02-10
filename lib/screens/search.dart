@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:untitled3/models/therapist_list.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
@@ -8,9 +7,9 @@ import 'package:untitled3/screens/availability_settings.dart';
 import 'package:untitled3/screens/doctor_detail.dart';
 
 class SearchPage extends StatefulWidget {
-  final cId,name;
+  final cId, name;
 
-  const SearchPage({Key? key, this.cId,this.name}) : super(key: key);
+  const SearchPage({Key? key, this.cId, this.name}) : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -93,7 +92,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                   ),
                                 ),
                               ),
-                              Padding(
+                              /*Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: IconButton(
                                   icon: Icon(
@@ -102,8 +101,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                   ),
                                   onPressed: null,
                                 ),
-                              ),
-                              //  Icon(Icons.)
+                              ),*/
                             ],
                           ),
                         ),
@@ -114,7 +112,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                             bottom: MediaQuery.of(context).size.height * 0.02,
                           ),
                           child: Text(
-                            'Welcome, '+widget.name,
+                            'Hello, ' + widget.name,
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.white,
@@ -147,8 +145,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50), color: Color(0XFFF4F4F5)),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: Color(0XFFF4F4F5)),
                     margin: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.02,
                       left: MediaQuery.of(context).size.width * 0.05,
@@ -160,8 +157,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                       controller: _tabController,
                       unselectedLabelColor: Colors.grey,
                       indicatorSize: TabBarIndicatorSize.label,
-                      indicator: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50), color: Colors.blue),
+                      indicator: BoxDecoration(borderRadius: BorderRadius.circular(50), color: Colors.blue),
                       tabs: [
                         Tab(
                           child: Container(
@@ -226,14 +222,15 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                     itemCount: therapistList.data.length,
                     itemBuilder: (context, index) {
                       return InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DoctorDetailScreen(
-                                    doctorId: therapistList.data[index].doctorId,
-                                cId: widget.cId,) //OnGoingTreatment(),
-                            ),
+                                      doctorId: therapistList.data[index].doctorId,
+                                      cId: widget.cId,
+                                    ) //OnGoingTreatment(),
+                                ),
                           );
                         },
                         child: Container(
@@ -279,10 +276,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                   children: [
                                     Text(
                                       therapistList.data[index].doctorName, //'Dr. David Gilmour',
-                                      style: TextStyle(
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
+                                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 16),
                                     ),
                                     SizedBox(height: 10),
                                     Text(
@@ -327,9 +321,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                     InkWell(
                                       onTap: () {
                                         Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => AvailabilitySettings()));
+                                            context, MaterialPageRoute(builder: (context) => AvailabilitySettings()));
                                       },
                                       child: Container(
                                         width: MediaQuery.of(context).size.width * 0.4,
@@ -388,13 +380,13 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                     itemCount: therapistList.data.length,
                     itemBuilder: (context, index) {
                       return InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DoctorDetailScreen(
                                     doctorId: therapistList.data[index].doctorId) //OnGoingTreatment(),
-                            ),
+                                ),
                           );
                         },
                         child: Container(
@@ -440,10 +432,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                   children: [
                                     Text(
                                       therapistList.data[index].doctorName, //'Dr. David Gilmour',
-                                      style: TextStyle(
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
+                                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 16),
                                     ),
                                     SizedBox(height: 10),
                                     Text(
@@ -488,9 +477,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                     InkWell(
                                       onTap: () {
                                         Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => AvailabilitySettings()));
+                                            context, MaterialPageRoute(builder: (context) => AvailabilitySettings()));
                                       },
                                       child: Container(
                                         width: MediaQuery.of(context).size.width * 0.4,
@@ -549,13 +536,13 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                     itemCount: therapistList.data.length,
                     itemBuilder: (context, index) {
                       return InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DoctorDetailScreen(
                                     doctorId: therapistList.data[index].doctorId) //OnGoingTreatment(),
-                            ),
+                                ),
                           );
                         },
                         child: Container(
@@ -601,10 +588,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                   children: [
                                     Text(
                                       therapistList.data[index].doctorName, //'Dr. David Gilmour',
-                                      style: TextStyle(
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
+                                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 16),
                                     ),
                                     SizedBox(height: 10),
                                     Text(
@@ -649,9 +633,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                     InkWell(
                                       onTap: () {
                                         Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => AvailabilitySettings()));
+                                            context, MaterialPageRoute(builder: (context) => AvailabilitySettings()));
                                       },
                                       child: Container(
                                         width: MediaQuery.of(context).size.width * 0.4,

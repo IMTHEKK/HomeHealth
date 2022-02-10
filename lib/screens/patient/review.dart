@@ -77,7 +77,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                               child: Container(
                                 margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.15),
                                 child: Text(
-                                  'Review Screen',
+                                  'Review',
                                   style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 22),
                                 ),
                               ),

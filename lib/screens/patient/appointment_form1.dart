@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/utilities/utils.dart';
@@ -33,8 +35,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
   var aTimeController = TextEditingController();
 
   bool isVisible = false;
-  int? _gender = 0;
-  int? _appointmentDate = 0;
+  int? aDate = 0;
 
   bool isValid() {
     if (firstNameController.text.toString().isEmpty) {
@@ -61,10 +62,12 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
     } else if (medicalConditionsController.text.toString().isEmpty) {
       Utils.showToast(context, "Please enter medical Conditions");
       return false;
-    } /*else if (patientConcernController.text.toString().isEmpty) {
+    }
+    /*else if (patientConcernController.text.toString().isEmpty) {
       Utils.showToast(context, "Please enter patient Concern");
       return false;
-    }*/ else if (injuredAreaController.text.toString().isEmpty) {
+    }*/
+    else if (injuredAreaController.text.toString().isEmpty) {
       Utils.showToast(context, "Please enter injured Area");
       return false;
     } else if (xrayController.text.toString().isEmpty) {
@@ -92,6 +95,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
     return true;
   }
 
+/*
   DateTime selectedDate = DateTime.now();
 
   _selectDate(BuildContext context) async {
@@ -104,6 +108,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
             selectedDate.year.toString() + '-' + selectedDate.month.toString() + '-' + selectedDate.day.toString();
       });
   }
+*/
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +233,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                 ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                              Container(
+                              /*Container(
                                 decoration: BoxDecoration(
                                   // color: Colors.blue,
                                   border: Border.all(
@@ -246,6 +251,48 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                         fillColor: Colors.white70),
                                   ),
                                   //  trailing: Icon(Icons.person),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),*/
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: InkWell(
+                                  onTap: () {
+                                    showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1865),
+                                      lastDate: DateTime.now(),
+                                    ).then((pickedDate1) {
+                                      if (pickedDate1 == null) {
+                                        return;
+                                      }
+                                      setState(() {
+                                        dobController.text = DateFormat('yyyy-MM-dd').format(pickedDate1);
+                                      });
+                                    });
+                                  },
+                                  child: ListTile(
+                                    title: /*TextField(
+                                      controller: aDateController,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintText: "Appointment Date",
+                                          fillColor: Colors.white70),
+                                    ),*/
+                                        Text(dobController.text.toString().isEmpty
+                                            ? "Date of Birth"
+                                            : dobController.text.toString()),
+                                  ),
                                 ),
                                 margin: EdgeInsets.only(
                                   left: MediaQuery.of(context).size.width * 0.07,
@@ -288,6 +335,10 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   child: ListTile(
                                     title: TextField(
                                       controller: phoneController,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                      ],
+                                      keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintStyle: TextStyle(color: Colors.grey[800]),
@@ -521,6 +572,10 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   child: ListTile(
                                     title: TextField(
                                       controller: emergencyPhoneController,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                      ],
+                                      keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintStyle: TextStyle(color: Colors.grey[800]),
@@ -551,23 +606,33 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
                                 child: InkWell(
+                                  onTap: () {
+                                    showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime.now(),
+                                      lastDate: DateTime(2024),
+                                    ).then((pickedDate) {
+                                      if (pickedDate == null) {
+                                        return;
+                                      }
+                                      setState(() {
+                                        aDateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                      });
+                                    });
+                                  },
                                   child: ListTile(
-                                    title: TextField(
+                                    title: /*TextField(
                                       controller: aDateController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           hintStyle: TextStyle(color: Colors.grey[800]),
                                           hintText: "Appointment Date",
                                           fillColor: Colors.white70),
-                                    ),
-                                    /*trailing: Container(
-                                      height: 24,
-                                      width: 24,
-                                      child: Image.asset(
-                                        'images/calendar.png',
-                                        color: Colors.grey,
-                                      ),
-                                    ),*/ //Icon(Icons.admin_panel_settings),
+                                    ),*/
+                                        Text(aDateController.text.toString().isEmpty
+                                            ? "Appointment Date"
+                                            : aDateController.text.toString()),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
@@ -576,6 +641,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                 ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+/*
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -593,20 +659,86 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                           hintText: "Appointment Time",
                                           fillColor: Colors.white70),
                                     ),
-                                    /*trailing: Container(
+                                    */
+/*trailing: Container(
                                       height: 24,
                                       width: 24,
                                       child: Image.asset(
                                         'images/calendar.png',
                                         color: Colors.grey,
                                       ),
-                                    ),*/ //Icon(Icons.admin_panel_settings),
+                                    ),*/ /*
+ //Icon(Icons.admin_panel_settings),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
                                   left: MediaQuery.of(context).size.width * 0.07,
                                   right: MediaQuery.of(context).size.width * 0.07,
                                 ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+*/
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    //width: MediaQuery.of(context).size.width * 0.7,
+                                    decoration: BoxDecoration(
+                                      // color: Colors.blue,
+                                      border: Border.all(
+                                        color: Colors.black12,
+                                      ),
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                    margin: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width * 0.07,
+                                      right: MediaQuery.of(context).size.width * 0.07,
+                                    ),
+                                    padding: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width * 0.04,
+                                      right: MediaQuery.of(context).size.width * 0.07,
+                                      top: MediaQuery.of(context).size.height * 0.01,
+                                      bottom: MediaQuery.of(context).size.height * 0.01,
+                                    ),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton(
+                                        value: aDate,
+                                        items: [
+                                          DropdownMenuItem(
+                                            child: Text("Appointment Time"),
+                                            value: 0,
+                                          ),
+                                          DropdownMenuItem(
+                                            child: Text("09:00-12:00"),
+                                            value: 1,
+                                          ),
+                                          DropdownMenuItem(
+                                            child: Text("12:00-15:00"),
+                                            value: 2,
+                                          ),
+                                          DropdownMenuItem(
+                                            child: Text("15:00-18:00"),
+                                            value: 3,
+                                          ),
+                                          DropdownMenuItem(
+                                            child: Text("18:00-21:00"),
+                                            value: 4,
+                                          )
+                                        ],
+                                        onChanged: (int? value) {
+                                          setState(() {
+                                            aDate = value;
+                                            if (value == 0) aTimeController.text = "";
+                                            if (value == 1) aTimeController.text = "09:00-12:00";
+                                            if (value == 2) aTimeController.text = "12:00-15:00";
+                                            if (value == 3) aTimeController.text = "15:00-18:00";
+                                            if (value == 4) aTimeController.text = "18:00-21:00";
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                               Container(

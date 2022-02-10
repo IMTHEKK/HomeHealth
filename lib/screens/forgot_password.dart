@@ -78,7 +78,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         children: [
                           SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                           Text(
-                            'Forgot Password Screen',
+                            'Forgot Password',
                             style: TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,

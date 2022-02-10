@@ -159,15 +159,15 @@ class MyTherapiesList {
   set customerID(String customerID) => _customerID = customerID;
 
   MyTherapiesList.fromJson(Map<String, dynamic> json) {
-    _bookingId = json['booking_id'];
-    _patientName = json['patient_name'];
-    _therapy = json['therapy'];
+    _bookingId = json['booking_id']??'';
+    _patientName = json['patient_name']??'';
+    _therapy = json['therapy']??'';
     _gender = json['gender'].toString();
-    _age = json['age'];
-    _bookingTime = json['bookingTime'];
-    _appointmentDate = json['appointment_date'];
-    _appointmentTime = json['appointment_time'];
-    _patientConcern = json['patient_concern'];
+    _age = json['age']??'';
+    _bookingTime = json['bookingTime']??'';
+    _appointmentDate = json['appointment_date']??'';
+    _appointmentTime = json['appointment_time']??'';
+    _patientConcern = json['patient_concern']??'';
     _status = json['status'];
     _doctorID = json['doctorID'].toString();
     _customerID = json['customerID'].toString();

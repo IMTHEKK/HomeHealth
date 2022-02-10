@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled3/network/api_blocs.dart';
@@ -27,6 +28,8 @@ class _SignUpTherapistState extends State<SignUpTherapist> {
   DateTime currentDate = DateTime.now();
   DateTime _selectedDate = DateTime.now();
   String? dob;
+
+  int? dType = 0;
 
   bool isValid() {
     if (fullNameController.text.toString().isEmpty) {
@@ -233,6 +236,10 @@ class _SignUpTherapistState extends State<SignUpTherapist> {
                                 child: ListTile(
                                   title: TextField(
                                     controller: phoneController,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                    ],
+                                    keyboardType: TextInputType.number,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
@@ -463,7 +470,49 @@ class _SignUpTherapistState extends State<SignUpTherapist> {
                                 ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                              Container(
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.7,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black12),
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.07),
+                                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.04),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton(
+                                        value: dType,
+                                        items: [
+                                          DropdownMenuItem(
+                                            child: Text("Doctor Type"),
+                                            value: 0,
+                                          ),
+                                          DropdownMenuItem(
+                                            child: Text("Massage Therapy"),
+                                            value: 1,
+                                          ),
+                                          DropdownMenuItem(
+                                            child: Text("Physiotherapy"),
+                                            value: 2,
+                                          ),
+                                        ],
+                                        onChanged: (int? value) {
+                                          setState(() {
+                                            dType = value;
+                                            if (value == 0) docTypeController.text = "";
+                                            if (value == 1) docTypeController.text = "Massage Therapy";
+                                            if (value == 2) docTypeController.text = "Physiotherapy";
+                                          });
+                                        },
+
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              /*Container(
                                 decoration: BoxDecoration(
                                   // color: Colors.blue,
                                   border: Border.all(
@@ -480,17 +529,17 @@ class _SignUpTherapistState extends State<SignUpTherapist> {
                                         hintText: "Doctor Type",
                                         fillColor: Colors.white70),
                                   ),
-                                  /* trailing: Container(
+                                  */ /* trailing: Container(
                                         height: 24,
                                         width: 24,
                                         child: Image.asset('images/confirm_pwd.png'),
-                                      ),*/
+                                      ),*/ /*
                                 ),
                                 margin: EdgeInsets.only(
                                   left: MediaQuery.of(context).size.width * 0.07,
                                   right: MediaQuery.of(context).size.width * 0.07,
                                 ),
-                              ),
+                              ),*/
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                               Container(
                                 margin: EdgeInsets.only(

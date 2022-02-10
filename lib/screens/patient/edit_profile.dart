@@ -231,7 +231,7 @@ class _EditProfileState extends State<EditProfile> {
                       children: [
                         Container(
                           margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.025,
+                            top: MediaQuery.of(context).size.height * 0.06,
                           ),
                           child: Row(
                             children: [
@@ -271,7 +271,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                         Container(
                           margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.145,
+                            top: MediaQuery.of(context).size.height * 0.115,
                             left: MediaQuery.of(context).size.width * 0.04,
                             right: MediaQuery.of(context).size.width * 0.04,
                             bottom: MediaQuery.of(context).size.width * 0.07,
@@ -364,9 +364,11 @@ class _EditProfileState extends State<EditProfile> {
                                           ),
                                           Container(
                                               margin: EdgeInsets.only(left: 32),
-                                              child: TextField(
+                                              child: /*TextField(
                                                 controller: emailController,
-                                              )),
+                                              )*/
+                                          Text(emailController.text.toString(),),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -406,9 +408,11 @@ class _EditProfileState extends State<EditProfile> {
                                           ),
                                           Container(
                                               margin: EdgeInsets.only(left: 32),
-                                              child: TextField(
+                                              child: /*TextField(
                                                 controller: phoneController,
-                                              )),
+                                              )*/
+                                          Text(phoneController.text.toString()),
+                                          ),
                                         ],
                                       ),
                                     ),

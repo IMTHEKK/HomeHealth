@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled3/network/api_blocs.dart';
@@ -217,6 +218,10 @@ class _SignUpState extends State<SignUp> {
                                 child: ListTile(
                                   title: TextField(
                                     controller: phoneController,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                    ],
+                                    keyboardType: TextInputType.number,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),

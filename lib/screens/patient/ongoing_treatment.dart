@@ -1,9 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled3/models/treatment_list.dart';
+import 'package:intl/intl.dart';
+import 'package:untitled3/models/treatment_details.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
+import 'package:untitled3/screens/patient/review.dart';
 
 class OnGoingTreatment extends StatefulWidget {
   final apId;
@@ -31,7 +34,8 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                 ),
               );
             } else {
-              TreatmentList treatmentList = TreatmentList.fromJson(snap.data);
+              // TreatmentList treatmentList = TreatmentList.fromJson(snap.data);
+              TreatmentDetails treatmentList = treatmentDetailsFromJson(json.encode(snap.data));
               return SingleChildScrollView(
                 child: Stack(
                   children: [
@@ -79,6 +83,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                       ),
                       child: Column(
                         children: [
+/*
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -108,22 +113,15 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                       )),
                             ),
                           ),
+*/
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.01,
                           ),
                           Text(
-                            treatmentList.data[0]['patient_name'].toString(), //'John Deo',
+                            treatmentList.data[0].firstName.toString() +
+                                '\t' + //'John Deo',
+                                treatmentList.data[0].lastName.toString(), //'John Deo',
                             style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.01,
-                          ),
-                          Text(
-                            treatmentList.data[0]['therapy'].toString(), // 'Massage Therapy',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.white,
-                            ),
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.01,
@@ -133,13 +131,13 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                         left: MediaQuery.of(context).size.width * 0.155,
                         right: MediaQuery.of(context).size.width * 0.155,
                       ),*/
-                            decoration: BoxDecoration(
+                            /*decoration: BoxDecoration(
                               color: Color(0xff59bbeb), //Color(0xff0098db),
                               border: Border.all(
                                 color: Colors.transparent,
                               ),
                               borderRadius: BorderRadius.circular(25.0),
-                            ),
+                            ),*/
                             height: MediaQuery.of(context).size.height * 0.04,
                             width: MediaQuery.of(context).size.width * 0.44,
                             child: Row(
@@ -147,10 +145,12 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                               children: <Widget>[
                                 Center(
                                   child: Text(
-                                    "Age: " +
-                                        treatmentList.data[0]['age'].toString() +
+                                    "DOB: " +
+                                        treatmentList.data[0].dob
+                                            .toString() /*+
                                         " | Gender: " +
-                                        treatmentList.data[0]['gender'].toString(),
+                                        treatmentList.data[0].['gender'].toString()*/
+                                    ,
                                     style: TextStyle(
                                       color: Colors.white,
                                       // fontFamily: 'Montserrat',
@@ -164,12 +164,44 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                             ),
                           ),
                           SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                          Text(
+                            treatmentList.data[0].email.toString(), // 'Massage Therapy',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01,
+                          ),
+                          Text(
+                            treatmentList.data[0].phone.toString(), // 'Massage Therapy',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01,
+                          ),
+                          Text(
+                            treatmentList.data[0].address.toString(), // 'Massage Therapy',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01,
+                          ),
                           Card(
                             shape: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
                                 borderSide: BorderSide(color: Colors.transparent)),
                             color: Colors.white,
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                                 Container(
@@ -180,7 +212,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        'Concern for therapy:',
+                                        'Medical Conditions', //'Concern for therapy:',
                                         style: TextStyle(
                                           // fontSize: 18,
                                           color: Colors.black,
@@ -202,7 +234,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          treatmentList.data[0]['patient_concern'].toString(),
+                                          treatmentList.data[0].medicalConditions.toString(),
                                           //'CLord Ipsum quisque facilisis risus eu orci tempor semper. Vestibulum aliquam purus nec arcu venenatis lobortis. Aliquam et egestas erat. Nullam sed magna urna. Fusce rutrum, arcu eu dignissim malesuada, massa elit malesuada ex, ac dictum sapien ipsum at dolor. Curabitur finibus dui quis metus facilisis, a tincidunt ipsum maximus. Praesent sed justo orci. Quisque cursus dignissim rutrum.',
                                           style: TextStyle(
                                             // fontSize: 18,
@@ -215,7 +247,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: MediaQuery.of(context).size.height * 0.05,
+                                  height: MediaQuery.of(context).size.height * 0.03,
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -223,7 +255,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                     Container(
                                       padding: EdgeInsets.only(
                                         right: MediaQuery.of(context).size.width * 0.01,
-                                        left: MediaQuery.of(context).size.width * 0.06,
+                                        left: MediaQuery.of(context).size.width * 0.04,
                                         top: MediaQuery.of(context).size.height * 0.02,
                                         bottom: MediaQuery.of(context).size.height * 0.02,
                                       ),
@@ -277,9 +309,11 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                               SizedBox(width: 10),
                                               Center(
                                                 child: Text(
-                                                  treatmentList.data[0]['appointment_date'].toString() +
+                                                  DateFormat('yyyy-MM-dd')
+                                                          .format(treatmentList.data[0].appointmentDate)
+                                                          .toString() +
                                                       '\t\t' +
-                                                      snap.data['timeschedule'].toString(),
+                                                      treatmentList.data[0].appointmentTime.toString(),
 
 //                                                  "05 Jan,2022 | 3:30 PM",
                                                   style: TextStyle(
@@ -301,7 +335,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                 SizedBox(
                                   height: MediaQuery.of(context).size.height * 0.04,
                                 ),
-                                Container(
+                                /*  Container(
                                   margin: EdgeInsets.only(
                                     left: MediaQuery.of(context).size.width * 0.07,
                                     right: MediaQuery.of(context).size.width * 0.07,
@@ -314,10 +348,10 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                         width: 24,
                                         child: Image.asset('images/treatment_prog.png'),
                                       ),
-                                      /* Icon(
+                                      */ /* Icon(
                                   Icons.assignment_ind_sharp,
                                   color: Colors.blue,
-                                ),*/
+                                ),*/ /*
                                       SizedBox(
                                         width: 10,
                                       ),
@@ -336,7 +370,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                 ),
                                 SizedBox(
                                   height: MediaQuery.of(context).size.height * 0.02,
-                                ),
+                                ),*/
                                 /*Container(
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.12,
@@ -458,7 +492,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.02,
-                          ),*/
+                          ),
                                 Container(
                                   padding: EdgeInsets.only(
                                     left: MediaQuery.of(context).size.width * 0.04,
@@ -499,7 +533,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                                   ),
                                 ),
                                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                                /*Container(
+                            */ /*Container(
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.07,
                               right: MediaQuery.of(context).size.width * 0.07,
@@ -560,6 +594,331 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                             ),
                           ),
                           SizedBox(height: MediaQuery.of(context).size.height * 0.06),*/
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.07,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Injured Area', //'Concern for therapy:',
+                                        style: TextStyle(
+                                          // fontSize: 18,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.01,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.07,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          treatmentList.data[0].injuredArea.toString(),
+                                          //'CLord Ipsum quisque facilisis risus eu orci tempor semper. Vestibulum aliquam purus nec arcu venenatis lobortis. Aliquam et egestas erat. Nullam sed magna urna. Fusce rutrum, arcu eu dignissim malesuada, massa elit malesuada ex, ac dictum sapien ipsum at dolor. Curabitur finibus dui quis metus facilisis, a tincidunt ipsum maximus. Praesent sed justo orci. Quisque cursus dignissim rutrum.',
+                                          style: TextStyle(
+                                            // fontSize: 18,
+                                            color: Colors.grey,
+                                            // fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.03,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.07,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Medications', //'Concern for therapy:',
+                                        style: TextStyle(
+                                          // fontSize: 18,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.01,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.07,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          treatmentList.data[0].medications.toString(),
+                                          //'CLord Ipsum quisque facilisis risus eu orci tempor semper. Vestibulum aliquam purus nec arcu venenatis lobortis. Aliquam et egestas erat. Nullam sed magna urna. Fusce rutrum, arcu eu dignissim malesuada, massa elit malesuada ex, ac dictum sapien ipsum at dolor. Curabitur finibus dui quis metus facilisis, a tincidunt ipsum maximus. Praesent sed justo orci. Quisque cursus dignissim rutrum.',
+                                          style: TextStyle(
+                                            // fontSize: 18,
+                                            color: Colors.grey,
+                                            // fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.03,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.07,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'XRAY / MRI / UltraSound', //'Concern for therapy:',
+                                        style: TextStyle(
+                                          // fontSize: 18,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.01,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.07,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          treatmentList.data[0].xray.toString(),
+                                          //'CLord Ipsum quisque facilisis risus eu orci tempor semper. Vestibulum aliquam purus nec arcu venenatis lobortis. Aliquam et egestas erat. Nullam sed magna urna. Fusce rutrum, arcu eu dignissim malesuada, massa elit malesuada ex, ac dictum sapien ipsum at dolor. Curabitur finibus dui quis metus facilisis, a tincidunt ipsum maximus. Praesent sed justo orci. Quisque cursus dignissim rutrum.',
+                                          style: TextStyle(
+                                            // fontSize: 18,
+                                            color: Colors.grey,
+                                            // fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.03,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.07,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Family Doctor', //'Concern for therapy:',
+                                        style: TextStyle(
+                                          // fontSize: 18,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.01,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.07,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          treatmentList.data[0].familyDoctor.toString(),
+                                          //'CLord Ipsum quisque facilisis risus eu orci tempor semper. Vestibulum aliquam purus nec arcu venenatis lobortis. Aliquam et egestas erat. Nullam sed magna urna. Fusce rutrum, arcu eu dignissim malesuada, massa elit malesuada ex, ac dictum sapien ipsum at dolor. Curabitur finibus dui quis metus facilisis, a tincidunt ipsum maximus. Praesent sed justo orci. Quisque cursus dignissim rutrum.',
+                                          style: TextStyle(
+                                            // fontSize: 18,
+                                            color: Colors.grey,
+                                            // fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.05,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.07,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Emergency Contact Details', //'Concern for therapy:',
+                                        style: TextStyle(
+                                          // fontSize: 18,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.07,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Text('Name: ' + treatmentList.data[0].emergencyContactName),
+                                ),
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.07,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Text('Contact Number: ' + treatmentList.data[0].emergencyContactNumber),
+                                ),
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.07,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Text('Relationship: ' + treatmentList.data[0].emergencyContactRelation),
+                                ),
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                                if( treatmentList.data[0].status=='0')
+                                  Container(
+                                      margin: EdgeInsets.only(
+                                        left: MediaQuery.of(context).size.width * 0.07,
+                                        right: MediaQuery.of(context).size.width * 0.07,
+                                      ),
+                                      child: Text(
+                                    'Treatment Status: Requesting for Appointment',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),),
+                                if( treatmentList.data[0].status=='0')
+                                  SizedBox(height: 10),
+                                if( treatmentList.data[0].status=='2')
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width * 0.07,
+                                      right: MediaQuery.of(context).size.width * 0.07,
+                                    ),
+                                    child:Text(
+                                    'Treatment Status: Request Cancelled',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),),
+                                if( treatmentList.data[0].status=='2')
+                                  SizedBox(height: 10),
+                                if( treatmentList.data[0].status=='1')
+                                  Container(
+                                      margin: EdgeInsets.only(
+                                        left: MediaQuery.of(context).size.width * 0.07,
+                                        right: MediaQuery.of(context).size.width * 0.07,
+                                      ),
+                                      child: Text(
+                                    'Treatment Status: Appointment Request Acccepted',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),),
+                                if( treatmentList.data[0].status=='1')
+                                  SizedBox(height: 10),
+                                if( treatmentList.data[0].status=='3')
+                                  Container(
+                                      margin: EdgeInsets.only(
+                                        left: MediaQuery.of(context).size.width * 0.07,
+                                        right: MediaQuery.of(context).size.width * 0.07,
+                                      ),
+                                      child:Text(
+                                    'Treatment Status: Completed',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),),
+                                if( treatmentList.data[0].status=='3')
+                                  SizedBox(height: 10),
+                                //if( treatmentList.data[0].status=='3')
+                                if( treatmentList.data[0].status=='3')
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ReviewScreen(
+                                                dId: treatmentList.data[0].doctorId,
+                                                cId: treatmentList.data[0].customerId,
+                                                aId: treatmentList.data[0].bookingId,
+                                              )));
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                        left: MediaQuery.of(context).size.width * 0.07,
+                                        right: MediaQuery.of(context).size.width * 0.07,
+                                      ),
+                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.blue,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8.0),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          left: MediaQuery.of(context).size.width * 0.04,
+                                          right: MediaQuery.of(context).size.width * 0.04,
+                                          top: MediaQuery.of(context).size.height * 0.008,
+                                          bottom: MediaQuery.of(context).size.height * 0.008,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'Leave a Review',
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                if( treatmentList.data[0].status=='3')
+                                  SizedBox(height: 20),
                               ],
                             ),
                           ),
@@ -587,7 +946,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                               ),
                             ),
                           ),
-                          Padding(
+                          /*Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: IconButton(
                               icon: Icon(
@@ -596,7 +955,7 @@ class _OnGoingTreatmentState extends State<OnGoingTreatment> {
                               ),
                               onPressed: null,
                             ),
-                          ),
+                          ),*/
                           //  Icon(Icons.)
                         ],
                       ),
