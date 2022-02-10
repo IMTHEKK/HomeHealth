@@ -227,7 +227,7 @@ class _EditProfileState extends State<EditProfile> {
                       children: [
                         Container(
                           margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.025,
+                            top: MediaQuery.of(context).size.height * 0.06,
                           ),
                           child: Row(
                             children: [
@@ -467,7 +467,7 @@ class _EditProfileState extends State<EditProfile> {
                                                     color: Colors.white,
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w600,
-                                                    letterSpacing: 1,
+                                                    letterSpacing: 0,
                                                   ),
                                                 ),
                                               )

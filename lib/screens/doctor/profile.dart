@@ -60,7 +60,7 @@ class _ProfileState extends State<Profile> {
                           children: [
                             Container(
                               margin: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.height * 0.03,
+                                top: MediaQuery.of(context).size.height * 0.06,
                               ),
                               child: Row(
                                 children: [
