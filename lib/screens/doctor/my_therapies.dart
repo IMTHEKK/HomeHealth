@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:untitled3/models/my_therapies_model.dart';
-import 'package:untitled3/models/treatment_list.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 
@@ -33,8 +32,7 @@ class _MyTherapiesState extends State<MyTherapies> {
                   ),
                 ),
                 child: Container(
-                  margin: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.03),
+                  margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -67,10 +65,7 @@ class _MyTherapiesState extends State<MyTherapies> {
                               // alignment: Alignment.center,
                               child: Text(
                                 'My Therapies',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22),
+                                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 22),
                               ),
                             ),
                           ),
@@ -100,8 +95,7 @@ class _MyTherapiesState extends State<MyTherapies> {
                       );
                     } else {
                       if (snap.data['code'] == 200) {
-                        MyTherapiesModel treatmentList =
-                            MyTherapiesModel.fromJson(snap.data);
+                        MyTherapiesModel treatmentList = MyTherapiesModel.fromJson(snap.data);
                         return ListView.builder(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
@@ -117,15 +111,13 @@ class _MyTherapiesState extends State<MyTherapies> {
                               ),
                               margin: EdgeInsets.only(
                                 top: MediaQuery.of(context).size.height * 0.01,
-                                bottom:
-                                    MediaQuery.of(context).size.height * 0.01,
+                                bottom: MediaQuery.of(context).size.height * 0.01,
                                 left: MediaQuery.of(context).size.width * 0.05,
                                 right: MediaQuery.of(context).size.width * 0.05,
                               ),
                               padding: EdgeInsets.only(
                                 top: MediaQuery.of(context).size.height * 0.02,
-                                bottom:
-                                    MediaQuery.of(context).size.height * 0.02,
+                                bottom: MediaQuery.of(context).size.height * 0.02,
                                 //left: MediaQuery.of(context).size.width * 0.05,
                                 right: MediaQuery.of(context).size.width * 0.05,
                               ),
@@ -138,25 +130,15 @@ class _MyTherapiesState extends State<MyTherapies> {
                                   children: [
                                     Column(
                                       //mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Center(
                                           child: Container(
                                               margin: EdgeInsets.only(
-                                                left: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.05,
+                                                left: MediaQuery.of(context).size.width * 0.05,
                                               ),
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.20,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.20,
+                                              width: MediaQuery.of(context).size.width * 0.20,
+                                              height: MediaQuery.of(context).size.width * 0.20,
                                               decoration: new BoxDecoration(
                                                   border: Border.all(
                                                     color: Colors.white,
@@ -168,28 +150,19 @@ class _MyTherapiesState extends State<MyTherapies> {
                                                           "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1")))),
                                         ),
                                         SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.01,
+                                          height: MediaQuery.of(context).size.height * 0.01,
                                         ),
                                         Row(
                                           children: [
                                             Container(
                                               margin: EdgeInsets.only(
-                                                  bottom: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.01,
-                                                  left: 5),
+                                                  bottom: MediaQuery.of(context).size.height * 0.01, left: 5),
                                               color: Colors.grey,
                                               child: Text(
                                                 " Age: " +
-                                                    treatmentList
-                                                        .data[position].age +
+                                                    treatmentList.data[position].age +
                                                     " " +
-                                                    treatmentList.data[position]
-                                                        .gender[0] +
+                                                    treatmentList.data[position].gender[0] +
                                                     " ",
                                                 style: TextStyle(
                                                   color: Colors.white,
@@ -201,20 +174,15 @@ class _MyTherapiesState extends State<MyTherapies> {
                                       ],
                                     ),
                                     SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.07,
+                                      width: MediaQuery.of(context).size.width * 0.07,
                                     ),
                                     Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          treatmentList
-                                              .data[position].patientName,
-                                          style: TextStyle(
-                                              color: Colors.blue,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16),
+                                          treatmentList.data[position].patientName,
+                                          style:
+                                              TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 16),
                                         ),
                                         SizedBox(height: 6),
                                         Text(
@@ -233,17 +201,12 @@ class _MyTherapiesState extends State<MyTherapies> {
                                               color: Colors.blue,
                                             ),
                                             SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.025,
+                                              width: MediaQuery.of(context).size.width * 0.025,
                                             ),
                                             Text(
-                                              treatmentList.data[position]
-                                                      .appointmentDate +
+                                              treatmentList.data[position].appointmentDate +
                                                   " | " +
-                                                  treatmentList.data[position]
-                                                      .appointmentTime,
+                                                  treatmentList.data[position].appointmentTime,
                                               style: TextStyle(
                                                 fontSize: 10,
                                                 color: Colors.grey,
@@ -265,38 +228,21 @@ class _MyTherapiesState extends State<MyTherapies> {
                                               child: Container(
                                                 decoration: BoxDecoration(
                                                   color: Colors.green,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                  borderRadius: BorderRadius.circular(8.0),
                                                 ),
                                                 child: Padding(
                                                   padding: EdgeInsets.only(
-                                                    left: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.04,
-                                                    right:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.04,
-                                                    top: MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.008,
-                                                    bottom:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.008,
+                                                    left: MediaQuery.of(context).size.width * 0.04,
+                                                    right: MediaQuery.of(context).size.width * 0.04,
+                                                    top: MediaQuery.of(context).size.height * 0.008,
+                                                    bottom: MediaQuery.of(context).size.height * 0.008,
                                                   ),
                                                   child: Center(
                                                     child: Text(
                                                       'Confirm',
                                                       style: TextStyle(
                                                         color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                        fontWeight: FontWeight.bold,
                                                       ),
                                                     ),
                                                   ),
@@ -304,10 +250,7 @@ class _MyTherapiesState extends State<MyTherapies> {
                                               ),
                                             ),
                                             SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.025,
+                                              width: MediaQuery.of(context).size.width * 0.025,
                                             ),
                                             InkWell(
 //                                      onTap:(){
@@ -323,38 +266,21 @@ class _MyTherapiesState extends State<MyTherapies> {
                                                     color: Colors.transparent,
                                                   ),
                                                   color: Colors.redAccent,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                  borderRadius: BorderRadius.circular(8.0),
                                                 ),
                                                 child: Padding(
                                                   padding: EdgeInsets.only(
-                                                    left: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.04,
-                                                    right:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.04,
-                                                    top: MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.008,
-                                                    bottom:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.008,
+                                                    left: MediaQuery.of(context).size.width * 0.04,
+                                                    right: MediaQuery.of(context).size.width * 0.04,
+                                                    top: MediaQuery.of(context).size.height * 0.008,
+                                                    bottom: MediaQuery.of(context).size.height * 0.008,
                                                   ),
                                                   child: Center(
                                                     child: Text(
                                                       'Cancel',
                                                       style: TextStyle(
                                                         color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                        fontWeight: FontWeight.bold,
                                                       ),
                                                     ),
                                                   ),

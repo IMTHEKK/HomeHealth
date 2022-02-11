@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:untitled3/models/doctors.dart';
@@ -300,6 +301,120 @@ class _ProfileState extends State<Profile> {
                                           ),
                                         ),
                                         SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                            left: MediaQuery.of(context).size.height * 0.03,
+                                            right: MediaQuery.of(context).size.height * 0.03,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Icon(
+                                                    CupertinoIcons.briefcase_fill,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  SizedBox(
+                                                    width: MediaQuery.of(context).size.height * 0.01,
+                                                  ),
+                                                  Text('Experience'),
+                                                ],
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context).size.width * 0.45,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Expanded(
+                                                        child: Text(
+                                                      doctor.data[0].doctorExp + ' Years',
+                                                      textAlign: TextAlign.right, /*'123 Royal Street, New York'*/
+                                                    )),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                            left: MediaQuery.of(context).size.height * 0.03,
+                                            right: MediaQuery.of(context).size.height * 0.03,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Icon(
+                                                    Icons.airline_seat_flat,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  SizedBox(
+                                                    width: MediaQuery.of(context).size.height * 0.01,
+                                                  ),
+                                                  Text('Total Patients'),
+                                                ],
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context).size.width * 0.45,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Expanded(
+                                                        child: Text(
+                                                      doctor.data[0].totalPatients + ' K',
+                                                      textAlign: TextAlign.right, /*'123 Royal Street, New York'*/
+                                                    )),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                            left: MediaQuery.of(context).size.height * 0.03,
+                                            right: MediaQuery.of(context).size.height * 0.03,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Icon(
+                                                    Icons.description,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  SizedBox(
+                                                    width: MediaQuery.of(context).size.height * 0.01,
+                                                  ),
+                                                  Text('Description'),
+                                                ],
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context).size.width * 0.45,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Expanded(
+                                                        child: Text(
+                                                      doctor.data[0].description,
+                                                      textAlign: TextAlign.right, /*'123 Royal Street, New York'*/
+                                                    )),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                                       ],
                                     ),
                                   ),
@@ -336,7 +451,7 @@ class _ProfileState extends State<Profile> {
                                                       color: Colors.blue,
                                                       fontSize: 16,
                                                       fontWeight: FontWeight.w600,
-                                                      letterSpacing: 1,
+                                                      letterSpacing: 0,
                                                     ),
                                                   ),
                                                 )
@@ -384,7 +499,7 @@ class _ProfileState extends State<Profile> {
                                                       // fontFamily: 'Montserrat',
                                                       fontSize: 16,
                                                       fontWeight: FontWeight.w600,
-                                                      letterSpacing: 1,
+                                                      letterSpacing: 0,
                                                     ),
                                                   ),
                                                 )
