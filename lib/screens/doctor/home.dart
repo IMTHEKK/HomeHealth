@@ -34,8 +34,7 @@ class _HomeState extends State<Home> {
             ),
             SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.15),
+                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -81,16 +80,11 @@ class _HomeState extends State<Home> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    SizedBox(
-                                        height: 50,
-                                        width: 50,
-                                        child: Image.asset(
-                                            'images/doctor/box_shape.png')),
+                                    SizedBox(height: 50, width: 50, child: Image.asset('images/doctor/box_shape.png')),
                                   ],
                                 ),
                                 Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.45,
+                                  width: MediaQuery.of(context).size.width * 0.45,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -99,11 +93,7 @@ class _HomeState extends State<Home> {
                                         height: 36,
                                         width: 36,
                                       ),
-                                      SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.02),
+                                      SizedBox(height: MediaQuery.of(context).size.width * 0.02),
                                       Text(
                                         'My\nAccount',
                                         style: TextStyle(
@@ -144,16 +134,11 @@ class _HomeState extends State<Home> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    SizedBox(
-                                        height: 50,
-                                        width: 50,
-                                        child: Image.asset(
-                                            'images/doctor/box_shape.png')),
+                                    SizedBox(height: 50, width: 50, child: Image.asset('images/doctor/box_shape.png')),
                                   ],
                                 ),
                                 Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.45,
+                                  width: MediaQuery.of(context).size.width * 0.45,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -162,11 +147,7 @@ class _HomeState extends State<Home> {
                                         height: 36,
                                         width: 36,
                                       ),
-                                      SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.02),
+                                      SizedBox(height: MediaQuery.of(context).size.width * 0.02),
                                       Text(
                                         'My\nTherapies',
                                         textAlign: TextAlign.center,
@@ -193,7 +174,9 @@ class _HomeState extends State<Home> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => MySchedules(),
+                                builder: (context) => MySchedules(
+                                  dId: widget.id,
+                                ),
                               ),
                             );
                           },
@@ -211,16 +194,11 @@ class _HomeState extends State<Home> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    SizedBox(
-                                        height: 50,
-                                        width: 50,
-                                        child: Image.asset(
-                                            'images/doctor/box_shape.png')),
+                                    SizedBox(height: 50, width: 50, child: Image.asset('images/doctor/box_shape.png')),
                                   ],
                                 ),
                                 Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.45,
+                                  width: MediaQuery.of(context).size.width * 0.45,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -229,11 +207,7 @@ class _HomeState extends State<Home> {
                                         height: 36,
                                         width: 36,
                                       ),
-                                      SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.02),
+                                      SizedBox(height: MediaQuery.of(context).size.width * 0.02),
                                       Text(
                                         'My\nSchedule',
                                         textAlign: TextAlign.center,
@@ -274,16 +248,11 @@ class _HomeState extends State<Home> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    SizedBox(
-                                        height: 50,
-                                        width: 50,
-                                        child: Image.asset(
-                                            'images/doctor/box_shape.png')),
+                                    SizedBox(height: 50, width: 50, child: Image.asset('images/doctor/box_shape.png')),
                                   ],
                                 ),
                                 Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.45,
+                                  width: MediaQuery.of(context).size.width * 0.45,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -292,11 +261,7 @@ class _HomeState extends State<Home> {
                                         height: 36,
                                         width: 36,
                                       ),
-                                      SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.02),
+                                      SizedBox(height: MediaQuery.of(context).size.width * 0.02),
                                       Text(
                                         'My\nReviews',
                                         textAlign: TextAlign.center,
@@ -342,11 +307,7 @@ class _HomeState extends State<Home> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                SizedBox(
-                                    height: 50,
-                                    width: 50,
-                                    child: Image.asset(
-                                        'images/doctor/box_shape.png')),
+                                SizedBox(height: 50, width: 50, child: Image.asset('images/doctor/box_shape.png')),
                               ],
                             ),
                             Container(
@@ -359,10 +320,7 @@ class _HomeState extends State<Home> {
                                     color: Color(0xff0095da),
                                     size: 35,
                                   ),
-                                  SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.width *
-                                              0.02),
+                                  SizedBox(height: MediaQuery.of(context).size.width * 0.02),
                                   Text(
                                     'Logout',
                                     textAlign: TextAlign.center,

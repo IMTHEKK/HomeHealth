@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:untitled3/models/treatment_details.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
+import 'package:untitled3/screens/doctor/therapy_completion_form.dart';
+import 'package:untitled3/screens/patient/appointment_form1.dart';
 import 'package:untitled3/screens/patient/review.dart';
 
 class TherpiesDetailsScreen extends StatefulWidget {
@@ -846,7 +848,48 @@ class TherpiesDetailsScreenState extends State<TherpiesDetailsScreen> {
                                 if( treatmentList.data[0].status=='2')
                                   SizedBox(height: 10),
                                 if( treatmentList.data[0].status=='1')
-                                  Container(
+                                  InkWell(
+                                    onTap:(){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => TherapyCompletionForm(),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      margin:EdgeInsets.only(
+                                        left: MediaQuery.of(context).size.width * 0.04,
+                                        right: MediaQuery.of(context).size.width * 0.04,
+                                        bottom: MediaQuery.of(context).size.height * 0.02,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                        ),
+                                        color: Colors.orangeAccent,
+                                        borderRadius: BorderRadius.circular(8.0),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          left: MediaQuery.of(context).size.width * 0.04,
+                                          right: MediaQuery.of(context).size.width * 0.04,
+                                          top: MediaQuery.of(context).size.height * 0.008,
+                                          bottom: MediaQuery.of(context).size.height * 0.008,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'Complete Therapy',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  /*Container(
                                     margin: EdgeInsets.only(
                                       left: MediaQuery.of(context).size.width * 0.07,
                                       right: MediaQuery.of(context).size.width * 0.07,
@@ -856,7 +899,7 @@ class TherpiesDetailsScreenState extends State<TherpiesDetailsScreen> {
                                       style: TextStyle(
                                         fontSize: 10,
                                       ),
-                                    ),),
+                                    ),),*/
                                 if( treatmentList.data[0].status=='1')
                                   SizedBox(height: 10),
                                 if( treatmentList.data[0].status=='3')

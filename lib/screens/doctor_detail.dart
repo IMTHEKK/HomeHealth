@@ -142,8 +142,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                   //Text('* * * * *'),
                                   RatingBarIndicator(
                                     rating: double.parse(therapistDetails
-                                        .data[0].doctorRatings
-                                        .toString()),
+                                        .data[0].doctorRatings),
                                     itemBuilder: (context, index) => Icon(
                                       Icons.star,
                                       color: Colors.blue,

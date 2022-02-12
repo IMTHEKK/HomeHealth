@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/utilities/utils.dart';
+import "package:flutter/src/material/card.dart"as Card1;
 
 class AppointmentForm1 extends StatefulWidget {
   final dId, cId;
@@ -174,7 +176,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                           right: MediaQuery.of(context).size.width * 0.07,
                           bottom: MediaQuery.of(context).size.width * 0.07,
                         ),
-                        child: Card(
+                        child: Card1.Card(
                           elevation: 10,
                           shape: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(38),
@@ -616,6 +618,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       if (pickedDate == null) {
                                         return;
                                       }
+
                                       setState(() {
                                         aDateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
                                       });
@@ -816,6 +819,14 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                 ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                              /*TextButton(
+                                onPressed: () async {
+                                  // create payment method
+                                  final paymentMethod =
+                                  await Stripe.instance.createPaymentMethod(PaymentMethodParams.card());
+                                },
+                                child: Text('pay'),
+                              )*/
                             ],
                           ),
                         ),

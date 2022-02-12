@@ -152,9 +152,9 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                             ),
                             Expanded(
                               child: Container(
-                                margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.12),
+                                margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.04),
                                 child: Text(
-                                  'Appointment Form',
+                                  'Therapy Completion Form',
                                   style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 22),
                                 ),
                               ),

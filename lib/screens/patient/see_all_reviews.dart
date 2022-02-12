@@ -6,6 +6,7 @@ import 'package:untitled3/models/customers.dart';
 import 'package:untitled3/models/testimonial_list.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
+import 'package:untitled3/utilities/text_wrapper.dart';
 
 class SeeAllReviews extends StatefulWidget {
   final dId;
@@ -158,7 +159,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
           controller: _tabController,
           children: <Widget>[
             FutureBuilder(
-              future: commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?doctor_id=' + widget.dId + '&sortBy=newest'),
+              future: commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?th_id=' + widget.dId + '&sortBy=newest'),
               builder: (context, AsyncSnapshot snap) {
                 if (snap.data == null) {
                   return Center(
@@ -172,126 +173,126 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: testimonials.data.length,
-                      itemBuilder: (context, index) {
-                        return FutureBuilder(
-                          future: commonBloc.hitGetApi(
-                              ApiUrl.view_profile + '?cs_id=' + testimonials.data[index].customerId.toString()),
-                          builder: (context, AsyncSnapshot sn) {
-                            if (sn.data == null) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else {
-                              if (snap.data['code'] == 200) {
-                                Customer customer = customerFromJson(json.encode(sn.data));
-                                return Container(
-                                  margin: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height * 0.01,
-                                    bottom: MediaQuery.of(context).size.height * 0.01,
-                                    left: MediaQuery.of(context).size.width * 0.05,
-                                    right: MediaQuery.of(context).size.width * 0.05,
-                                  ),
-                                  padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height * 0.02,
-                                    bottom: MediaQuery.of(context).size.height * 0.02,
-                                    left: MediaQuery.of(context).size.width * 0.05,
-                                    right: MediaQuery.of(context).size.width * 0.05,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Container(
-                                          width: MediaQuery.of(context).size.width * 0.22,
-                                          height: MediaQuery.of(context).size.width * 0.22,
-                                          decoration: new BoxDecoration(
-                                              border: Border.all(
+                      itemBuilder: (context, position) {
+                        return Card(
+                          elevation: 20,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          margin: EdgeInsets.only(
+                            top:
+                            MediaQuery.of(context).size.height * 0.01,
+                            bottom:
+                            MediaQuery.of(context).size.height * 0.01,
+                            left:
+                            MediaQuery.of(context).size.width * 0.05,
+                            right:
+                            MediaQuery.of(context).size.width * 0.05,
+                          ),
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                      width: MediaQuery.of(context).size.width * 0.22,
+                                      height: MediaQuery.of(context).size.width * 0.22,
+                                      decoration: new BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.blue,
+                                          ),
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: new NetworkImage(
+                                                'http://iconhomehealth.ca/assets/images/' +
+                                                    testimonials.data[position].photo,
+                                              )))),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                      left: MediaQuery.of(context)
+                                          .size
+                                          .width *
+                                          0.05,
+                                      right: MediaQuery.of(context)
+                                          .size
+                                          .width *
+                                          0.05,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(height: 10),
+                                        Text(
+                                          testimonials
+                                              .data[position].name,
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        RatingBarIndicator(
+                                          rating: double.parse(
+                                              testimonials
+                                                  .data[position].ratings
+                                                  .toString()),
+                                          itemBuilder: (context, index) =>
+                                              Icon(
+                                                Icons.star,
                                                 color: Colors.blue,
                                               ),
-                                              shape: BoxShape.circle,
-                                              image: new DecorationImage(
-                                                  fit: BoxFit.fill,
-                                                  image: new NetworkImage(
-                                                    //  "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1"
-                                                    'http://iconhomehealth.ca/assets/images/' +
-                                                        customer.data[0].customerPhoto,
-                                                  )))),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          RatingBarIndicator(
-                                            rating: double.parse(testimonials.data[0].ratings.toString()),
-                                            itemBuilder: (context, index) => Icon(
-                                              Icons.star,
-                                              color: Colors.blue,
-                                            ),
-                                            itemCount: 5,
-                                            itemSize: 20.0,
-                                            direction: Axis.horizontal,
-                                          ),
-                                          SizedBox(height: 10),
-                                          Text(
-                                            testimonials.data[0].comments, //'Dr. David Gilmour',
-                                            style: TextStyle(
-                                                color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 16),
-                                          ),
-                                          SizedBox(height: 10),
-                                          SizedBox(
-                                            width: MediaQuery.of(context).size.width * 0.4,
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Reviewed by: ' + customer.data[0].customerName,
-                                                    style: TextStyle(
-                                                      color: Colors.grey,
-                                                    ),
+                                          itemCount: 5,
+                                          itemSize: 20.0,
+                                          direction: Axis.horizontal,
+                                        ),
+                                        SizedBox(height: 10),
+                                        Container(
+                                          child: TextWrapper(
+                                              text: testimonials
+                                                  .data[position]
+                                                  .comments),
+                                        ),
+                                        SizedBox(height: 10),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.4,
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  'Reviewed by: ' +
+                                                      testimonials
+                                                          .data[position]
+                                                          .name,
+                                                  style: TextStyle(
+                                                    color: Colors.grey,
                                                   ),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(height: 10),
-                                          Text(
-                                            testimonials.data[0].createdAt,
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                            ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          testimonials
+                                              .data[position].createdAt,
+                                          style: TextStyle(
+                                            color: Colors.grey,
                                           ),
-                                          SizedBox(height: 10),
-                                        ],
-                                      ),
-                                    ],
+                                        ),
+                                        SizedBox(height: 10),
+                                      ],
+                                    ),
                                   ),
-                                );
-                              } else {
-                                return Text('error');
-                              }
-                            } //do whatever you want
-                          },
-                        );
-
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey,
-                              ),
-                              borderRadius: BorderRadius.circular(15.0),
+                                ),
+                              ],
                             ),
-                            margin: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.01,
-                              bottom: MediaQuery.of(context).size.height * 0.01,
-                              left: MediaQuery.of(context).size.width * 0.05,
-                              right: MediaQuery.of(context).size.width * 0.05,
-                            ),
-                            padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.02,
-                              bottom: MediaQuery.of(context).size.height * 0.02,
-                              left: MediaQuery.of(context).size.width * 0.05,
-                              right: MediaQuery.of(context).size.width * 0.05,
-                            ),
-                            child: Text('fyffftyfhgffg'),
                           ),
                         );
                       },
@@ -305,7 +306,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
             ),
             FutureBuilder(
               future:
-                  commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?doctor_id=' + widget.dId + '&sortBy=ratingLow'),
+                  commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?th_id=' + widget.dId + '&sortBy=ratingLow'),
               builder: (context, AsyncSnapshot snap) {
                 if (snap.data == null) {
                   return Center(
@@ -320,126 +321,126 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: testimonials.data.length,
-                      itemBuilder: (context, index) {
-                        return FutureBuilder(
-                          future: commonBloc.hitGetApi(
-                              ApiUrl.view_profile + '?cs_id=' + testimonials.data[index].customerId.toString()),
-                          builder: (context, AsyncSnapshot sn) {
-                            if (sn.data == null) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else {
-                              if (snap.data['code'] == 200) {
-                                Customer customer = customerFromJson(json.encode(sn.data));
-                                return Container(
-                                  margin: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height * 0.01,
-                                    bottom: MediaQuery.of(context).size.height * 0.01,
-                                    left: MediaQuery.of(context).size.width * 0.05,
-                                    right: MediaQuery.of(context).size.width * 0.05,
-                                  ),
-                                  padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height * 0.02,
-                                    bottom: MediaQuery.of(context).size.height * 0.02,
-                                    left: MediaQuery.of(context).size.width * 0.05,
-                                    right: MediaQuery.of(context).size.width * 0.05,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Container(
-                                          width: MediaQuery.of(context).size.width * 0.22,
-                                          height: MediaQuery.of(context).size.width * 0.22,
-                                          decoration: new BoxDecoration(
-                                              border: Border.all(
+                      itemBuilder: (context, position) {
+                        return Card(
+                          elevation: 20,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          margin: EdgeInsets.only(
+                            top:
+                            MediaQuery.of(context).size.height * 0.01,
+                            bottom:
+                            MediaQuery.of(context).size.height * 0.01,
+                            left:
+                            MediaQuery.of(context).size.width * 0.05,
+                            right:
+                            MediaQuery.of(context).size.width * 0.05,
+                          ),
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                      width: MediaQuery.of(context).size.width * 0.22,
+                                      height: MediaQuery.of(context).size.width * 0.22,
+                                      decoration: new BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.blue,
+                                          ),
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: new NetworkImage(
+                                                'http://iconhomehealth.ca/assets/images/' +
+                                                    testimonials.data[position].photo,
+                                              )))),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                      left: MediaQuery.of(context)
+                                          .size
+                                          .width *
+                                          0.05,
+                                      right: MediaQuery.of(context)
+                                          .size
+                                          .width *
+                                          0.05,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(height: 10),
+                                        Text(
+                                          testimonials
+                                              .data[position].name,
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        RatingBarIndicator(
+                                          rating: double.parse(
+                                              testimonials
+                                                  .data[position].ratings
+                                                  .toString()),
+                                          itemBuilder: (context, index) =>
+                                              Icon(
+                                                Icons.star,
                                                 color: Colors.blue,
                                               ),
-                                              shape: BoxShape.circle,
-                                              image: new DecorationImage(
-                                                  fit: BoxFit.fill,
-                                                  image: new NetworkImage(
-                                                    //  "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1"
-                                                    'http://iconhomehealth.ca/assets/images/' +
-                                                        customer.data[0].customerPhoto,
-                                                  )))),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          RatingBarIndicator(
-                                            rating: double.parse(testimonials.data[0].ratings.toString()),
-                                            itemBuilder: (context, index) => Icon(
-                                              Icons.star,
-                                              color: Colors.blue,
-                                            ),
-                                            itemCount: 5,
-                                            itemSize: 20.0,
-                                            direction: Axis.horizontal,
-                                          ),
-                                          SizedBox(height: 10),
-                                          Text(
-                                            testimonials.data[0].comments, //'Dr. David Gilmour',
-                                            style: TextStyle(
-                                                color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 16),
-                                          ),
-                                          SizedBox(height: 10),
-                                          SizedBox(
-                                            width: MediaQuery.of(context).size.width * 0.4,
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Reviewed by: ' + customer.data[0].customerName,
-                                                    style: TextStyle(
-                                                      color: Colors.grey,
-                                                    ),
+                                          itemCount: 5,
+                                          itemSize: 20.0,
+                                          direction: Axis.horizontal,
+                                        ),
+                                        SizedBox(height: 10),
+                                        Container(
+                                          child: TextWrapper(
+                                              text: testimonials
+                                                  .data[position]
+                                                  .comments),
+                                        ),
+                                        SizedBox(height: 10),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.4,
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  'Reviewed by: ' +
+                                                      testimonials
+                                                          .data[position]
+                                                          .name,
+                                                  style: TextStyle(
+                                                    color: Colors.grey,
                                                   ),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(height: 10),
-                                          Text(
-                                            testimonials.data[0].createdAt,
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                            ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          testimonials
+                                              .data[position].createdAt,
+                                          style: TextStyle(
+                                            color: Colors.grey,
                                           ),
-                                          SizedBox(height: 10),
-                                        ],
-                                      ),
-                                    ],
+                                        ),
+                                        SizedBox(height: 10),
+                                      ],
+                                    ),
                                   ),
-                                );
-                              } else {
-                                return Text('error');
-                              }
-                            } //do whatever you want
-                          },
-                        );
-
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey,
-                              ),
-                              borderRadius: BorderRadius.circular(15.0),
+                                ),
+                              ],
                             ),
-                            margin: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.01,
-                              bottom: MediaQuery.of(context).size.height * 0.01,
-                              left: MediaQuery.of(context).size.width * 0.05,
-                              right: MediaQuery.of(context).size.width * 0.05,
-                            ),
-                            padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.02,
-                              bottom: MediaQuery.of(context).size.height * 0.02,
-                              left: MediaQuery.of(context).size.width * 0.05,
-                              right: MediaQuery.of(context).size.width * 0.05,
-                            ),
-                            child: Text('fyffftyfhgffg'),
                           ),
                         );
                       },
@@ -453,7 +454,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
             ),
             FutureBuilder(
               future:
-                  commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?doctor_id=' + widget.dId + '&sortBy=ratingHigh'),
+                  commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?th_id=' + widget.dId + '&sortBy=ratingHigh'),
               builder: (context, AsyncSnapshot snap) {
                 if (snap.data == null) {
                   return Center(
@@ -468,126 +469,126 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: testimonials.data.length,
-                      itemBuilder: (context, index) {
-                        return FutureBuilder(
-                          future: commonBloc.hitGetApi(
-                              ApiUrl.view_profile + '?cs_id=' + testimonials.data[index].customerId.toString()),
-                          builder: (context, AsyncSnapshot sn) {
-                            if (sn.data == null) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else {
-                              if (snap.data['code'] == 200) {
-                                Customer customer = customerFromJson(json.encode(sn.data));
-                                return Container(
-                                  margin: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height * 0.01,
-                                    bottom: MediaQuery.of(context).size.height * 0.01,
-                                    left: MediaQuery.of(context).size.width * 0.05,
-                                    right: MediaQuery.of(context).size.width * 0.05,
-                                  ),
-                                  padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height * 0.02,
-                                    bottom: MediaQuery.of(context).size.height * 0.02,
-                                    left: MediaQuery.of(context).size.width * 0.05,
-                                    right: MediaQuery.of(context).size.width * 0.05,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Container(
-                                          width: MediaQuery.of(context).size.width * 0.22,
-                                          height: MediaQuery.of(context).size.width * 0.22,
-                                          decoration: new BoxDecoration(
-                                              border: Border.all(
+                      itemBuilder: (context, position) {
+                        return Card(
+                          elevation: 20,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          margin: EdgeInsets.only(
+                            top:
+                            MediaQuery.of(context).size.height * 0.01,
+                            bottom:
+                            MediaQuery.of(context).size.height * 0.01,
+                            left:
+                            MediaQuery.of(context).size.width * 0.05,
+                            right:
+                            MediaQuery.of(context).size.width * 0.05,
+                          ),
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                      width: MediaQuery.of(context).size.width * 0.22,
+                                      height: MediaQuery.of(context).size.width * 0.22,
+                                      decoration: new BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.blue,
+                                          ),
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: new NetworkImage(
+                                                'http://iconhomehealth.ca/assets/images/' +
+                                                    testimonials.data[position].photo,
+                                              )))),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                      left: MediaQuery.of(context)
+                                          .size
+                                          .width *
+                                          0.05,
+                                      right: MediaQuery.of(context)
+                                          .size
+                                          .width *
+                                          0.05,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(height: 10),
+                                        Text(
+                                          testimonials
+                                              .data[position].name,
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        RatingBarIndicator(
+                                          rating: double.parse(
+                                              testimonials
+                                                  .data[position].ratings
+                                                  .toString()),
+                                          itemBuilder: (context, index) =>
+                                              Icon(
+                                                Icons.star,
                                                 color: Colors.blue,
                                               ),
-                                              shape: BoxShape.circle,
-                                              image: new DecorationImage(
-                                                  fit: BoxFit.fill,
-                                                  image: new NetworkImage(
-                                                    //  "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1"
-                                                    'http://iconhomehealth.ca/assets/images/' +
-                                                        customer.data[0].customerPhoto,
-                                                  )))),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          RatingBarIndicator(
-                                            rating: double.parse(testimonials.data[0].ratings.toString()),
-                                            itemBuilder: (context, index) => Icon(
-                                              Icons.star,
-                                              color: Colors.blue,
-                                            ),
-                                            itemCount: 5,
-                                            itemSize: 20.0,
-                                            direction: Axis.horizontal,
-                                          ),
-                                          SizedBox(height: 10),
-                                          Text(
-                                            testimonials.data[0].comments, //'Dr. David Gilmour',
-                                            style: TextStyle(
-                                                color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 16),
-                                          ),
-                                          SizedBox(height: 10),
-                                          SizedBox(
-                                            width: MediaQuery.of(context).size.width * 0.4,
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Reviewed by: ' + customer.data[0].customerName,
-                                                    style: TextStyle(
-                                                      color: Colors.grey,
-                                                    ),
+                                          itemCount: 5,
+                                          itemSize: 20.0,
+                                          direction: Axis.horizontal,
+                                        ),
+                                        SizedBox(height: 10),
+                                        Container(
+                                          child: TextWrapper(
+                                              text: testimonials
+                                                  .data[position]
+                                                  .comments),
+                                        ),
+                                        SizedBox(height: 10),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.4,
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  'Reviewed by: ' +
+                                                      testimonials
+                                                          .data[position]
+                                                          .name,
+                                                  style: TextStyle(
+                                                    color: Colors.grey,
                                                   ),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(height: 10),
-                                          Text(
-                                            testimonials.data[0].createdAt,
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                            ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          testimonials
+                                              .data[position].createdAt,
+                                          style: TextStyle(
+                                            color: Colors.grey,
                                           ),
-                                          SizedBox(height: 10),
-                                        ],
-                                      ),
-                                    ],
+                                        ),
+                                        SizedBox(height: 10),
+                                      ],
+                                    ),
                                   ),
-                                );
-                              } else {
-                                return Text('error');
-                              }
-                            } //do whatever you want
-                          },
-                        );
-
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey,
-                              ),
-                              borderRadius: BorderRadius.circular(15.0),
+                                ),
+                              ],
                             ),
-                            margin: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.01,
-                              bottom: MediaQuery.of(context).size.height * 0.01,
-                              left: MediaQuery.of(context).size.width * 0.05,
-                              right: MediaQuery.of(context).size.width * 0.05,
-                            ),
-                            padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.02,
-                              bottom: MediaQuery.of(context).size.height * 0.02,
-                              left: MediaQuery.of(context).size.width * 0.05,
-                              right: MediaQuery.of(context).size.width * 0.05,
-                            ),
-                            child: Text('fyffftyfhgffg'),
                           ),
                         );
                       },

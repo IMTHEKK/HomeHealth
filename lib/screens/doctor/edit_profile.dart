@@ -123,6 +123,9 @@ class _EditProfileState extends State<EditProfile> {
       request.fields['address'] = addressController.text;
       request.fields['dob'] = dobController.text;
       request.fields['password'] = widget.doctor.data[0].doctorPassword;
+      request.fields['desc'] = descriptionController.text.toString();
+      request.fields['exp'] = expController.text.toString();
+      request.fields['num_patients'] = patientsController.text.toString();
     } on Exception catch (exception) {
       print(exception);
     } catch (error) {
@@ -165,12 +168,15 @@ class _EditProfileState extends State<EditProfile> {
     //var img64 = base64Encode(bytes);
     Map<String, dynamic> params = {
       // 'doctorPhoto':imageFile!=null?img64:widget.doctor.data[0].doctorPhoto.toString(),
-      'full-name': fullNameController.text,
-      'email': emailController.text,
-      'phone-number': phoneController.text,
-      'address': addressController.text,
-      'dob': dobController.text,
-      'password': widget.doctor.data[0].doctorPassword,
+      'full-name': fullNameController.text.toString(),
+      'email': emailController.text.toString(),
+      'phone-number': phoneController.text.toString(),
+      'address': addressController.text.toString(),
+      'dob': dobController.text.toString(),
+      'password': widget.doctor.data[0].doctorPassword.toString(),
+      'desc': descriptionController.text.toString(),
+      'exp': expController.text.toString(),
+      'num_patients': patientsController.text.toString(),
     };
     if (isValid()) {
       isVisible = true;
@@ -463,6 +469,7 @@ class _EditProfileState extends State<EditProfile> {
                                           Container(
                                               margin: EdgeInsets.only(left: 32),
                                               child: TextField(
+                                                keyboardType: TextInputType.number,
                                                 controller: expController,
                                               )),
                                         ],
@@ -493,6 +500,7 @@ class _EditProfileState extends State<EditProfile> {
                                           Container(
                                               margin: EdgeInsets.only(left: 32),
                                               child: TextField(
+                                                keyboardType: TextInputType.number,
                                                 controller: patientsController,
                                               )),
                                         ],
