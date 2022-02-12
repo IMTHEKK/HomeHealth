@@ -66,7 +66,7 @@ class _SignUpTherapistState extends State<SignUpTherapist> {
       Utils.showToast(context, "Please enter total patients");
       return false;
     } else if (docTypeController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter doctor type");
+      Utils.showToast(context, "Please enter your speciality");
       return false;
     }
     return true;
@@ -486,7 +486,7 @@ class _SignUpTherapistState extends State<SignUpTherapist> {
                                         value: dType,
                                         items: [
                                           DropdownMenuItem(
-                                            child: Text("Doctor Type"),
+                                            child: Text("Speciality"),
                                             value: 0,
                                           ),
                                           DropdownMenuItem(

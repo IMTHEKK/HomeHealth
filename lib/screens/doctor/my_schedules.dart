@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:untitled3/models/schedule.dart';
+import 'package:untitled3/network/api_blocs.dart';
 
 class MySchedules extends StatefulWidget {
   const MySchedules({Key? key}) : super(key: key);
@@ -11,15 +16,19 @@ class MySchedules extends StatefulWidget {
 
 class _MySchedulesState extends State<MySchedules> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
-      .toggledOff; // Can be toggled on/off by longpressing a date
+  RangeSelectionMode _rangeSelectionMode =
+      RangeSelectionMode.toggledOff; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
+  DateTime? _selectedDay = DateTime.now();
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
   bool isVisible = false;
+  late Map<DateTime, List> events;
+  late List selectedEvents;
 
-  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+  //late MySchedule mySchedule;
+
+  Future<void> _onDaySelected(DateTime selectedDay, DateTime focusedDay) async {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
         _focusedDay = focusedDay;
@@ -39,6 +48,11 @@ class _MySchedulesState extends State<MySchedules> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -47,6 +61,9 @@ class _MySchedulesState extends State<MySchedules> {
           child: Stack(
             children: [
               Container(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.01,
+                ),
                 height: MediaQuery.of(context).size.height * 0.25,
                 decoration: BoxDecoration(
                     color: Color(0xfff7f7f7), //s.grey,
@@ -68,7 +85,7 @@ class _MySchedulesState extends State<MySchedules> {
                           child: Padding(
                             padding: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.05,
-                              top: MediaQuery.of(context).size.height * 0.05,
+                              top: MediaQuery.of(context).size.height * 0.06,
                             ),
                             child: Icon(
                               Icons.arrow_back,
@@ -81,15 +98,12 @@ class _MySchedulesState extends State<MySchedules> {
                             padding: EdgeInsets.all(8),
                             margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.1,
-                              top: MediaQuery.of(context).size.width * 0.05,
+                              top: MediaQuery.of(context).size.width * 0.06,
                             ),
                             // alignment: Alignment.center,
                             child: Text(
                               'Availability Settings',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22),
+                              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 22),
                             ),
                           ),
                         ),
@@ -112,8 +126,7 @@ class _MySchedulesState extends State<MySchedules> {
                     SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                     Card(
                       shape: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(color: Colors.transparent)),
+                          borderRadius: BorderRadius.circular(20), borderSide: BorderSide(color: Colors.transparent)),
                       color: Colors.white,
                       child: ClipRRect(
                         borderRadius: BorderRadius.only(
@@ -122,17 +135,14 @@ class _MySchedulesState extends State<MySchedules> {
                         ),
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.02,
-                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                             Container(
                               margin: EdgeInsets.only(
                                 left: MediaQuery.of(context).size.width * 0.07,
                                 right: MediaQuery.of(context).size.width * 0.07,
                               ),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Select Date and Time',
@@ -152,10 +162,8 @@ class _MySchedulesState extends State<MySchedules> {
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.02,
-                            ),
-                            Padding(
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                            /*Padding(
                               padding: EdgeInsets.only(
                                 left: MediaQuery.of(context).size.width * 0.07,
                                 right: MediaQuery.of(context).size.width * 0.07,
@@ -167,13 +175,12 @@ class _MySchedulesState extends State<MySchedules> {
                                   ),
                                 ],
                               ),
-                            ),
+                            ),*/
                             TableCalendar(
                               firstDay: DateTime.now(),
                               lastDay: DateTime.utc(2030, 3, 14),
                               focusedDay: _focusedDay,
-                              selectedDayPredicate: (day) =>
-                                  isSameDay(_selectedDay, day),
+                              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
                               rangeStartDay: _rangeStart,
                               rangeEndDay: _rangeEnd,
                               calendarFormat: _calendarFormat,
@@ -201,269 +208,268 @@ class _MySchedulesState extends State<MySchedules> {
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                    Card(
-                      shape: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.transparent),
-                      ),
-                      color: Colors.white,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.02,
-                          ),
-                          Container(
-                            /*margin: EdgeInsets.only(
+                    FutureBuilder(
+                      future: commonBloc.hitGetApi(
+                          // 'https://run.mocky.io/v3/88012a3b-5912-4421-9e6d-6a11b8af8a94'
+                          'https://run.mocky.io/v3/007eaa97-07cb-4336-a92c-bc832158d8b9'),
+                      builder: (context, AsyncSnapshot snap) {
+                        if (snap.data == null) {
+                          return Container(
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        } else {
+                          MySchedule mySchedule = myScheduleFromJson(json.encode(snap.data));
+                          return Card(
+                            shape: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide(color: Colors.transparent),
+                            ),
+                            color: Colors.white,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.02,
+                                ),
+                                Container(
+                                  /*margin: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.2,
                               right: MediaQuery.of(context).size.width * 0.2,
                             ),*/
-                            // height: MediaQuery.of(context).size.height * 0.06,
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.only(
-                                    left:
-                                        MediaQuery.of(context).size.width * 0.3,
-                                    right: MediaQuery.of(context).size.width *
-                                        0.05,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                  // height: MediaQuery.of(context).size.height * 0.06,
+                                  child: Column(
                                     children: [
-                                      Column(
-                                        children: [
-                                          Text(
-                                            '1st JANUARY 2022',
-                                            style: TextStyle(
-                                              color: Colors.blue,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            'set your time table',
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 10,
-                                              //   fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
                                       Container(
-                                        height: 24,
-                                        width: 24,
-                                        child: SvgPicture.asset(
-                                          'images/add_time_slot.svg',
-                                          color: Colors.blue,
-                                          //   semanticsLabel: 'Acme Logo'
+                                        padding: EdgeInsets.only(
+                                          left: MediaQuery.of(context).size.width * 0.3,
+                                          right: MediaQuery.of(context).size.width * 0.05,
                                         ),
-                                      )
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  DateFormat("yMMMMd").format(_selectedDay!),
+                                                  // '1st JANUARY 2022',
+                                                  style: TextStyle(
+                                                    color: Colors.blue,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'set your time table',
+                                                  style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 10,
+                                                    //   fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Container(
+                                              height: 24,
+                                              width: 24,
+                                              child: SvgPicture.asset(
+                                                'images/add_time_slot.svg',
+                                                color: Colors.blue,
+                                                //   semanticsLabel: 'Acme Logo'
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                                      Container(
+                                        height: MediaQuery.of(context).size.height * 0.05,
+                                        child: ListView.builder(
+                                          //shrinkWrap: true,
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: mySchedule.data[0].slotsJson.length,
+                                          itemBuilder: (context, index) {
+                                            return Container(
+                                              height: MediaQuery.of(context).size.height * 0.05,
+                                              child: Row(
+                                                //  scrollDirection: Axis.horizontal,
+                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                children: [
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                      left: MediaQuery.of(context).size.width * 0.03,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xffDAF3FF),
+                                                      border: Border.all(
+                                                        color: Colors.blue,
+                                                      ),
+                                                      borderRadius: BorderRadius.circular(8.0),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                        left: MediaQuery.of(context).size.width * 0.02,
+                                                        right: MediaQuery.of(context).size.width * 0.02,
+                                                        top: MediaQuery.of(context).size.height * 0.008,
+                                                        bottom: MediaQuery.of(context).size.height * 0.008,
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          mySchedule.data[0].slotsJson[index].startTime +
+                                                              '-' +
+                                                              mySchedule.data[0].slotsJson[index].endTime,
+                                                          //'09:00-12:00',
+                                                          style: TextStyle(
+                                                            fontSize: 9,
+                                                            color: Colors.blue,
+                                                            fontWeight: FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  /*Container(
+                                                margin: EdgeInsets.only(
+                                                  left: MediaQuery.of(context).size.width * 0.01,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xffDAF3FF),
+                                                  border: Border.all(
+                                                    color: Colors.blue,
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(8.0),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                    left: MediaQuery.of(context).size.width * 0.02,
+                                                    right: MediaQuery.of(context).size.width * 0.02,
+                                                    top: MediaQuery.of(context).size.height * 0.008,
+                                                    bottom: MediaQuery.of(context).size.height * 0.008,
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      '12:00-15:00',
+                                                      style: TextStyle(
+                                                        fontSize: 9,
+                                                        color: Colors.blue,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left: MediaQuery.of(context).size.width * 0.01,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xffDAF3FF),
+                                                  border: Border.all(
+                                                    color: Colors.blue,
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(8.0),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                    left: MediaQuery.of(context).size.width * 0.02,
+                                                    right: MediaQuery.of(context).size.width * 0.02,
+                                                    top: MediaQuery.of(context).size.height * 0.008,
+                                                    bottom: MediaQuery.of(context).size.height * 0.008,
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      '15:00-18:00',
+                                                      style: TextStyle(
+                                                        fontSize: 9,
+                                                        color: Colors.blue,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left: MediaQuery.of(context).size.width * 0.01,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xffDAF3FF),
+                                                  border: Border.all(
+                                                    color: Colors.blue,
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(8.0),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                    left: MediaQuery.of(context).size.width * 0.02,
+                                                    right: MediaQuery.of(context).size.width * 0.02,
+                                                    top: MediaQuery.of(context).size.height * 0.008,
+                                                    bottom: MediaQuery.of(context).size.height * 0.008,
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      '18:00-21:00',
+                                                      style: TextStyle(
+                                                        fontSize: 9,
+                                                        color: Colors.blue,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),*/
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                                      Container(
+                                        padding: EdgeInsets.all(
+                                          8,
+                                        ),
+                                        margin: EdgeInsets.only(
+                                          left: MediaQuery.of(context).size.width * 0.2,
+                                          right: MediaQuery.of(context).size.width * 0.2,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xff0098db),
+                                          border: Border.all(
+                                            color: Colors.transparent,
+                                          ),
+                                          borderRadius: BorderRadius.circular(10.0),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Center(
+                                              child: Text(
+                                                "update".toUpperCase(),
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  // fontFamily: 'Montserrat',
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  letterSpacing: 1,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
                                 SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02,
-                                ),
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  child: Row(
-                                    //  scrollDirection: Axis.horizontal,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          left: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.01,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xffDAF3FF),
-                                          border: Border.all(
-                                            color: Colors.blue,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            left: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.02,
-                                            right: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.02,
-                                            top: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.008,
-                                            bottom: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.008,
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              '09:00 AM - 12:00PM',
-                                              style: TextStyle(
-                                                fontSize: 9,
-                                                color: Colors.blue,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          left: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.01,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xffDAF3FF),
-                                          border: Border.all(
-                                            color: Colors.blue,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            left: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.02,
-                                            right: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.02,
-                                            top: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.008,
-                                            bottom: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.008,
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              '12:00 PM - 03:00PM',
-                                              style: TextStyle(
-                                                fontSize: 9,
-                                                color: Colors.blue,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          left: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.01,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xffDAF3FF),
-                                          border: Border.all(
-                                            color: Colors.blue,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            left: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.02,
-                                            right: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.02,
-                                            top: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.008,
-                                            bottom: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.008,
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              '03:00 PM - 06:00PM',
-                                              style: TextStyle(
-                                                fontSize: 9,
-                                                color: Colors.blue,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.03,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(
-                                    8,
-                                  ),
-                                  margin: EdgeInsets.only(
-                                    left:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    right:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xff0098db),
-                                    border: Border.all(
-                                      color: Colors.transparent,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Center(
-                                        child: Text(
-                                          "update".toUpperCase(),
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            // fontFamily: 'Montserrat',
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            letterSpacing: 1,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                  height: MediaQuery.of(context).size.height * 0.06,
                                 ),
                               ],
                             ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.06,
-                          ),
-                        ],
-                      ),
+                          );
+                        } //do whatever you want
+                      },
                     ),
                   ],
                 ),
@@ -474,4 +480,8 @@ class _MySchedulesState extends State<MySchedules> {
       ),
     );
   }
+}
+
+Widget _getEventsForDay(DateTime day) {
+  return Text('jvgjgjyv');
 }

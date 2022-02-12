@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -30,6 +31,9 @@ class _EditProfileState extends State<EditProfile> {
   var phoneController = TextEditingController();
   var dobController = TextEditingController();
   var addressController = TextEditingController();
+  var expController = TextEditingController();
+  var descriptionController = TextEditingController();
+  var patientsController = TextEditingController();
   bool isVisible = false;
   var imageFile;
   DateTime currentDate = DateTime.now();
@@ -192,6 +196,9 @@ class _EditProfileState extends State<EditProfile> {
     phoneController.text = widget.doctor.data[0].doctorPhone;
     dobController.text = widget.doctor.data[0].doctorDob as String;
     addressController.text = widget.doctor.data[0].doctorAddress;
+    expController.text = widget.doctor.data[0].doctorExp;
+    descriptionController.text = widget.doctor.data[0].description;
+    patientsController.text = widget.doctor.data[0].totalPatients;
     super.initState();
   }
 
@@ -329,8 +336,9 @@ class _EditProfileState extends State<EditProfile> {
                                           ),
                                           Container(
                                               margin: EdgeInsets.only(left: 32),
-                                              child: TextField(
-                                                controller: emailController,
+                                              child: Text /*Field*/ (
+                                                /* controller: */
+                                                emailController.text,
                                               )),
                                         ],
                                       ),
@@ -359,8 +367,9 @@ class _EditProfileState extends State<EditProfile> {
                                           ),
                                           Container(
                                               margin: EdgeInsets.only(left: 32),
-                                              child: TextField(
-                                                controller: phoneController,
+                                              child: Text /*Field*/ (
+                                                /*controller:*/
+                                                phoneController.text,
                                               )),
                                         ],
                                       ),
@@ -425,6 +434,96 @@ class _EditProfileState extends State<EditProfile> {
                                               margin: EdgeInsets.only(left: 32),
                                               child: TextField(
                                                 controller: addressController,
+                                              )),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        left: MediaQuery.of(context).size.height * 0.03,
+                                        right: MediaQuery.of(context).size.height * 0.03,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Icon(
+                                                CupertinoIcons.briefcase_fill,
+                                                color: Colors.grey,
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context).size.height * 0.01,
+                                              ),
+                                              Text('Experience (in years)'),
+                                            ],
+                                          ),
+                                          Container(
+                                              margin: EdgeInsets.only(left: 32),
+                                              child: TextField(
+                                                controller: expController,
+                                              )),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        left: MediaQuery.of(context).size.height * 0.03,
+                                        right: MediaQuery.of(context).size.height * 0.03,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Icon(
+                                                Icons.airline_seat_flat,
+                                                color: Colors.grey,
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context).size.height * 0.01,
+                                              ),
+                                              Text('Patients (in Thousands)'),
+                                            ],
+                                          ),
+                                          Container(
+                                              margin: EdgeInsets.only(left: 32),
+                                              child: TextField(
+                                                controller: patientsController,
+                                              )),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        left: MediaQuery.of(context).size.height * 0.03,
+                                        right: MediaQuery.of(context).size.height * 0.03,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Icon(
+                                                Icons.description,
+                                                color: Colors.grey,
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context).size.height * 0.01,
+                                              ),
+                                              Text('Description'),
+                                            ],
+                                          ),
+                                          Container(
+                                              margin: EdgeInsets.only(left: 32),
+                                              child: TextField(
+                                                controller: descriptionController,
                                               )),
                                         ],
                                       ),
