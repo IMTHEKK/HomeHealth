@@ -1,17 +1,26 @@
 class MyTherapiesModel {
-  late String _status;
+  String? _status;
   late int _code;
   late List<MyTherapiesList> _data;
 
-  MyTherapiesModel({required String status,required  int code, required List<MyTherapiesList> data}) {
-    this._status = status;
-    this._code = code;
-    this._data = data;
+  MyTherapiesModel(
+      {required String status,
+      required int code,
+      required List<MyTherapiesList> data}) {
+    if (status != null) {
+      this._status = status;
+    }
+    if (code != null) {
+      this._code = code;
+    }
+    if (data != null) {
+      this._data = data;
+    }
   }
 
-  String get status => _status;
+  String? get status => _status;
 
-  set status(String status) => _status = status;
+  set status(String? status) => _status = status;
 
   int get code => _code;
 
@@ -45,48 +54,99 @@ class MyTherapiesModel {
 
 class MyTherapiesList {
   late String _bookingId;
-  late String _patientName;
-  late  String _therapy;
-  late  String _gender;
-  late  String _age;
-  late  String _bookingTime;
-  late  String _appointmentDate;
-  late  String _appointmentTime;
-  late  String _patientConcern;
-  late  String _status;
-  late  String _doctorID;
-  late  String _customerID;
+  late String _customerID;
+  late String _doctorID;
+  late String _firstName;
+  late String _lastName;
+  late String _dob;
+  late String _address;
+  late String _phone;
+  late String _email;
+  late String _familyDoctor;
+  late String _medicalConditions;
+  late String _injuredArea;
+  late String _xray;
+  late String _medications;
+  late String _emergencyContactName;
+  late String _emergencyContactRelation;
+  late String _emergencyContactNumber;
+  late String _appointmentDate;
+  late String _appointmentTime;
+  late String _status;
+  late String _bookingTime;
 
   MyTherapiesList(
       {required String bookingId,
-      required String patientName,
-      required String therapy,
-      required String gender,
-      required String age,
-      required String bookingTime,
+      required String customerID,
+      required String doctorID,
+      required String firstName,
+      required String lastName,
+      required String dob,
+      required String address,
+      required String phone,
+      required String email,
+      required String familyDoctor,
+      required String medicalConditions,
+      required String injuredArea,
+      required String xray,
+      required String medications,
+      required String emergencyContactName,
+      required String emergencyContactRelation,
+      required String emergencyContactNumber,
       required String appointmentDate,
       required String appointmentTime,
-      required String patientConcern,
       required String status,
-      required String doctorID,
-      required String customerID}) {
+      required String bookingTime}) {
     if (bookingId != null) {
       this._bookingId = bookingId;
     }
-    if (patientName != null) {
-      this._patientName = patientName;
+    if (customerID != null) {
+      this._customerID = customerID;
     }
-    if (therapy != null) {
-      this._therapy = therapy;
+    if (doctorID != null) {
+      this._doctorID = doctorID;
     }
-    if (gender != null) {
-      this._gender = gender;
+    if (firstName != null) {
+      this._firstName = firstName;
     }
-    if (age != null) {
-      this._age = age;
+    if (lastName != null) {
+      this._lastName = lastName;
     }
-    if (bookingTime != null) {
-      this._bookingTime = bookingTime;
+    if (dob != null) {
+      this._dob = dob;
+    }
+    if (address != null) {
+      this._address = address;
+    }
+    if (phone != null) {
+      this._phone = phone;
+    }
+    if (email != null) {
+      this._email = email;
+    }
+    if (familyDoctor != null) {
+      this._familyDoctor = familyDoctor;
+    }
+    if (medicalConditions != null) {
+      this._medicalConditions = medicalConditions;
+    }
+    if (injuredArea != null) {
+      this._injuredArea = injuredArea;
+    }
+    if (xray != null) {
+      this._xray = xray;
+    }
+    if (medications != null) {
+      this._medications = medications;
+    }
+    if (emergencyContactName != null) {
+      this._emergencyContactName = emergencyContactName;
+    }
+    if (emergencyContactRelation != null) {
+      this._emergencyContactRelation = emergencyContactRelation;
+    }
+    if (emergencyContactNumber != null) {
+      this._emergencyContactNumber = emergencyContactNumber;
     }
     if (appointmentDate != null) {
       this._appointmentDate = appointmentDate;
@@ -94,17 +154,11 @@ class MyTherapiesList {
     if (appointmentTime != null) {
       this._appointmentTime = appointmentTime;
     }
-    if (patientConcern != null) {
-      this._patientConcern = patientConcern;
-    }
     if (status != null) {
       this._status = status;
     }
-    if (doctorID != null) {
-      this._doctorID = doctorID;
-    }
-    if (customerID != null) {
-      this._customerID = customerID;
+    if (bookingTime != null) {
+      this._bookingTime = bookingTime;
     }
   }
 
@@ -112,25 +166,73 @@ class MyTherapiesList {
 
   set bookingId(String bookingId) => _bookingId = bookingId;
 
-  String get patientName => _patientName;
+  String get customerID => _customerID;
 
-  set patientName(String patientName) => _patientName = patientName;
+  set customerID(String customerID) => _customerID = customerID;
 
-  String get therapy => _therapy;
+  String get doctorID => _doctorID;
 
-  set therapy(String therapy) => _therapy = therapy;
+  set doctorID(String doctorID) => _doctorID = doctorID;
 
-  String get gender => _gender;
+  String get firstName => _firstName;
 
-  set gender(String gender) => _gender = gender;
+  set firstName(String firstName) => _firstName = firstName;
 
-  String get age => _age;
+  String get lastName => _lastName;
 
-  set age(String age) => _age = age;
+  set lastName(String lastName) => _lastName = lastName;
 
-  String get bookingTime => _bookingTime;
+  String get dob => _dob;
 
-  set bookingTime(String bookingTime) => _bookingTime = bookingTime;
+  set dob(String dob) => _dob = dob;
+
+  String get address => _address;
+
+  set address(String address) => _address = address;
+
+  String get phone => _phone;
+
+  set phone(String phone) => _phone = phone;
+
+  String get email => _email;
+
+  set email(String email) => _email = email;
+
+  String get familyDoctor => _familyDoctor;
+
+  set familyDoctor(String familyDoctor) => _familyDoctor = familyDoctor;
+
+  String get medicalConditions => _medicalConditions;
+
+  set medicalConditions(String medicalConditions) =>
+      _medicalConditions = medicalConditions;
+
+  String get injuredArea => _injuredArea;
+
+  set injuredArea(String injuredArea) => _injuredArea = injuredArea;
+
+  String get xray => _xray;
+
+  set xray(String xray) => _xray = xray;
+
+  String get medications => _medications;
+
+  set medications(String medications) => _medications = medications;
+
+  String get emergencyContactName => _emergencyContactName;
+
+  set emergencyContactName(String emergencyContactName) =>
+      _emergencyContactName = emergencyContactName;
+
+  String get emergencyContactRelation => _emergencyContactRelation;
+
+  set emergencyContactRelation(String emergencyContactRelation) =>
+      _emergencyContactRelation = emergencyContactRelation;
+
+  String get emergencyContactNumber => _emergencyContactNumber;
+
+  set emergencyContactNumber(String emergencyContactNumber) =>
+      _emergencyContactNumber = emergencyContactNumber;
 
   String get appointmentDate => _appointmentDate;
 
@@ -142,51 +244,61 @@ class MyTherapiesList {
   set appointmentTime(String appointmentTime) =>
       _appointmentTime = appointmentTime;
 
-  String get patientConcern => _patientConcern;
-
-  set patientConcern(String patientConcern) => _patientConcern = patientConcern;
-
   String get status => _status;
 
   set status(String status) => _status = status;
 
-  String get doctorID => _doctorID;
+  String get bookingTime => _bookingTime;
 
-  set doctorID(String doctorID) => _doctorID = doctorID;
-
-  String get customerID => _customerID;
-
-  set customerID(String customerID) => _customerID = customerID;
+  set bookingTime(String bookingTime) => _bookingTime = bookingTime;
 
   MyTherapiesList.fromJson(Map<String, dynamic> json) {
-    _bookingId = json['booking_id']??'';
-    _patientName = json['patient_name']??'';
-    _therapy = json['therapy']??'';
-    _gender = json['gender'].toString();
-    _age = json['age']??'';
-    _bookingTime = json['bookingTime']??'';
-    _appointmentDate = json['appointment_date']??'';
-    _appointmentTime = json['appointment_time']??'';
-    _patientConcern = json['patient_concern']??'';
+    _bookingId = json['booking_id'];
+    _customerID = json['customerID'];
+    _doctorID = json['doctorID'];
+    _firstName = json['first_name'];
+    _lastName = json['last_name'];
+    _dob = json['dob'];
+    _address = json['address'];
+    _phone = json['phone'];
+    _email = json['email'];
+    _familyDoctor = json['family_doctor'];
+    _medicalConditions = json['medical_conditions'];
+    _injuredArea = json['injured_area'];
+    _xray = json['xray'];
+    _medications = json['medications'];
+    _emergencyContactName = json['emergency_contact_name'];
+    _emergencyContactRelation = json['emergency_contact_relation'];
+    _emergencyContactNumber = json['emergency_contact_number'];
+    _appointmentDate = json['appointment_date'];
+    _appointmentTime = json['appointment_time'];
     _status = json['status'];
-    _doctorID = json['doctorID'].toString();
-    _customerID = json['customerID'].toString();
+    _bookingTime = json['bookingTime'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['booking_id'] = this._bookingId;
-    data['patient_name'] = this._patientName;
-    data['therapy'] = this._therapy;
-    data['gender'] = this._gender;
-    data['age'] = this._age;
-    data['bookingTime'] = this._bookingTime;
+    data['customerID'] = this._customerID;
+    data['doctorID'] = this._doctorID;
+    data['first_name'] = this._firstName;
+    data['last_name'] = this._lastName;
+    data['dob'] = this._dob;
+    data['address'] = this._address;
+    data['phone'] = this._phone;
+    data['email'] = this._email;
+    data['family_doctor'] = this._familyDoctor;
+    data['medical_conditions'] = this._medicalConditions;
+    data['injured_area'] = this._injuredArea;
+    data['xray'] = this._xray;
+    data['medications'] = this._medications;
+    data['emergency_contact_name'] = this._emergencyContactName;
+    data['emergency_contact_relation'] = this._emergencyContactRelation;
+    data['emergency_contact_number'] = this._emergencyContactNumber;
     data['appointment_date'] = this._appointmentDate;
     data['appointment_time'] = this._appointmentTime;
-    data['patient_concern'] = this._patientConcern;
     data['status'] = this._status;
-    data['doctorID'] = this._doctorID;
-    data['customerID'] = this._customerID;
+    data['bookingTime'] = this._bookingTime;
     return data;
   }
 }
