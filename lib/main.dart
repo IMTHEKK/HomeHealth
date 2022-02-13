@@ -2,9 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:untitled3/network/constant.dart';
-import 'package:untitled3/screens/doctor/therapy_completion_form.dart';
-import 'package:untitled3/screens/onboard.dart';
-import 'package:untitled3/screens/payment_screen.dart';
 import 'package:untitled3/screens/splash.dart';
 
 void main() async {
