@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import "package:flutter/src/material/card.dart" as Card1;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:untitled3/models/schedule.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/utilities/utils.dart';
@@ -135,9 +139,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                   Column(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.05,
-                        ),
+                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.06),
                         child: Row(
                           children: [
                             InkWell(
@@ -174,7 +176,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                           right: MediaQuery.of(context).size.width * 0.07,
                           bottom: MediaQuery.of(context).size.width * 0.07,
                         ),
-                        child: Card(
+                        child: Card1.Card(
                           elevation: 10,
                           shape: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(38),
@@ -612,9 +614,18 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime.now(),
                                       lastDate: DateTime(2024),
-                                    ).then((pickedDate) {
+                                    ).then((pickedDate) async {
                                       if (pickedDate == null) {
                                         return;
+                                      }
+
+                                      var res = await commonBloc
+                                          .hitGetApi(ApiUrl.get_therapist_schedule + '?doctor_id=' + widget.dId);
+                                      print('resp:' + json.encode(res).toString());
+                                      MySchedule mySchedule = myScheduleFromJson(json.encode(res));
+                                      for (int i = 0; i < mySchedule.data.length; i++) {
+                                        if (mySchedule.data[i].scheduleDate ==
+                                            DateFormat('yyyy-MM-dd').format(pickedDate)) {}
                                       }
                                       setState(() {
                                         aDateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
@@ -751,7 +762,6 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   onTap: () async {
                                     isVisible = true;
                                     setState(() {});
-
                                     //     '&appointment_date=2022-02-06'
                                     //   '&appointment_time=09:00-12:00'
                                     Map<String, dynamic> params = {
@@ -816,6 +826,14 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                 ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                              /*TextButton(
+                                onPressed: () async {
+                                  // create payment method
+                                  final paymentMethod =
+                                  await Stripe.instance.createPaymentMethod(PaymentMethodParams.card());
+                                },
+                                child: Text('pay'),
+                              )*/
                             ],
                           ),
                         ),

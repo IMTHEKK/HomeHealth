@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:untitled3/models/therapist_list.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
-import 'package:untitled3/screens/availability_settings.dart';
 import 'package:untitled3/screens/doctor_detail.dart';
+import 'package:untitled3/screens/patient/appointment_form1.dart';
+import 'package:untitled3/screens/search_doctor.dart';
 
 class SearchPage extends StatefulWidget {
   final cId, name;
@@ -22,7 +23,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(vsync: this, length: 3);
+    _tabController = new TabController(vsync: this, length: 2);
   }
 
   @override
@@ -119,26 +120,40 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                             ),
                           ),
                         ),
-                        Center(
-                          child: Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(30),
-                                //  border: Border.all(
-                                //    width: 1, /*color: Colors.purple, */style: BorderStyle.solid),
-                              ),
-                              child: ListTile(
-                                horizontalTitleGap: 0,
-                                leading: Icon(Icons.search),
-                                title: TextField(
-                                  decoration: InputDecoration(
-                                      hintText: 'Search therapist, specialities...',
-                                      //  contentPadding: EdgeInsets.all(15),
-                                      border: InputBorder.none),
-                                  onChanged: (value) {},
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SearchDoctor(
+                                          cId: widget.name,
+                                          type: ApiUrl.therapist_list + '?text=',
+                                        )));
+                          },
+                          child: Center(
+                            child: Container(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30),
+                                  //  border: Border.all(
+                                  //    width: 1, /*color: Colors.purple, */style: BorderStyle.solid),
                                 ),
-                              )),
+                                child: ListTile(
+                                  horizontalTitleGap: 0,
+                                  leading: Icon(Icons.search),
+                                  title: Text(
+                                    /*Field(
+                                    decoration: InputDecoration(
+                                        hintText:*/
+                                    'Search therapist, specialities...',
+                                    //  contentPadding: EdgeInsets.all(15),
+                                    /*   border: InputBorder.none),
+                                    onChanged: (value) {},
+                                  */
+                                  ),
+                                )),
+                          ),
                         ),
                       ],
                     ),
@@ -181,7 +196,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                             ),
                           ),
                         ),
-                        Tab(
+                        /*Tab(
                           child: Container(
                             child: Align(
                               alignment: Alignment.center,
@@ -192,7 +207,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                               ),
                             ),
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
@@ -221,6 +236,9 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                     shrinkWrap: true,
                     itemCount: therapistList.data.length,
                     itemBuilder: (context, index) {
+                      print(
+                        'smfasdf' + 'http://iconhomehealth.ca/assets/images/' + therapistList.data[index].doctorPhoto,
+                      );
                       return InkWell(
                         onTap: () {
                           Navigator.push(
@@ -268,7 +286,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                             fit: BoxFit.fill,
                                             image: new NetworkImage(
                                               'http://iconhomehealth.ca/assets/images/' +
-                                                  therapistList.data[0].doctorPhoto,
+                                                  therapistList.data[index].doctorPhoto,
                                               //    "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1"
                                             )))),
                                 Column(
@@ -321,7 +339,12 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                     InkWell(
                                       onTap: () {
                                         Navigator.push(
-                                            context, MaterialPageRoute(builder: (context) => AvailabilitySettings()));
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => AppointmentForm1(
+                                                      dId: therapistList.data[index].doctorId,
+                                                      cId: widget.cId,
+                                                    )));
                                       },
                                       child: Container(
                                         width: MediaQuery.of(context).size.width * 0.4,
@@ -363,6 +386,167 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
               },
             ),
             FutureBuilder(
+              future: commonBloc.hitGetApi(ApiUrl.therapist_list + '?sortBy=topRated'),
+              builder: (context, AsyncSnapshot snap) {
+                if (snap.data == null) {
+                  return Container(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                } else {
+                  TherapistList therapistList = TherapistList.fromJson(snap.data);
+                  return ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: therapistList.data.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DoctorDetailScreen(
+                                    doctorId: therapistList.data[index].doctorId) //OnGoingTreatment(),
+                                ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
+                            ),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.01,
+                            bottom: MediaQuery.of(context).size.height * 0.01,
+                            left: MediaQuery.of(context).size.width * 0.05,
+                            right: MediaQuery.of(context).size.width * 0.05,
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.02,
+                              bottom: MediaQuery.of(context).size.height * 0.02,
+                              left: MediaQuery.of(context).size.width * 0.05,
+                              right: MediaQuery.of(context).size.width * 0.05,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                    width: MediaQuery.of(context).size.width * 0.22,
+                                    height: MediaQuery.of(context).size.width * 0.22,
+                                    decoration: new BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.blue,
+                                        ),
+                                        shape: BoxShape.circle,
+                                        image: new DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: new NetworkImage(
+                                              'http://iconhomehealth.ca/assets/images/' +
+                                                  therapistList.data[index].doctorPhoto,
+                                              //    "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1"
+                                            )))),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      therapistList.data[index].doctorName, //'Dr. David Gilmour',
+                                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 16),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      therapistList.data[index].doctorExp + ' years Experience',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    InkWell(
+                                      child: Container(
+                                        width: MediaQuery.of(context).size.width * 0.4,
+                                        decoration: BoxDecoration(
+                                          /*border: Border.all(
+                                        color: Colors.blue,
+                                      ),*/
+                                          color: Color(0XFFFFC5DBF4),
+                                          borderRadius: BorderRadius.circular(8.0),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            left: MediaQuery.of(context).size.width * 0.02,
+                                            right: MediaQuery.of(context).size.width * 0.02,
+                                            top: MediaQuery.of(context).size.height * 0.008,
+                                            bottom: MediaQuery.of(context).size.height * 0.008,
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              therapistList.data[index].doctorType,
+                                              //'Massage therapist',
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                color: Colors.blue,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => AppointmentForm1(
+                                                      dId: therapistList.data[index].doctorId,
+                                                      cId: widget.cId,
+                                                    )));
+                                      },
+                                      child: Container(
+                                        width: MediaQuery.of(context).size.width * 0.4,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.blue,
+                                          ),
+                                          borderRadius: BorderRadius.circular(8.0),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            left: MediaQuery.of(context).size.width * 0.04,
+                                            right: MediaQuery.of(context).size.width * 0.04,
+                                            top: MediaQuery.of(context).size.height * 0.008,
+                                            bottom: MediaQuery.of(context).size.height * 0.008,
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              'Book Now',
+                                              style: TextStyle(
+                                                color: Colors.blue,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                } //do whatever you want
+              },
+            ),
+            /*FutureBuilder(
               future: commonBloc.hitGetApi(ApiUrl.therapist_list),
               builder: (context, AsyncSnapshot snap) {
                 if (snap.data == null) {
@@ -424,7 +608,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                             fit: BoxFit.fill,
                                             image: new NetworkImage(
                                               'http://iconhomehealth.ca/assets/images/' +
-                                                  therapistList.data[0].doctorPhoto,
+                                                  therapistList.data[index].doctorPhoto,
                                               //    "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1"
                                             )))),
                                 Column(
@@ -446,9 +630,9 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                       child: Container(
                                         width: MediaQuery.of(context).size.width * 0.4,
                                         decoration: BoxDecoration(
-                                          /*border: Border.all(
+                                          */ /*border: Border.all(
                                         color: Colors.blue,
-                                      ),*/
+                                      ),*/ /*
                                           color: Color(0XFFFFC5DBF4),
                                           borderRadius: BorderRadius.circular(8.0),
                                         ),
@@ -477,7 +661,12 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                     InkWell(
                                       onTap: () {
                                         Navigator.push(
-                                            context, MaterialPageRoute(builder: (context) => AvailabilitySettings()));
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => AppointmentForm1(
+                                                      dId: therapistList.data[index].doctorId,
+                                                      cId: widget.cId,
+                                                    )));
                                       },
                                       child: Container(
                                         width: MediaQuery.of(context).size.width * 0.4,
@@ -517,163 +706,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                   );
                 } //do whatever you want
               },
-            ),
-            FutureBuilder(
-              future: commonBloc.hitGetApi(ApiUrl.therapist_list),
-              builder: (context, AsyncSnapshot snap) {
-                if (snap.data == null) {
-                  return Container(
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                } else {
-                  TherapistList therapistList = TherapistList.fromJson(snap.data);
-                  return ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: therapistList.data.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DoctorDetailScreen(
-                                    doctorId: therapistList.data[index].doctorId) //OnGoingTreatment(),
-                                ),
-                          );
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                            ),
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.01,
-                            bottom: MediaQuery.of(context).size.height * 0.01,
-                            left: MediaQuery.of(context).size.width * 0.05,
-                            right: MediaQuery.of(context).size.width * 0.05,
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.02,
-                              bottom: MediaQuery.of(context).size.height * 0.02,
-                              left: MediaQuery.of(context).size.width * 0.05,
-                              right: MediaQuery.of(context).size.width * 0.05,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Container(
-                                    width: MediaQuery.of(context).size.width * 0.22,
-                                    height: MediaQuery.of(context).size.width * 0.22,
-                                    decoration: new BoxDecoration(
-                                        border: Border.all(
-                                          color: Colors.blue,
-                                        ),
-                                        shape: BoxShape.circle,
-                                        image: new DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: new NetworkImage(
-                                              'http://iconhomehealth.ca/assets/images/' +
-                                                  therapistList.data[0].doctorPhoto,
-                                              //    "https://th.bing.com/th/id/OIP.hw-Sk04AflX4Te0r8K4R9QAAAA?pid=ImgDet&rs=1"
-                                            )))),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      therapistList.data[index].doctorName, //'Dr. David Gilmour',
-                                      style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 16),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      therapistList.data[index].doctorExp + ' years Experience',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    InkWell(
-                                      child: Container(
-                                        width: MediaQuery.of(context).size.width * 0.4,
-                                        decoration: BoxDecoration(
-                                          /*border: Border.all(
-                                        color: Colors.blue,
-                                      ),*/
-                                          color: Color(0XFFFFC5DBF4),
-                                          borderRadius: BorderRadius.circular(8.0),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            left: MediaQuery.of(context).size.width * 0.02,
-                                            right: MediaQuery.of(context).size.width * 0.02,
-                                            top: MediaQuery.of(context).size.height * 0.008,
-                                            bottom: MediaQuery.of(context).size.height * 0.008,
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              therapistList.data[index].doctorType,
-                                              //'Massage therapist',
-                                              maxLines: 1,
-                                              style: TextStyle(
-                                                color: Colors.blue,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context, MaterialPageRoute(builder: (context) => AvailabilitySettings()));
-                                      },
-                                      child: Container(
-                                        width: MediaQuery.of(context).size.width * 0.4,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Colors.blue,
-                                          ),
-                                          borderRadius: BorderRadius.circular(8.0),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            left: MediaQuery.of(context).size.width * 0.04,
-                                            right: MediaQuery.of(context).size.width * 0.04,
-                                            top: MediaQuery.of(context).size.height * 0.008,
-                                            bottom: MediaQuery.of(context).size.height * 0.008,
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              'Book Now',
-                                              style: TextStyle(
-                                                color: Colors.blue,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                } //do whatever you want
-              },
-            ),
+            ),*/
           ],
         ),
       ),

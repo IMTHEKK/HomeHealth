@@ -4,8 +4,7 @@
 
 import 'dart:convert';
 
-Testimonials testimonialsFromJson(String str) =>
-    Testimonials.fromJson(json.decode(str));
+Testimonials testimonialsFromJson(String str) => Testimonials.fromJson(json.decode(str));
 
 String testimonialsToJson(Testimonials data) => json.encode(data.toJson());
 
@@ -50,6 +49,9 @@ class Datum {
     required this.createdAt,
     required this.updatedAt,
     required this.deletedAt,
+    required this.photo,
+    required this.doctorName,
+    required this.doctorPhoto,
   });
 
   String id;
@@ -63,6 +65,9 @@ class Datum {
   String createdAt;
   String updatedAt;
   String deletedAt;
+  String photo;
+  String doctorName;
+  String doctorPhoto;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['ID'] ?? '',
@@ -73,6 +78,9 @@ class Datum {
         ratings: json['ratings'] ?? '',
         comments: json['comments'] ?? '',
         status: json['status'] ?? '',
+        photo: json['photo'] ?? '',
+        doctorName: json['doctorName'] ?? '',
+        doctorPhoto: json['doctorPhoto'] ?? '',
         createdAt: json['createdAt'] ?? '',
         updatedAt: json['updatedAt'] == null ? '' : json['updatedAt'],
         deletedAt: json['deletedAt'] == null ? '' : json['deletedAt'],
@@ -90,5 +98,8 @@ class Datum {
         'createdAt': createdAt,
         'updatedAt': updatedAt,
         'deletedAt': deletedAt,
+        'photo': deletedAt,
+        'doctorName': deletedAt,
+        'doctorPhoto': deletedAt,
       };
 }

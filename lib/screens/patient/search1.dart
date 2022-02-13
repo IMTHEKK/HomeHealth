@@ -6,11 +6,12 @@ import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/screens/doctor_detail.dart';
 import 'package:untitled3/screens/search.dart';
+import 'package:untitled3/screens/search_doctor.dart';
 
 class SearchPage1 extends StatefulWidget {
   final cId, name;
 
-  const SearchPage1({Key? key, this.cId,this.name}) : super(key: key);
+  const SearchPage1({Key? key, this.cId, this.name}) : super(key: key);
 
   @override
   State<SearchPage1> createState() => _SearchPage1State();
@@ -90,33 +91,47 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                             bottom: MediaQuery.of(context).size.height * 0.02,
                           ),
                           child: Text(
-                            'Hello, '+widget.name,
+                            'Hello, ' + widget.name,
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.white,
                             ),
                           ),
                         ),
-                        Center(
-                          child: Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(30),
-                                //  border: Border.all(
-                                //    width: 1, /*color: Colors.purple, */style: BorderStyle.solid),
-                              ),
-                              child: ListTile(
-                                horizontalTitleGap: 0,
-                                leading: Icon(Icons.search),
-                                title: TextField(
-                                  decoration: InputDecoration(
-                                      hintText: 'Search therapist, specialities...',
-                                      //  contentPadding: EdgeInsets.all(15),
-                                      border: InputBorder.none),
-                                  onChanged: (value) {},
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SearchDoctor(
+                                          cId: widget.name,
+                                          type: ApiUrl.therapist_list + '?location=',
+                                        )));
+                          },
+                          child: Center(
+                            child: Container(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30),
+                                  //  border: Border.all(
+                                  //    width: 1, /*color: Colors.purple, */style: BorderStyle.solid),
                                 ),
-                              )),
+                                child: ListTile(
+                                  horizontalTitleGap: 0,
+                                  leading: Icon(Icons.search),
+                                  title: Text(
+                                    /*Field(
+                                    decoration: InputDecoration(
+                                        hintText: */
+                                    'Search therapist, specialities...',
+                                    //  contentPadding: EdgeInsets.all(15),
+                                    /*        border: InputBorder.none),
+                                    onChanged: (value) {},
+                                */
+                                  ),
+                                )),
+                          ),
                         ),
                       ],
                     ),
@@ -210,7 +225,12 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage(name: widget.name,)));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchPage(
+                                        name: widget.name,
+                                      )));
                         },
                         child: Container(
                           padding: EdgeInsets.only(
@@ -260,7 +280,7 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                               MaterialPageRoute(
                                   builder: (context) => DoctorDetailScreen(
                                         doctorId: therapistList.data[index].doctorId,
-                                    cId: widget.cId,
+                                        cId: widget.cId,
                                       ) //OnGoingTreatment(),
                                   ),
                             );
