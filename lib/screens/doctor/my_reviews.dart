@@ -1,12 +1,8 @@
 import 'dart:convert';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:untitled3/models/customers.dart';
-import 'package:untitled3/models/my_therapies_model.dart';
 import 'package:untitled3/models/testimonial_list.dart';
-import 'package:untitled3/models/treatment_list.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/utilities/text_wrapper.dart';
@@ -40,8 +36,7 @@ class _MyReviewsState extends State<MyReviews> {
                   ),
                 ),
                 child: Container(
-                  margin: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.03),
+                  margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -74,10 +69,7 @@ class _MyReviewsState extends State<MyReviews> {
                               // alignment: Alignment.center,
                               child: Text(
                                 'My Reviews',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22),
+                                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 22),
                               ),
                             ),
                           ),
@@ -89,25 +81,33 @@ class _MyReviewsState extends State<MyReviews> {
               ),
               Container(
                   margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.2,
+                    top: MediaQuery.of(context).size.height * 0.12,
                   ),
                   child: FutureBuilder(
                     future: commonBloc.hitGetApi(
 
                         ///  'https://run.mocky.io/v3/eb5f43d1-0e08-48c1-be04-292dae6b8138'),
-                        ApiUrl.get_testimonial_list +
-                            '?th_id=' +
-                            widget.id.toString()),
+                        ApiUrl.get_testimonial_list + '?th_id=' + widget.id.toString()),
                     builder: (context, AsyncSnapshot snap) {
                       if (snap.data == null) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
+                          return Container(
+                           // color: Colors.white,
+                            height: MediaQuery.of(context).size.height,
+                            child:
+                              Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    CircularProgressIndicator(color:Colors.white),
+                                  ],
+                                ),
+                              )
+                          );
                       } else {
                         print(snap.data.toString());
                         if (snap.data['code'] == 200) {
-                          Testimonials testimonials =
-                              testimonialsFromJson(json.encode(snap.data));
+                          Testimonials testimonials = testimonialsFromJson(json.encode(snap.data));
 
                           return ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
@@ -120,69 +120,52 @@ class _MyReviewsState extends State<MyReviews> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 margin: EdgeInsets.only(
-                                  top:
-                                      MediaQuery.of(context).size.height * 0.01,
-                                  bottom:
-                                      MediaQuery.of(context).size.height * 0.01,
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.05,
-                                  right:
-                                      MediaQuery.of(context).size.width * 0.05,
+                                  top: MediaQuery.of(context).size.height * 0.01,
+                                  bottom: MediaQuery.of(context).size.height * 0.01,
+                                  left: MediaQuery.of(context).size.width * 0.05,
+                                  right: MediaQuery.of(context).size.width * 0.05,
                                 ),
                                 child: Container(
                                   child: Row(
                                     children: [
                                       Expanded(
                                         flex: 1,
-                                        child: Center(
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(120.0),
-                                            ),
-                                            child: Container(
-                                              color: Colors.black12,
-                                              child: const Icon(
-                                                Icons.person,
-                                                color: Colors.grey,
-                                                size: 80,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                        child: Container(
+                                            width: MediaQuery.of(context).size.width * 0.22,
+                                            height: MediaQuery.of(context).size.width * 0.22,
+                                            decoration: new BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.blue,
+                                                ),
+                                                shape: BoxShape.circle,
+                                                image: new DecorationImage(
+                                                    fit: BoxFit.fill,
+                                                    image: new NetworkImage(
+                                                      'http://iconhomehealth.ca/assets/images/' +
+                                                          testimonials.data[position].photo,
+                                                    )))),
                                       ),
                                       Expanded(
                                         flex: 3,
                                         child: Container(
                                           margin: EdgeInsets.only(
-                                            left: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.05,
-                                            right: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.05,
+                                            left: MediaQuery.of(context).size.width * 0.05,
+                                            right: MediaQuery.of(context).size.width * 0.05,
                                           ),
                                           child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               SizedBox(height: 10),
                                               Text(
-                                                testimonials
-                                                    .data[position].name,
+                                                testimonials.data[position].name,
                                                 style: TextStyle(
                                                   color: Colors.grey,
                                                 ),
                                               ),
                                               SizedBox(height: 10),
                                               RatingBarIndicator(
-                                                rating: double.parse(
-                                                    testimonials
-                                                        .data[position].ratings
-                                                        .toString()),
-                                                itemBuilder: (context, index) =>
-                                                    Icon(
+                                                rating: double.parse(testimonials.data[position].ratings.toString()),
+                                                itemBuilder: (context, index) => Icon(
                                                   Icons.star,
                                                   color: Colors.blue,
                                                 ),
@@ -192,25 +175,16 @@ class _MyReviewsState extends State<MyReviews> {
                                               ),
                                               SizedBox(height: 10),
                                               Container(
-                                                child: TextWrapper(
-                                                    text: testimonials
-                                                        .data[position]
-                                                        .comments),
+                                                child: TextWrapper(text: testimonials.data[position].comments),
                                               ),
-                                              SizedBox(height: 10),
+                                             /* SizedBox(height: 10),
                                               SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.4,
+                                                width: MediaQuery.of(context).size.width * 0.4,
                                                 child: Row(
                                                   children: [
                                                     Expanded(
                                                       child: Text(
-                                                        'Reviewed by: ' +
-                                                            testimonials
-                                                                .data[position]
-                                                                .name,
+                                                        *//*'Reviewed by: ' + *//*testimonials.data[position].name,
                                                         style: TextStyle(
                                                           color: Colors.grey,
                                                         ),
@@ -218,11 +192,10 @@ class _MyReviewsState extends State<MyReviews> {
                                                     ),
                                                   ],
                                                 ),
-                                              ),
+                                              ),*/
                                               SizedBox(height: 10),
                                               Text(
-                                                testimonials
-                                                    .data[position].createdAt,
+                                                testimonials.data[position].createdAt,
                                                 style: TextStyle(
                                                   color: Colors.grey,
                                                 ),

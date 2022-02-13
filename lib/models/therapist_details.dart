@@ -65,7 +65,7 @@ class Datum {
         doctorExp: json['doctorExp'] ?? '',
         totalPatients: json['totalPatients'] ?? '',
         doctorPhoto: json['doctorPhoto'] ?? '',
-        doctorRatings: json['doctorRatings'] ?? '',
+        doctorRatings: json['doctorRatings'] ?? '0',
       );
 
   Map<String, dynamic> toJson() => {

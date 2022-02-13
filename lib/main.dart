@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'poppins',
         primarySwatch: Colors.blue,
       ),
-      home: /*TherapyCompletionForm(),*/WebhookPaymentScreen(), // /* EditProfile(),*/ Selection(),
+      home:/* TherapyCompletionForm(),*/Splash(), // /* EditProfile(),*/ Selection(),
     );
   }
 }

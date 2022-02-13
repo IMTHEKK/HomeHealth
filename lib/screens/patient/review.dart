@@ -54,7 +54,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                     children: [
                       Container(
                         margin: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.05,
+                          top: MediaQuery.of(context).size.height * 0.07,
                         ),
                         child: Row(
                           children: [

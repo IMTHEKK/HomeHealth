@@ -49,14 +49,14 @@ class Datum {
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         isDisabled: json['is_disabled'] ?? '',
-        scheduleDate: json['schedule_date'].toString(),
+        scheduleDate: json['schedule_date'] ?? '',
         slotsJson: List<SlotsJson>.from(json['slots_json'].map((x) => SlotsJson.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         'is_disabled': isDisabled,
         'schedule_date': scheduleDate,
-        //'${scheduleDate.year.toString().padLeft(4, '0')}-${scheduleDate.month.toString().padLeft(2, '0')}-${scheduleDate.day.toString().padLeft(2, '0')}',
+        // '${scheduleDate.year.toString().padLeft(4, '0')}-${scheduleDate.month.toString().padLeft(2, '0')}-${scheduleDate.day.toString().padLeft(2, '0')}',
         'slots_json': List<dynamic>.from(slotsJson.map((x) => x.toJson())),
       };
 }
@@ -65,26 +65,22 @@ class SlotsJson {
   SlotsJson({
     required this.startTime,
     required this.endTime,
-    required this.slotsJsonIsDisabled,
     required this.isDisabled,
   });
 
   String startTime;
   String endTime;
-  bool slotsJsonIsDisabled;
   bool isDisabled;
 
   factory SlotsJson.fromJson(Map<String, dynamic> json) => SlotsJson(
         startTime: json['start_time'] ?? '',
         endTime: json['end_time'] ?? '',
-        slotsJsonIsDisabled: json['is_disabled'],
         isDisabled: json['is_disabled'],
       );
 
   Map<String, dynamic> toJson() => {
         'start_time': startTime,
         'end_time': endTime,
-        'is_disabled': slotsJsonIsDisabled,
         'is_disabled': isDisabled,
       };
 }
