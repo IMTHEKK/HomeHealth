@@ -7,13 +7,12 @@ import 'package:untitled3/models/treatment_details.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/screens/doctor/therapy_completion_form.dart';
-import 'package:untitled3/screens/patient/appointment_form1.dart';
 import 'package:untitled3/screens/patient/review.dart';
 
 class TherpiesDetailsScreen extends StatefulWidget {
-  final apId;
+  final apId, type;
 
-  const TherpiesDetailsScreen({Key? key, this.apId}) : super(key: key);
+  const TherpiesDetailsScreen({Key? key, this.apId, this.type}) : super(key: key);
 
   @override
   TherpiesDetailsScreenState createState() => TherpiesDetailsScreenState();
@@ -312,8 +311,8 @@ class TherpiesDetailsScreenState extends State<TherpiesDetailsScreen> {
                                               Center(
                                                 child: Text(
                                                   DateFormat('yyyy-MM-dd')
-                                                      .format(treatmentList.data[0].appointmentDate)
-                                                      .toString() +
+                                                          .format(treatmentList.data[0].appointmentDate)
+                                                          .toString() +
                                                       '\t\t' +
                                                       treatmentList.data[0].appointmentTime.toString(),
 
@@ -819,7 +818,7 @@ class TherpiesDetailsScreenState extends State<TherpiesDetailsScreen> {
                                   child: Text('Relationship: ' + treatmentList.data[0].emergencyContactRelation),
                                 ),
                                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                                if( treatmentList.data[0].status=='0')
+                                if (treatmentList.data[0].status == '0')
                                   Container(
                                     margin: EdgeInsets.only(
                                       left: MediaQuery.of(context).size.width * 0.07,
@@ -830,26 +829,40 @@ class TherpiesDetailsScreenState extends State<TherpiesDetailsScreen> {
                                       style: TextStyle(
                                         fontSize: 10,
                                       ),
-                                    ),),
-                                if( treatmentList.data[0].status=='0')
-                                  SizedBox(height: 10),
-                                if( treatmentList.data[0].status=='2')
+                                    ),
+                                  ),
+                                if (treatmentList.data[0].status == '0') SizedBox(height: 10),
+                                if (treatmentList.data[0].status == '2')
                                   Container(
                                     margin: EdgeInsets.only(
                                       left: MediaQuery.of(context).size.width * 0.07,
                                       right: MediaQuery.of(context).size.width * 0.07,
                                     ),
-                                    child:Text(
+                                    child: Text(
                                       'Treatment Status: Request Cancelled',
                                       style: TextStyle(
                                         fontSize: 10,
                                       ),
-                                    ),),
-                                if( treatmentList.data[0].status=='2')
-                                  SizedBox(height: 10),
-                                if( treatmentList.data[0].status=='1')
+                                    ),
+                                  ),
+                                if (treatmentList.data[0].status == '2') SizedBox(height: 10),
+                                if (treatmentList.data[0].status == '1' && widget.type == '0')
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width * 0.07,
+                                      right: MediaQuery.of(context).size.width * 0.07,
+                                    ),
+                                    child: Text(
+                                      'Treatment Status: Accepted',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ),
+                                if (treatmentList.data[0].status == '1' && widget.type == '0') SizedBox(height: 10),
+                                if (treatmentList.data[0].status == '1' && widget.type == '1')
                                   InkWell(
-                                    onTap:(){
+                                    onTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -858,7 +871,7 @@ class TherpiesDetailsScreenState extends State<TherpiesDetailsScreen> {
                                       );
                                     },
                                     child: Container(
-                                      margin:EdgeInsets.only(
+                                      margin: EdgeInsets.only(
                                         left: MediaQuery.of(context).size.width * 0.04,
                                         right: MediaQuery.of(context).size.width * 0.04,
                                         bottom: MediaQuery.of(context).size.height * 0.02,
@@ -889,7 +902,7 @@ class TherpiesDetailsScreenState extends State<TherpiesDetailsScreen> {
                                       ),
                                     ),
                                   ),
-                                  /*Container(
+                                /*Container(
                                     margin: EdgeInsets.only(
                                       left: MediaQuery.of(context).size.width * 0.07,
                                       right: MediaQuery.of(context).size.width * 0.07,
@@ -900,24 +913,64 @@ class TherpiesDetailsScreenState extends State<TherpiesDetailsScreen> {
                                         fontSize: 10,
                                       ),
                                     ),),*/
-                                if( treatmentList.data[0].status=='1')
-                                  SizedBox(height: 10),
-                                if( treatmentList.data[0].status=='3')
+                                if (treatmentList.data[0].status == '1' && widget.type == '1') SizedBox(height: 10),
+                                if (treatmentList.data[0].status == '3' && widget.type == '1')
                                   Container(
                                     margin: EdgeInsets.only(
                                       left: MediaQuery.of(context).size.width * 0.07,
                                       right: MediaQuery.of(context).size.width * 0.07,
                                     ),
-                                    child:Text(
+                                    child: Text(
                                       'Treatment Status: Completed',
                                       style: TextStyle(
                                         fontSize: 10,
                                       ),
-                                    ),),
-                                if( treatmentList.data[0].status=='3')
-                                  SizedBox(height: 10),
+                                    ),
+                                  ),
+                                if (treatmentList.data[0].status == '3' && widget.type == '0')
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ReviewScreen(
+                                                    dId: treatmentList.data[0].doctorId,
+                                                    cId: treatmentList.data[0].customerId,
+                                                    aId: treatmentList.data[0].bookingId,
+                                                  )));
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.only(
+                                        left: MediaQuery.of(context).size.width * 0.07,
+                                        right: MediaQuery.of(context).size.width * 0.07,
+                                        top: MediaQuery.of(context).size.height * 0.008,
+                                        bottom: MediaQuery.of(context).size.height * 0.008,
+                                      ),
+                                      margin: EdgeInsets.only(
+                                        left: MediaQuery.of(context).size.width * 0.07,
+                                        right: MediaQuery.of(context).size.width * 0.07,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                        ),
+                                        color: Colors.green,
+                                        borderRadius: BorderRadius.circular(8.0),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'Give Therapist a Review',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                if (treatmentList.data[0].status == '3') SizedBox(height: 10),
                                 //if( treatmentList.data[0].status=='3')
-                                if( treatmentList.data[0].status=='3')
+                                if (treatmentList.data[0].status == '3')
 //                                  InkWell(
 //                                    onTap: () {
 //                                      Navigator.push(
@@ -960,8 +1013,7 @@ class TherpiesDetailsScreenState extends State<TherpiesDetailsScreen> {
 //                                      ),
 //                                    ),
 //                                  ),
-                                if( treatmentList.data[0].status=='3')
-                                  SizedBox(height: 20),
+                                  if (treatmentList.data[0].status == '3') SizedBox(height: 20),
                               ],
                             ),
                           ),

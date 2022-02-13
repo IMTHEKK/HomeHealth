@@ -1,4 +1,3 @@
-import 'package:chips_choice_null_safety/chips_choice_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:untitled3/network/api_blocs.dart';
@@ -27,6 +26,28 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
   var historyController = TextEditingController();
   var sComplaintsController = TextEditingController();
   var previousHxRxController = TextEditingController();
+  var observationController = TextEditingController();
+  var scaleController = TextEditingController();
+  var outcomeController = TextEditingController();
+  var pattternController = TextEditingController();
+  var hobbiesController = TextEditingController();
+  var resultsController = TextEditingController();
+  var headachesController = TextEditingController();
+  var movementController = TextEditingController();
+  var activeController = TextEditingController();
+  var passiveController = TextEditingController();
+  var resistedController = TextEditingController();
+  var symptomsController = TextEditingController();
+  var palpationController = TextEditingController();
+  var analysisController = TextEditingController();
+  var specialTestsController = TextEditingController();
+  var slrController = TextEditingController();
+  var vaController = TextEditingController();
+  var slumpController = TextEditingController();
+  var ulttController = TextEditingController();
+  var pkbController = TextEditingController();
+  var stabilityController = TextEditingController();
+  var treatmentPlanController = TextEditingController();
 
   bool isVisible = false;
 
@@ -62,9 +83,21 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
   var hrsPatternController;
   var activitiesController;
 
-  var showvalue;
-
-  var resultsController;
+  var showValue;
+  bool? valueFirst = false;
+  bool? valueSecond = false;
+  bool? valueThird = false;
+  bool? valueFourth = false;
+  bool? valueFifth = false;
+  bool? valueSixth = false;
+  bool? valueSeventh = false;
+  bool? valueEighth = false;
+  bool? valueNinth = false;
+  bool? valueTenth = false;
+  bool? valueEleventh = false;
+  bool? valueTwelve = false;
+  bool? valueThirteen = false;
+  bool? valueFourteen = false;
 
   bool isValid() {
     if (nameController.text.toString().isEmpty) {
@@ -192,7 +225,7 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Full Name",
+                                        hintText: "Client Name",
                                         fillColor: Colors.white70),
                                   ),
                                   trailing: Icon(Icons.person),
@@ -242,7 +275,32 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Assessment Date",
+                                        hintText: "Occupation",
+                                        fillColor: Colors.white70),
+                                  ),
+                                  //  trailing: Icon(Icons.person),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  // color: Colors.blue,
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    controller: occupationController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Date of Assessment",
                                         fillColor: Colors.white70),
                                   ),
                                   //  trailing: Icon(Icons.person),
@@ -278,32 +336,7 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                              Container(
-                                decoration: BoxDecoration(
-                                  // color: Colors.blue,
-                                  border: Border.all(
-                                    color: Colors.black12,
-                                  ),
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
-                                child: ListTile(
-                                  title: TextField(
-                                    controller: occupationController,
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Occupation",
-                                        fillColor: Colors.white70),
-                                  ),
-                                  //  trailing: Icon(Icons.person),
-                                ),
-                                margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
-                                ),
-                              ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                              Container(
+                              /*Container(
                                 decoration: BoxDecoration(
                                   // color: Colors.blue,
                                   border: Border.all(
@@ -326,9 +359,156 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                   left: MediaQuery.of(context).size.width * 0.07,
                                   right: MediaQuery.of(context).size.width * 0.07,
                                 ),
+                              ),*/
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text('Off Work'),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text('Yes'),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Checkbox(
+                                      // checkColor: Colors.greenAccent,
+                                      // activeColor: Colors.red,
+                                      value: valueFirst,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          valueFirst = value;
+                                        });
+                                      },
+                                    ),
+                                    Text('NO'),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Checkbox(
+                                      value: !valueFirst!,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          valueFirst = !valueFirst!;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                              Text('Subjective History'.toUpperCase()),
+                              Container(
+                                decoration: BoxDecoration(
+                                  // color: Colors.blue,
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: occupationController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Since",
+                                        fillColor: Colors.white70),
+                                  ),
+                                  //  trailing: Icon(Icons.person),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                              Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.09,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Subjective History'.toUpperCase(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text('Drive'),
+                                    SizedBox(width: 10),
+                                    Checkbox(
+                                      // checkColor: Colors.greenAccent,
+                                      // activeColor: Colors.red,
+                                      value: valueSecond,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          valueSecond = value;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text('Front Passenger'),
+                                    SizedBox(width: 10),
+                                    Checkbox(
+                                      // checkColor: Colors.greenAccent,
+                                      // activeColor: Colors.red,
+                                      value: valueThird,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          valueThird = value;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text('Rear Passenger'),
+                                    SizedBox(width: 10),
+                                    Checkbox(
+                                      value: !valueThird!,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          valueThird = !valueThird!;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                               Container(
                                 decoration: BoxDecoration(
@@ -339,6 +519,8 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
+                                    maxLength: 150,
+                                    maxLines: 6,
                                     controller: historyController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -362,6 +544,8 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
+                                    maxLength: 150,
+                                    maxLines: 6,
                                     controller: sComplaintsController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -376,7 +560,7 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                              Text('Aggravating Factors'),
+                              /*Text('Aggravating Factors'),
                               ChipsChoice<String>.multiple(
                                 value: tags,
                                 onChanged: (val) => {print(tags), setState(() => tags = val)},
@@ -391,6 +575,31 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 wrapped: true,
                                 textDirection: TextDirection.rtl,
+                              ),*/
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Aggravating Factors: ',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            'bending sitting running standing walking extension still/move lying supine R L prone am as day progresses pm other',
+                                            style: TextStyle(fontWeight: FontWeight.w300),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                               Container(
@@ -402,6 +611,8 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
+                                    maxLength: 150,
+                                    maxLines: 6,
                                     controller: previousHxRxController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -415,8 +626,96 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                   right: MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                              Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.09,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Present Symptoms'.toUpperCase(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                              Text('Present Symptoms'.toUpperCase()),
+                              Container(
+                                height: MediaQuery.of(context).size.height * 0.4,
+                                width: MediaQuery.of(context).size.width,
+                                child: Image.asset('images/body.jpg'),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                height: MediaQuery.of(context).size.height * 0.2,
+                                width: MediaQuery.of(context).size.width,
+                                child: Image.asset('images/scale.jpg'),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: outcomeMeasuresController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        //hintText: "",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text('No Pain'),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Checkbox(
+                                      // checkColor: Colors.greenAccent,
+                                      // activeColor: Colors.red,
+                                      value: valueFourth,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          valueFourth = value;
+                                        });
+                                      },
+                                    ),
+                                    Text('Worst Pain'),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Checkbox(
+                                      value: !valueFourth!,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          valueFourth = !valueFourth!;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                               Container(
                                 decoration: BoxDecoration(
@@ -486,39 +785,59 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                   right: MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text('Diagnostics Tests'),
+                                  ],
+                                ),
+                              ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                              Text('Diagnostics Tests'),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                              Row(
-                                children: [
-                                  Text('X-Rays'),
-                                  Row(
-                                    children: [
-                                      /*Checkbox(
-                                        value: this.showvalue,
-                                        onChanged: (var value) {
-                                          setState(() {
-                                            this.showvalue = value;
-                                          });
-                                        },
-                                      ),*/
-                                      Text('Yes'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      /*Checkbox(
-                                        value: this.showvalue,
-                                        onChanged: (var value) {
-                                          setState(() {
-                                            this.showvalue = value;
-                                          });
-                                        },
-                                      ),*/
-                                      Text('No'),
-                                    ],
-                                  ),
-                                ],
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text('X-Ray: '),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text('Yes'),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Checkbox(
+                                      // checkColor: Colors.greenAccent,
+                                      // activeColor: Colors.red,
+                                      value: valueFifth,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          valueFifth = value;
+                                        });
+                                      },
+                                    ),
+                                    Text('No'),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Checkbox(
+                                      value: !valueFifth!,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          valueFifth = !valueFifth!;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                               Container(
@@ -544,87 +863,897 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                              Text('Symptoms Have'),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        value: true,//this.showvalue,
-                                        onChanged: (value) {
-                                          setState(() {
-                                          //  this.showvalue = value;
-                                          });
-                                        },
-                                      ),
-                                      Text('Improved'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      /*Checkbox(
-                                        value: this.showvalue,
-                                        onChanged: (var value) {
-                                          setState(() {
-                                            this.showvalue = value;
-                                          });
-                                        },
-                                      ),*/
-                                      Text('Unchanged'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      /*Checkbox(
-                                        value: this.showvalue,
-                                        onChanged: (var value) {
-                                          setState(() {
-                                            this.showvalue = value;
-                                          });
-                                        },
-                                      ),*/
-                                      Text('Worsened'),
-                                    ],
-                                  ),
-                                ],
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Medications: ',
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text('NIL'),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Checkbox(
+                                      // checkColor: Colors.greenAccent,
+                                      // activeColor: Colors.red,
+                                      value: valueSixth,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          valueSixth = value;
+                                        });
+                                      },
+                                    ),
+                                    Text('NSAIDS'),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Checkbox(
+                                      value: !valueSixth!,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          valueSixth = !valueSixth!;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text('ANALG'),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Checkbox(
+                                      // checkColor: Colors.greenAccent,
+                                      // activeColor: Colors.red,
+                                      value: valueSixth,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          valueSixth = value;
+                                        });
+                                      },
+                                    ),
+                                    Text('Other'),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Checkbox(
+                                      value: !valueSixth!,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          valueSixth = !valueSixth!;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Sleep Disturbed: '),
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        value: true,//this.showvalue,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            //  this.showvalue = value;
-                                          });
-                                        },
-                                      ),
-                                      Text('Yes'),
-                                    ],
+                              Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.11,
+                                    right: MediaQuery.of(context).size.width * 0.07,
                                   ),
-                                  Row(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      /*Checkbox(
-                                        value: this.showvalue,
-                                        onChanged: (var value) {
-                                          setState(() {
-                                            this.showvalue = value;
-                                          });
-                                        },
-                                      ),*/
-                                      Text('No'),
+                                      Text('Symptoms Have'),
                                     ],
-                                  ),
-                                ],
-                              ),
-
+                                  )),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Row(
+                                  //                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                          value: valueEighth, //this.showvalue,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              valueEighth = value;
+                                            });
+                                          },
+                                        ),
+                                        Text('Improved'),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                          value: valueEighth,
+                                          onChanged: (var value) {
+                                            setState(() {
+                                              valueEighth = value;
+                                            });
+                                          },
+                                        ),
+                                        Text('Unchanged'),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Checkbox(
+                                      value: valueEighth,
+                                      onChanged: (var value) {
+                                        setState(() {
+                                          valueEighth = value;
+                                        });
+                                      },
+                                    ),
+                                    Text('Worsened'),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('Sleep Disturbed: '),
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                          value: valueNinth,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              valueNinth = value;
+                                            });
+                                          },
+                                        ),
+                                        Text('Yes'),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Checkbox(
+                                          value: !valueNinth!,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              valueNinth = !valueNinth!;
+                                            });
+                                          },
+                                        ),
+                                        Text('No'),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Headaches",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.09,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Objective'.toUpperCase(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Observations/Postures",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                              Container(
+                                  margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width * 0.09,
+                                    right: MediaQuery.of(context).size.width * 0.07,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'range of motion'.toUpperCase(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Movement",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Active",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Passive",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Resisted",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Symptoms",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Text('C-Spine'),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                height: MediaQuery.of(context).size.width * 0.6,
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                child: Image.asset('images/cspine.jpg'),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Text('Spinal ROM'),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Text('L-Spine'),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                height: MediaQuery.of(context).size.width * 0.6,
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                child: Image.asset('images/lspine.jpg'),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    maxLines: 3,
+                                    maxLength: 180,
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Palpation",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Neurological'.toUpperCase(),
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                                    Text(
+                                      'Reflexes: ',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: valueTenth,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  valueTenth = value;
+                                                });
+                                              },
+                                            ),
+                                            Text('Normal'),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: !valueTenth!,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  valueTenth = !valueTenth!;
+                                                });
+                                              },
+                                            ),
+                                            Text('Abnormal'),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Myotomes: ',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: valueEleventh,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  valueEleventh = value;
+                                                });
+                                              },
+                                            ),
+                                            Text('Normal'),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: !valueEleventh!,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  valueEleventh = !valueEleventh!;
+                                                });
+                                              },
+                                            ),
+                                            Text('Abnormal'),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Sensation: ',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: valueTwelve,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  valueTwelve = value;
+                                                });
+                                              },
+                                            ),
+                                            Text('Normal'),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: !valueTwelve!,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  valueTwelve = !valueTwelve!;
+                                                });
+                                              },
+                                            ),
+                                            Text('Abnormal'),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    maxLines: 3,
+                                    maxLength: 180,
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Analysis",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Informed Consent Given: ',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: valueThirteen,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  valueThirteen = value;
+                                                });
+                                              },
+                                            ),
+                                            Text('Yes'),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: !valueThirteen!,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  valueThirteen = !valueThirteen!;
+                                                });
+                                              },
+                                            ),
+                                            Text('No'),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.11,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Risk \& Benefits Explained: ',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: valueFourteen,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  valueFourteen = value;
+                                                });
+                                              },
+                                            ),
+                                            Text('Yes'),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Checkbox(
+                                              value: !valueFourteen!,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  valueFourteen = !valueFourteen!;
+                                                });
+                                              },
+                                            ),
+                                            Text('No'),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    maxLines: 3,
+                                    maxLength: 180,
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Special Tests",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "SLR",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "VA",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Slump",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "ULTT",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "PKB",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Stability",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ListTile(
+                                  title: TextField(
+                                    maxLength: 180,
+                                    maxLines: 5,
+                                    // controller: resultsController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintText: "Treatment Plan",
+                                        fillColor: Colors.white70),
+                                  ),
+                                ),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  right: MediaQuery.of(context).size.width * 0.07,
+                                ),
+                              ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                               Container(
                                 margin: EdgeInsets.only(
@@ -637,26 +1766,21 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     isVisible = true;
                                     setState(() {});
                                     Map<String, dynamic> params = {
-                                      'age': occupationController.text.toString(),
-                                      'gender': genderController.text.toString(),
-                                      'therapy': therapyController.text.toString(),
-                                      'patient_concern': patientConcernController.text.toString(),
-                                      'appointment_date': appointmentDateController.text.toString(),
-                                      'appointment_time': appointmentTimeController.text.toString(),
-                                      'docid': widget.dId.toString(),
-                                      'cid': widget.cId.toString(),
-                                      'full-name': nameController.text.toString(),
+                                      'appointment_id': '',
+                                      'therapist_comments': 'test',
+                                      'status': '1',
+                                      'assessment_form': {"test": "value"}
                                     };
                                     print('######################' + params.toString());
                                     if (isValid()) {
-                                      var res = await commonBloc.hitPostApi(params, ApiUrl.book_appointment);
+                                      var res = await commonBloc.hitPostApi(params, ApiUrl.update_appointment_details);
                                       if (res['code'] == 200) {
                                         Utils.showToast(context, '${res['message']}');
                                         Navigator.pop(context);
                                       } else if (res['code'] == 400) {
                                         Utils.showToast(context, '${res['validation-errors']}');
                                       } else {
-                                        Utils.showToast(context, 'Appointment booking failed');
+                                        Utils.showToast(context, 'failed');
                                       }
                                     }
                                     isVisible = false;

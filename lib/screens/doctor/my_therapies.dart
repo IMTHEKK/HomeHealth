@@ -30,6 +30,7 @@ class _MyTherapiesState extends State<MyTherapies> {
               child: Stack(
                 children: [
                   Container(
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
                     height: MediaQuery.of(context).size.height * 0.3,
                     decoration: BoxDecoration(
                       color: Color(0xfff7f7f7), //s.grey,
@@ -38,53 +39,50 @@ class _MyTherapiesState extends State<MyTherapies> {
                         bottomRight: Radius.circular(25),
                       ),
                     ),
-                    child: Container(
-                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width * 0.05,
-                                    top: 20,
-                                  ),
-                                  child: Icon(
-                                    Icons.arrow_back,
-                                    color: Colors.black,
-                                  ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.05,
+                                  top: 20,
+                                ),
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.black,
                                 ),
                               ),
-                              Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width * 0.18,
-                                    top: 5,
-                                  ),
-                                  // alignment: Alignment.center,
-                                  child: Text(
-                                    'My Therapies',
-                                    style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 22),
-                                  ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.all(8),
+                                margin: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width * 0.18,
+                                  top: 5,
+                                ),
+                                // alignment: Alignment.center,
+                                child: Text(
+                                  'My Therapies',
+                                  style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 22),
                                 ),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.2,
+                      top: MediaQuery.of(context).size.height * 0.13,
                     ),
                     child: FutureBuilder(
                       future: commonBloc.hitGetApi(
@@ -96,11 +94,17 @@ class _MyTherapiesState extends State<MyTherapies> {
                       builder: (context, AsyncSnapshot snap) {
                         if (snap.data == null) {
                           return Container(
-                            // height: MediaQuery.of(context).size.height * 0.3,
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          );
+                              // color: Colors.white,
+                              height: MediaQuery.of(context).size.height,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    CircularProgressIndicator(color: Colors.white),
+                                  ],
+                                ),
+                              ));
                         } else {
                           if (snap.data['code'] == 200) {
                             MyTherapiesModel treatmentList = MyTherapiesModel.fromJson(snap.data);
@@ -119,6 +123,7 @@ class _MyTherapiesState extends State<MyTherapies> {
                                         MaterialPageRoute(
                                           builder: (context) => TherpiesDetailsScreen(
                                             apId: treatmentList.data[position].bookingId,
+                                            type:'1',
                                           ),
                                         ),
                                       );
@@ -194,9 +199,9 @@ class _MyTherapiesState extends State<MyTherapies> {
                                               Container(
                                                 margin: EdgeInsets.only(
                                                     bottom: MediaQuery.of(context).size.height * 0.01, left: 5),
-                                               // color: Colors.grey,
+                                                // color: Colors.grey,
                                                 child: Text(
-                                                  'DOB: '+treatmentList.data[position].dob,
+                                                  'DOB: ' + treatmentList.data[position].dob,
                                                   // style: TextStyle(
                                                   //   color: Colors.white,
                                                   // ),
