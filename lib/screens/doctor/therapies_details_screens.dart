@@ -866,7 +866,9 @@ class TherpiesDetailsScreenState extends State<TherpiesDetailsScreen> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => TherapyCompletionForm(),
+                                          builder: (context) => TherapyCompletionForm(
+                                            therapyId: treatmentList.data[0].bookingId,
+                                          ),
                                         ),
                                       );
                                     },

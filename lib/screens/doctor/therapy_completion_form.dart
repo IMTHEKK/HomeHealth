@@ -5,34 +5,31 @@ import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/utilities/utils.dart';
 
 class TherapyCompletionForm extends StatefulWidget {
-  final dId, cId;
+  final dId, cId, therapyId;
 
-  TherapyCompletionForm({Key? key, this.dId, this.cId}) : super(key: key);
+  TherapyCompletionForm({Key? key, this.dId, this.cId, this.therapyId}) : super(key: key);
 
   @override
   _TherapyCompletionFormState createState() => _TherapyCompletionFormState();
 }
 
 class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
+  var clientNameController = TextEditingController();
   var occupationController = TextEditingController();
-  var genderController = TextEditingController();
-  var therapyController = TextEditingController();
-  var appointmentDateController = TextEditingController();
-  var passwordController = TextEditingController();
-  var appointmentTimeController = TextEditingController();
-  var patientConcernController = TextEditingController();
-  var nameController = TextEditingController();
-  var injuryController = TextEditingController();
+  var dobController = TextEditingController();
+  var assessmentDateController = TextEditingController();
+  var injuryDateController = TextEditingController();
+  var sinceController = TextEditingController();
   var historyController = TextEditingController();
   var sComplaintsController = TextEditingController();
   var previousHxRxController = TextEditingController();
-  var observationController = TextEditingController();
   var scaleController = TextEditingController();
   var outcomeController = TextEditingController();
-  var pattternController = TextEditingController();
+  var patternController = TextEditingController();
   var hobbiesController = TextEditingController();
   var resultsController = TextEditingController();
   var headachesController = TextEditingController();
+  var observationsController = TextEditingController();
   var movementController = TextEditingController();
   var activeController = TextEditingController();
   var passiveController = TextEditingController();
@@ -50,76 +47,124 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
   var treatmentPlanController = TextEditingController();
 
   bool isVisible = false;
-
-  int? _gender = 0;
-  int? _appointmentDate = 0;
-
-  var _value1;
-
-  int tag = 1;
-
-  // multiple choice value
-  List<String> tags = [];
-
-  // list of string options
-  List<String> options = [
-    'bending',
-    'sitting',
-    'running',
-    'standing',
-    'walking',
-    'extension',
-    'still/move',
-    'lying supine',
-    'R L',
-    'prone',
-    'am',
-    'as day progresses',
-    'pm',
-    'other'
-  ];
-
-  var outcomeMeasuresController;
-  var hrsPatternController;
-  var activitiesController;
-
-  var showValue;
-  bool? valueFirst = false;
-  bool? valueSecond = false;
-  bool? valueThird = false;
-  bool? valueFourth = false;
-  bool? valueFifth = false;
-  bool? valueSixth = false;
-  bool? valueSeventh = false;
-  bool? valueEighth = false;
-  bool? valueNinth = false;
-  bool? valueTenth = false;
-  bool? valueEleventh = false;
-  bool? valueTwelve = false;
-  bool? valueThirteen = false;
-  bool? valueFourteen = false;
+  bool? offWorkBool = false;
+  bool? driveBool = false;
+  bool? passengerBool = false;
+  bool? painBool = false;
+  bool? xrayBool = false;
+  bool? nilBool = false;
+  bool? nsaidsBool = false;
+  bool? analgBool = false;
+  bool? otherBool = false;
+  bool? improvedBool = false;
+  bool? unchangedBool = false;
+  bool? worsenedBool = false;
+  bool? sleepBool = false;
+  bool? reflexesBool = false;
+  bool? myotomesBool = false;
+  bool? sensationBool = false;
+  bool? informedConsentBool = false;
+  bool? riskBool = false;
 
   bool isValid() {
-    if (nameController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter your full name");
+    if (clientNameController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter Client Name ');
+      return false;
+    } else if (dobController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please select Date of Birth');
       return false;
     } else if (occupationController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter your age");
+      Utils.showToast(context, 'Please enter occupation');
       return false;
-    } else if (genderController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please choose gender");
+    } else if (assessmentDateController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please Select Assessment Date');
       return false;
-    } else if (therapyController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter therapy");
+    } else if (injuryDateController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please select Date of Injury');
       return false;
-    } else if (appointmentDateController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter appointment Date");
+    }
+    /*else if (sinceController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter your occupation');
       return false;
-    } else if (patientConcernController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter your Concern");
+    } */
+    else if (historyController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter current History');
       return false;
-    } else if (appointmentTimeController.text.toString().isEmpty) {
-      Utils.showToast(context, "Please enter Appointment time");
+    } else if (sComplaintsController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter subjective Complaints');
+      return false;
+    } else if (previousHxRxController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter previous Hx/Rx');
+      return false;
+    }
+    /*else if (scaleController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter your occupation');
+      return false;
+    }*/
+    else if (outcomeController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter outcome measures');
+      return false;
+    } else if (patternController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter 24 Hrs pattern');
+      return false;
+    } else if (hobbiesController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter Activities/Hobbies');
+      return false;
+    } else if (resultsController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter results');
+      return false;
+    } else if (headachesController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter headaches');
+      return false;
+    } else if (observationsController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter observation/postures');
+      return false;
+    } else if (movementController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter movement');
+      return false;
+    }
+    /* else if (activeController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter your occupation');
+      return false;
+    } else if (passiveController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter your occupation');
+      return false;
+    } else if (resistedController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter your occupation');
+      return false;
+    } */
+    else if (symptomsController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter symptoms');
+      return false;
+    } else if (palpationController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter palpation');
+      return false;
+    } else if (analysisController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter analysis Data');
+      return false;
+    } else if (specialTestsController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter Special tests');
+      return false;
+    } else if (slrController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter SLR');
+      return false;
+    } else if (vaController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter VA');
+      return false;
+    } else if (slumpController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter Slump');
+      return false;
+    } else if (ulttController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter ULTT');
+      return false;
+    } else if (pkbController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter PKB');
+      return false;
+    } else if (stabilityController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter stability');
+      return false;
+    } else if (treatmentPlanController.text.toString().isEmpty) {
+      Utils.showToast(context, 'Please enter Treatment Plan');
       return false;
     }
     return true;
@@ -127,7 +172,7 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
 
   DateTime selectedDate = DateTime.now();
 
-  _selectDate(BuildContext context) async {
+/*  _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context, initialDate: selectedDate, firstDate: DateTime(2015, 8), lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate)
@@ -136,7 +181,7 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
         appointmentDateController.text =
             selectedDate.year.toString() + '-' + selectedDate.month.toString() + '-' + selectedDate.day.toString();
       });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -221,11 +266,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    controller: nameController,
+                                    controller: clientNameController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Client Name",
+                                        hintText: 'Client Name',
                                         fillColor: Colors.white70),
                                   ),
                                   trailing: Icon(Icons.person),
@@ -246,11 +291,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    controller: occupationController,
+                                    //controller: occupationController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "DOB",
+                                        hintText: 'DOB',
                                         fillColor: Colors.white70),
                                   ),
                                   //  trailing: Icon(Icons.person),
@@ -275,7 +320,7 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Occupation",
+                                        hintText: 'Occupation',
                                         fillColor: Colors.white70),
                                   ),
                                   //  trailing: Icon(Icons.person),
@@ -296,11 +341,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    controller: occupationController,
+                                    //controller: occupationController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Date of Assessment",
+                                        hintText: 'Date of Assessment',
                                         fillColor: Colors.white70),
                                   ),
                                   //  trailing: Icon(Icons.person),
@@ -321,11 +366,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    controller: injuryController,
+                                    //controller: Controller,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Date of Injury",
+                                        hintText: 'Date of Injury',
                                         fillColor: Colors.white70),
                                   ),
                                   //  trailing: Icon(Icons.person),
@@ -336,30 +381,6 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                               ),
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                              /*Container(
-                                decoration: BoxDecoration(
-                                  // color: Colors.blue,
-                                  border: Border.all(
-                                    color: Colors.black12,
-                                  ),
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
-                                child: ListTile(
-                                  title: TextField(
-                                    controller: occupationController,
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "OFF Work",
-                                        fillColor: Colors.white70),
-                                  ),
-                                  //  trailing: Icon(Icons.person),
-                                ),
-                                margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
-                                ),
-                              ),*/
                               Container(
                                 margin: EdgeInsets.only(
                                   left: MediaQuery.of(context).size.width * 0.11,
@@ -378,10 +399,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     Checkbox(
                                       // checkColor: Colors.greenAccent,
                                       // activeColor: Colors.red,
-                                      value: valueFirst,
+                                      value: offWorkBool,
                                       onChanged: (value) {
                                         setState(() {
-                                          valueFirst = value;
+                                          offWorkBool = value;
                                         });
                                       },
                                     ),
@@ -390,10 +411,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                       width: 10,
                                     ),
                                     Checkbox(
-                                      value: !valueFirst!,
+                                      value: !offWorkBool!,
                                       onChanged: (value) {
                                         setState(() {
-                                          valueFirst = !valueFirst!;
+                                          offWorkBool = !offWorkBool!;
                                         });
                                       },
                                     ),
@@ -415,7 +436,7 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Since",
+                                        hintText: 'Since',
                                         fillColor: Colors.white70),
                                   ),
                                   //  trailing: Icon(Icons.person),
@@ -456,10 +477,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     Checkbox(
                                       // checkColor: Colors.greenAccent,
                                       // activeColor: Colors.red,
-                                      value: valueSecond,
+                                      value: driveBool,
                                       onChanged: (value) {
                                         setState(() {
-                                          valueSecond = value;
+                                          driveBool = value;
                                         });
                                       },
                                     ),
@@ -479,10 +500,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     Checkbox(
                                       // checkColor: Colors.greenAccent,
                                       // activeColor: Colors.red,
-                                      value: valueThird,
+                                      value: passengerBool,
                                       onChanged: (value) {
                                         setState(() {
-                                          valueThird = value;
+                                          passengerBool = value;
                                         });
                                       },
                                     ),
@@ -499,10 +520,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     Text('Rear Passenger'),
                                     SizedBox(width: 10),
                                     Checkbox(
-                                      value: !valueThird!,
+                                      value: !passengerBool!,
                                       onChanged: (value) {
                                         setState(() {
-                                          valueThird = !valueThird!;
+                                          passengerBool = !passengerBool!;
                                         });
                                       },
                                     ),
@@ -525,7 +546,7 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Current History",
+                                        hintText: 'Current History',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -550,7 +571,7 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Subjective Complaints",
+                                        hintText: 'Subjective Complaints',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -617,7 +638,7 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Previous Hx / Rx",
+                                        hintText: 'Previous Hx / Rx',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -670,7 +691,7 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        //hintText: "",
+                                        //hintText: '',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -694,10 +715,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     Checkbox(
                                       // checkColor: Colors.greenAccent,
                                       // activeColor: Colors.red,
-                                      value: valueFourth,
+                                      value: painBool,
                                       onChanged: (value) {
                                         setState(() {
-                                          valueFourth = value;
+                                          painBool = value;
                                         });
                                       },
                                     ),
@@ -706,10 +727,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                       width: 10,
                                     ),
                                     Checkbox(
-                                      value: !valueFourth!,
+                                      value: !painBool!,
                                       onChanged: (value) {
                                         setState(() {
-                                          valueFourth = !valueFourth!;
+                                          painBool = !painBool!;
                                         });
                                       },
                                     ),
@@ -726,11 +747,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    controller: outcomeMeasuresController,
+                                    controller: outcomeController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Outcome Measures",
+                                        hintText: 'Outcome Measures',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -749,11 +770,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    controller: hrsPatternController,
+                                    controller: patternController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "24 Hrs Pattern",
+                                        hintText: '24 Hrs Pattern',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -772,11 +793,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    controller: activitiesController,
+                                    controller: hobbiesController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Activities/Hobbies",
+                                        hintText: 'Activities/Hobbies',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -815,12 +836,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                       width: 10,
                                     ),
                                     Checkbox(
-                                      // checkColor: Colors.greenAccent,
-                                      // activeColor: Colors.red,
-                                      value: valueFifth,
+                                      value: xrayBool,
                                       onChanged: (value) {
                                         setState(() {
-                                          valueFifth = value;
+                                          xrayBool = value;
                                         });
                                       },
                                     ),
@@ -829,10 +848,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                       width: 10,
                                     ),
                                     Checkbox(
-                                      value: !valueFifth!,
+                                      value: !xrayBool!,
                                       onChanged: (value) {
                                         setState(() {
-                                          valueFifth = !valueFifth!;
+                                          xrayBool = !xrayBool!;
                                         });
                                       },
                                     ),
@@ -853,7 +872,7 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Results",
+                                        hintText: 'Results',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -893,12 +912,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                       width: 10,
                                     ),
                                     Checkbox(
-                                      // checkColor: Colors.greenAccent,
-                                      // activeColor: Colors.red,
-                                      value: valueSixth,
+                                      value: nilBool,
                                       onChanged: (value) {
                                         setState(() {
-                                          valueSixth = value;
+                                          nilBool = value;
                                         });
                                       },
                                     ),
@@ -907,10 +924,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                       width: 10,
                                     ),
                                     Checkbox(
-                                      value: !valueSixth!,
+                                      value: nsaidsBool,
                                       onChanged: (value) {
                                         setState(() {
-                                          valueSixth = !valueSixth!;
+                                          nsaidsBool = value;
                                         });
                                       },
                                     ),
@@ -929,12 +946,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                       width: 10,
                                     ),
                                     Checkbox(
-                                      // checkColor: Colors.greenAccent,
-                                      // activeColor: Colors.red,
-                                      value: valueSixth,
+                                      value: analgBool,
                                       onChanged: (value) {
                                         setState(() {
-                                          valueSixth = value;
+                                          analgBool = value;
                                         });
                                       },
                                     ),
@@ -943,10 +958,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                       width: 10,
                                     ),
                                     Checkbox(
-                                      value: !valueSixth!,
+                                      value: otherBool,
                                       onChanged: (value) {
                                         setState(() {
-                                          valueSixth = !valueSixth!;
+                                          otherBool = value;
                                         });
                                       },
                                     ),
@@ -972,15 +987,14 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                   right: MediaQuery.of(context).size.width * 0.07,
                                 ),
                                 child: Row(
-                                  //                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Row(
                                       children: [
                                         Checkbox(
-                                          value: valueEighth, //this.showvalue,
+                                          value: improvedBool, //this.showvalue,
                                           onChanged: (value) {
                                             setState(() {
-                                              valueEighth = value;
+                                              improvedBool = value;
                                             });
                                           },
                                         ),
@@ -990,10 +1004,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     Row(
                                       children: [
                                         Checkbox(
-                                          value: valueEighth,
+                                          value: unchangedBool,
                                           onChanged: (var value) {
                                             setState(() {
-                                              valueEighth = value;
+                                              unchangedBool = value;
                                             });
                                           },
                                         ),
@@ -1011,10 +1025,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 child: Row(
                                   children: [
                                     Checkbox(
-                                      value: valueEighth,
+                                      value: worsenedBool,
                                       onChanged: (var value) {
                                         setState(() {
-                                          valueEighth = value;
+                                          worsenedBool = value;
                                         });
                                       },
                                     ),
@@ -1035,10 +1049,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     Row(
                                       children: [
                                         Checkbox(
-                                          value: valueNinth,
+                                          value: sleepBool,
                                           onChanged: (value) {
                                             setState(() {
-                                              valueNinth = value;
+                                              sleepBool = value;
                                             });
                                           },
                                         ),
@@ -1048,10 +1062,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     Row(
                                       children: [
                                         Checkbox(
-                                          value: !valueNinth!,
+                                          value: !sleepBool!,
                                           onChanged: (value) {
                                             setState(() {
-                                              valueNinth = !valueNinth!;
+                                              sleepBool = !sleepBool!;
                                             });
                                           },
                                         ),
@@ -1071,11 +1085,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    // controller: resultsController,
+                                    controller: headachesController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Headaches",
+                                        hintText: 'Headaches',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1112,11 +1126,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    // controller: resultsController,
+                                    controller: observationsController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Observations/Postures",
+                                        hintText: 'Observations/Postures',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1153,11 +1167,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    // controller: resultsController,
+                                    controller: movementController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Movement",
+                                        hintText: 'Movement',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1176,11 +1190,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    // controller: resultsController,
+                                    controller: activeController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Active",
+                                        hintText: 'Active',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1199,11 +1213,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    // controller: resultsController,
+                                    controller: passiveController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Passive",
+                                        hintText: 'Passive',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1222,11 +1236,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    // controller: resultsController,
+                                    controller: resistedController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Resisted",
+                                        hintText: 'Resisted',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1245,11 +1259,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    // controller: resultsController,
+                                    controller: symptomsController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Symptoms",
+                                        hintText: 'Symptoms',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1288,11 +1302,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                   title: TextField(
                                     maxLines: 3,
                                     maxLength: 180,
-                                    // controller: resultsController,
+                                    controller: palpationController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Palpation",
+                                        hintText: 'Palpation',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1325,10 +1339,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                         Row(
                                           children: [
                                             Checkbox(
-                                              value: valueTenth,
+                                              value: reflexesBool,
                                               onChanged: (value) {
                                                 setState(() {
-                                                  valueTenth = value;
+                                                  reflexesBool = value;
                                                 });
                                               },
                                             ),
@@ -1338,10 +1352,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                         Row(
                                           children: [
                                             Checkbox(
-                                              value: !valueTenth!,
+                                              value: !reflexesBool!,
                                               onChanged: (value) {
                                                 setState(() {
-                                                  valueTenth = !valueTenth!;
+                                                  reflexesBool = !reflexesBool!;
                                                 });
                                               },
                                             ),
@@ -1372,10 +1386,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                         Row(
                                           children: [
                                             Checkbox(
-                                              value: valueEleventh,
+                                              value: myotomesBool,
                                               onChanged: (value) {
                                                 setState(() {
-                                                  valueEleventh = value;
+                                                  myotomesBool = value;
                                                 });
                                               },
                                             ),
@@ -1385,10 +1399,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                         Row(
                                           children: [
                                             Checkbox(
-                                              value: !valueEleventh!,
+                                              value: !myotomesBool!,
                                               onChanged: (value) {
                                                 setState(() {
-                                                  valueEleventh = !valueEleventh!;
+                                                  myotomesBool = !myotomesBool!;
                                                 });
                                               },
                                             ),
@@ -1419,10 +1433,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                         Row(
                                           children: [
                                             Checkbox(
-                                              value: valueTwelve,
+                                              value: sensationBool,
                                               onChanged: (value) {
                                                 setState(() {
-                                                  valueTwelve = value;
+                                                  sensationBool = value;
                                                 });
                                               },
                                             ),
@@ -1432,10 +1446,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                         Row(
                                           children: [
                                             Checkbox(
-                                              value: !valueTwelve!,
+                                              value: !sensationBool!,
                                               onChanged: (value) {
                                                 setState(() {
-                                                  valueTwelve = !valueTwelve!;
+                                                  sensationBool = !sensationBool!;
                                                 });
                                               },
                                             ),
@@ -1459,11 +1473,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                   title: TextField(
                                     maxLines: 3,
                                     maxLength: 180,
-                                    // controller: resultsController,
+                                    controller: analysisController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Analysis",
+                                        hintText: 'Analysis',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1491,10 +1505,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                         Row(
                                           children: [
                                             Checkbox(
-                                              value: valueThirteen,
+                                              value: informedConsentBool,
                                               onChanged: (value) {
                                                 setState(() {
-                                                  valueThirteen = value;
+                                                  informedConsentBool = value;
                                                 });
                                               },
                                             ),
@@ -1504,10 +1518,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                         Row(
                                           children: [
                                             Checkbox(
-                                              value: !valueThirteen!,
+                                              value: !informedConsentBool!,
                                               onChanged: (value) {
                                                 setState(() {
-                                                  valueThirteen = !valueThirteen!;
+                                                  informedConsentBool = !informedConsentBool!;
                                                 });
                                               },
                                             ),
@@ -1538,10 +1552,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                         Row(
                                           children: [
                                             Checkbox(
-                                              value: valueFourteen,
+                                              value: riskBool,
                                               onChanged: (value) {
                                                 setState(() {
-                                                  valueFourteen = value;
+                                                  riskBool = value;
                                                 });
                                               },
                                             ),
@@ -1551,10 +1565,10 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                         Row(
                                           children: [
                                             Checkbox(
-                                              value: !valueFourteen!,
+                                              value: !riskBool!,
                                               onChanged: (value) {
                                                 setState(() {
-                                                  valueFourteen = !valueFourteen!;
+                                                  riskBool = !riskBool!;
                                                 });
                                               },
                                             ),
@@ -1578,11 +1592,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                   title: TextField(
                                     maxLines: 3,
                                     maxLength: 180,
-                                    // controller: resultsController,
+                                    controller: specialTestsController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Special Tests",
+                                        hintText: 'Special Tests',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1601,11 +1615,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    // controller: resultsController,
+                                    controller: slrController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "SLR",
+                                        hintText: 'SLR',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1624,11 +1638,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    // controller: resultsController,
+                                    controller: vaController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "VA",
+                                        hintText: 'VA',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1647,11 +1661,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    // controller: resultsController,
+                                    controller: slumpController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Slump",
+                                        hintText: 'Slump',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1670,11 +1684,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    // controller: resultsController,
+                                    controller: ulttController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "ULTT",
+                                        hintText: 'ULTT',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1693,11 +1707,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    // controller: resultsController,
+                                    controller: pkbController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "PKB",
+                                        hintText: 'PKB',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1716,11 +1730,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                 ),
                                 child: ListTile(
                                   title: TextField(
-                                    // controller: resultsController,
+                                    controller: stabilityController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Stability",
+                                        hintText: 'Stability',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1741,11 +1755,11 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                   title: TextField(
                                     maxLength: 180,
                                     maxLines: 5,
-                                    // controller: resultsController,
+                                    controller: treatmentPlanController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: "Treatment Plan",
+                                        hintText: 'Treatment Plan',
                                         fillColor: Colors.white70),
                                   ),
                                 ),
@@ -1766,10 +1780,62 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                     isVisible = true;
                                     setState(() {});
                                     Map<String, dynamic> params = {
-                                      'appointment_id': '',
+                                      'appointment_id': widget.therapyId,
                                       'therapist_comments': 'test',
-                                      'status': '1',
-                                      'assessment_form': {"test": "value"}
+                                      'status': '3',
+                                      'assessment_form': {
+                                        'clientNameController': clientNameController.text.toString(),
+                                        'occupationController': occupationController.text.toString(),
+                                        'dobController': dobController.text.toString(),
+                                        'assessmentDateController': assessmentDateController.text.toString(),
+                                        'injuryDateController': injuryDateController.text.toString(),
+                                        'sinceController': sinceController.text.toString(),
+                                        'historyController': historyController.text.toString(),
+                                        'sComplaintsController': sComplaintsController.text.toString(),
+                                        'previousHxRxController': previousHxRxController.text.toString(),
+                                        'scaleController': scaleController.text.toString(),
+                                        'outcomeController': outcomeController.text.toString(),
+                                        'patternController': patternController.text.toString(),
+                                        'hobbiesController': hobbiesController.text.toString(),
+                                        'resultsController': resultsController.text.toString(),
+                                        'headachesController': headachesController.text.toString(),
+                                        'observationsController': observationsController.text.toString(),
+                                        'movementController': movementController.text.toString(),
+                                        'activeController': activeController.text.toString(),
+                                        'passiveController': passiveController.text.toString(),
+                                        'resistedController': resistedController.text.toString(),
+                                        'symptomsController': symptomsController.text.toString(),
+                                        'palpationController': palpationController.text.toString(),
+                                        'analysisController': analysisController.text.toString(),
+                                        'specialTestsController': specialTestsController.text.toString(),
+                                        'slrController': slrController.text.toString(),
+                                        'vaController': vaController.text.toString(),
+                                        'slumpController': slumpController.text.toString(),
+                                        'ulttController': ulttController.text.toString(),
+                                        'pkbController': pkbController.text.toString(),
+                                        'stabilityController': stabilityController.text.toString(),
+                                        'treatmentPlanController': treatmentPlanController.text.toString(),
+                                        'offwork': offWorkBool.toString(),
+                                        'drive': driveBool.toString(),
+                                        'offWorkBool': offWorkBool.toString(),
+                                        'driveBool': driveBool.toString(),
+                                        'passengerBool': passengerBool.toString(),
+                                        'painBool': painBool.toString(),
+                                        'xrayBool': xrayBool.toString(),
+                                        'nil': nilBool.toString(),
+                                        'nsaids': nsaidsBool.toString(),
+                                        'analg': analgBool.toString(),
+                                        'other': otherBool.toString(),
+                                        'improved': improvedBool.toString(),
+                                        'unchanged': unchangedBool.toString(),
+                                        'worsened': worsenedBool.toString(),
+                                        'sleepBool': sleepBool.toString(),
+                                        'reflexesBool': reflexesBool.toString(),
+                                        'myotomesBool': myotomesBool.toString(),
+                                        'sensationBool': sensationBool.toString(),
+                                        'informedConsentBool': informedConsentBool.toString(),
+                                        'riskBool': riskBool.toString(),
+                                      }
                                     };
                                     print('######################' + params.toString());
                                     if (isValid()) {
@@ -1799,10 +1865,9 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                                       children: <Widget>[
                                         Center(
                                           child: Text(
-                                            "Finish Therapy",
+                                            'Finish Therapy',
                                             style: TextStyle(
                                               color: Colors.white,
-                                              // fontFamily: 'Montserrat',
                                               fontSize: 16,
                                               fontWeight: FontWeight.w600,
                                               letterSpacing: 1,
