@@ -58,7 +58,7 @@ class Selection extends StatelessWidget {
                   right: MediaQuery.of(context).size.width * 0.1,
                 ),
                 child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+                  'Welcome to Icon Home Health. You are one click away from treating your body.',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.white,

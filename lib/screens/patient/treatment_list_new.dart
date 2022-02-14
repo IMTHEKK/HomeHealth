@@ -43,9 +43,11 @@ class _TreatmentListState extends State<TreatmentList> {
             ),
             child: Column(
               children: [
-                Text(
-                  'My Therapies',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+                Center(
+                  child: Text(
+                    'My Therapies',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+                  ),
                 ),
                 FutureBuilder(
                   future: commonBloc.hitGetApi(
@@ -88,7 +90,7 @@ class _TreatmentListState extends State<TreatmentList> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Colors.transparent,
+                                      color: Colors.grey,
                                     ),
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(15.0),

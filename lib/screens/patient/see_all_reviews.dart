@@ -155,7 +155,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
           controller: _tabController,
           children: <Widget>[
             FutureBuilder(
-              future: commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?th_id=' + widget.dId + '&sortBy=newest'),
+              future: commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?doctor_id=' + widget.dId + '&sortBy=newest'),
               builder: (context, AsyncSnapshot snap) {
                 if (snap.data == null) {
                   return Center(child: CircularProgressIndicator());
@@ -272,7 +272,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
               },
             ),
             FutureBuilder(
-              future: commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?th_id=' + widget.dId + '&sortBy=ratingLow'),
+              future: commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?doctor_id=' + widget.dId + '&sortBy=ratingLow'),
               builder: (context, AsyncSnapshot snap) {
                 if (snap.data == null) {
                   return Center(
@@ -393,7 +393,7 @@ class _SeeAllReviewsState extends State<SeeAllReviews> with SingleTickerProvider
               },
             ),
             FutureBuilder(
-              future: commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?th_id=' + widget.dId + '&sortBy=ratingHigh'),
+              future: commonBloc.hitGetApi(ApiUrl.get_testimonial_list + '?doctor_id=' + widget.dId + '&sortBy=ratingHigh'),
               builder: (context, AsyncSnapshot snap) {
                 if (snap.data == null) {
                   return Center(

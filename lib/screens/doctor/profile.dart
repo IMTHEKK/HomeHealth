@@ -347,30 +347,36 @@ class _ProfileState extends State<Profile> {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  Icon(
-                                                    Icons.airline_seat_flat,
-                                                    color: Colors.grey,
+                                              Expanded(
+                                                child: Container(
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.airline_seat_flat,
+                                                        color: Colors.grey,
+                                                      ),
+                                                      SizedBox(
+                                                        width: MediaQuery.of(context).size.height * 0.01,
+                                                      ),
+                                                      Text('Total Patients'),
+                                                    ],
                                                   ),
-                                                  SizedBox(
-                                                    width: MediaQuery.of(context).size.height * 0.01,
-                                                  ),
-                                                  Text('Total Patients'),
-                                                ],
+                                                ),
                                               ),
-                                              Container(
-                                                width: MediaQuery.of(context).size.width * 0.45,
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                  children: [
-                                                    Expanded(
-                                                        child: Text(
-                                                      doctor.data[0].totalPatients + ' K',
-                                                      textAlign: TextAlign.right, /*'123 Royal Street, New York'*/
-                                                    )),
-                                                  ],
+                                              Expanded(
+                                                child: Container(
+                                                  width: MediaQuery.of(context).size.width * 0.45,
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    children: [
+                                                      Expanded(
+                                                          child: Text(
+                                                        doctor.data[0].totalPatients + ' K',
+                                                        textAlign: TextAlign.right, /*'123 Royal Street, New York'*/
+                                                      ),),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ],

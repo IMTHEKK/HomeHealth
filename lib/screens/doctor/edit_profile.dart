@@ -109,7 +109,7 @@ class _EditProfileState extends State<EditProfile> {
 
       // multipart that takes file
       var multipartFile = new http.MultipartFile(
-        'doctorPhoto', stream, length,
+        'customerPhoto', stream, length,
         filename: path.basename(imageFile.path),
         //contentType: new MediaType('image', 'jpeg'),
       );
@@ -181,7 +181,7 @@ class _EditProfileState extends State<EditProfile> {
     if (isValid()) {
       isVisible = true;
       setState(() {});
-      var res = await commonBloc.hitPostApi(params, ApiUrl.edit_profile + '?th_id=' + widget.doctor.data[0].doctorId);
+      var res = await commonBloc.hitPostApi(params, ApiUrl.edit_profile + '?doctor_id=' + widget.doctor.data[0].doctorId);
       if (res['code'] == 200) {
         Utils.showToast(context, 'Details uploaded Successfully');
         Navigator.pop(context, "true");

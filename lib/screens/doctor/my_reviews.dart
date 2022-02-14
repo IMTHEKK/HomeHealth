@@ -87,7 +87,7 @@ class _MyReviewsState extends State<MyReviews> {
                     future: commonBloc.hitGetApi(
 
                         ///  'https://run.mocky.io/v3/eb5f43d1-0e08-48c1-be04-292dae6b8138'),
-                        ApiUrl.get_testimonial_list + '?th_id=' + widget.id.toString()),
+                        ApiUrl.get_testimonial_list + '?doctor_id=' + widget.id.toString()),
                     builder: (context, AsyncSnapshot snap) {
                       if (snap.data == null) {
                           return Container(
