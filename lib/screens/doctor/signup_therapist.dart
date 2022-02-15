@@ -76,18 +76,13 @@ class _SignUpTherapistState extends State<SignUpTherapist> {
     showDatePicker(
             context: context,
             initialDate: _selectedDate,
-            //which date will display when user open the picker
             firstDate: DateTime(1950),
-            //what will be the previous supported year in picker
-            lastDate: currentDate) //what will be the up to supported date in picker
+            lastDate: currentDate)
         .then((pickedDate) {
-      //then usually do the future job
       if (pickedDate == null) {
-        //if user tap cancel then this function will stop
         return;
       }
       setState(() {
-        //for rebuilding the ui
         _selectedDate = pickedDate;
         dob = getDateMonthYear(_selectedDate);
       });
