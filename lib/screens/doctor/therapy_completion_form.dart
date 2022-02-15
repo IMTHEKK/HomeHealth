@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/utilities/utils.dart';
@@ -283,22 +284,40 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                               Container(
                                 decoration: BoxDecoration(
-                                  // color: Colors.blue,
                                   border: Border.all(
                                     color: Colors.black12,
                                   ),
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
-                                child: ListTile(
-                                  title: TextField(
-                                    //controller: occupationController,
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: 'DOB',
-                                        fillColor: Colors.white70),
+                                child: InkWell(
+                                  onTap: () {
+                                    showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1865),
+                                      lastDate: DateTime.now(),
+                                    ).then((pickedDate1) {
+                                      if (pickedDate1 == null) {
+                                        return;
+                                      }
+                                      setState(() {
+                                        dobController.text = DateFormat('yyyy-MM-dd').format(pickedDate1);
+                                      });
+                                    });
+                                  },
+                                  child: ListTile(
+                                    title: /*TextField(
+                                      controller: aDateController,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintText: "Appointment Date",
+                                          fillColor: Colors.white70),
+                                    ),*/
+                                    Text(dobController.text.toString().isEmpty
+                                        ? "Date of Birth"
+                                        : dobController.text.toString()),
                                   ),
-                                  //  trailing: Icon(Icons.person),
                                 ),
                                 margin: EdgeInsets.only(
                                   left: MediaQuery.of(context).size.width * 0.07,
@@ -333,22 +352,32 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                               Container(
                                 decoration: BoxDecoration(
-                                  // color: Colors.blue,
                                   border: Border.all(
                                     color: Colors.black12,
                                   ),
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
-                                child: ListTile(
-                                  title: TextField(
-                                    //controller: occupationController,
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: 'Date of Assessment',
-                                        fillColor: Colors.white70),
+                                child: InkWell(
+                                  onTap: () {
+                                    showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1865),
+                                      lastDate: DateTime.now(),
+                                    ).then((pickedDate1) {
+                                      if (pickedDate1 == null) {
+                                        return;
+                                      }
+                                      setState(() {
+                                        assessmentDateController.text = DateFormat('yyyy-MM-dd').format(pickedDate1);
+                                      });
+                                    });
+                                  },
+                                  child: ListTile(
+                                    title: Text(assessmentDateController.text.toString().isEmpty
+                                        ? "Assessment Date"
+                                        : assessmentDateController.text.toString()),
                                   ),
-                                  //  trailing: Icon(Icons.person),
                                 ),
                                 margin: EdgeInsets.only(
                                   left: MediaQuery.of(context).size.width * 0.07,
@@ -358,22 +387,32 @@ class _TherapyCompletionFormState extends State<TherapyCompletionForm> {
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                               Container(
                                 decoration: BoxDecoration(
-                                  // color: Colors.blue,
                                   border: Border.all(
                                     color: Colors.black12,
                                   ),
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
-                                child: ListTile(
-                                  title: TextField(
-                                    //controller: Controller,
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
-                                        hintText: 'Date of Injury',
-                                        fillColor: Colors.white70),
+                                child: InkWell(
+                                  onTap: () {
+                                    showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1865),
+                                      lastDate: DateTime.now(),
+                                    ).then((pickedDate1) {
+                                      if (pickedDate1 == null) {
+                                        return;
+                                      }
+                                      setState(() {
+                                        injuryDateController.text = DateFormat('yyyy-MM-dd').format(pickedDate1);
+                                      });
+                                    });
+                                  },
+                                  child: ListTile(
+                                    title: Text(injuryDateController.text.toString().isEmpty
+                                        ? "Injury Date"
+                                        : injuryDateController.text.toString()),
                                   ),
-                                  //  trailing: Icon(Icons.person),
                                 ),
                                 margin: EdgeInsets.only(
                                   left: MediaQuery.of(context).size.width * 0.07,

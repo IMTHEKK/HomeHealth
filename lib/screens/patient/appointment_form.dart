@@ -410,25 +410,30 @@ class _AppointmentFormState extends State<AppointmentForm> {
                                           value: 0,
                                         ),
                                         DropdownMenuItem(
-                                          child: Text("09:00 AM - 12:00PM"),
+                                          child: Text("09:00-12:00"),
                                           value: 1,
                                         ),
                                         DropdownMenuItem(
-                                          child: Text("12:00 PM - 03:00PM"),
+                                          child: Text("12:00-15:00"),
                                           value: 2,
                                         ),
                                         DropdownMenuItem(
-                                          child: Text("03:00 PM - 06:00PM"),
+                                          child: Text("15:00-18:00"),
                                           value: 3,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("18:00-21:00"),
+                                          value: 4,
                                         )
                                       ],
                                       onChanged: (int? value) {
                                         setState(() {
                                           _appointmentDate = value;
                                           if (value == 0) appointmentTimeController.text = "";
-                                          if (value == 1) appointmentTimeController.text = "09:00 AM - 12:00PM";
-                                          if (value == 2) appointmentTimeController.text = "12:00 PM - 03:00PM";
-                                          if (value == 3) appointmentTimeController.text = "03:00 PM - 06:00PM";
+                                          if (value == 1) appointmentTimeController.text = "09:00-12:00";
+                                          if (value == 2) appointmentTimeController.text = "12:00-15:00";
+                                          if (value == 3) appointmentTimeController.text = "15:00-18:00";
+                                          if (value == 4) appointmentTimeController.text = "18:00-21:00";
                                         });
                                       },
                                     ),

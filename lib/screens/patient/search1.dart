@@ -20,6 +20,8 @@ class SearchPage1 extends StatefulWidget {
 class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStateMixin {
   var scrollController;
   var _tabController;
+  late double _latitude; //= 10.750492; // = 12.916983;
+  late double _longitude;
 
   @override
   void initState() {
@@ -472,4 +474,87 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
       ),
     );
   }
+
+/*  getCurrentLocation() async {
+    Location location = new Location();
+
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    print("_serviceEnabled $_serviceEnabled");
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      print("_serviceEnabled $_serviceEnabled");
+      if (!_serviceEnabled) {
+        showMyDialog(context, "Location Not Enable", "Please enable location to continue app", false);
+        return false;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    print("permission ${_permissionGranted}");
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      print("re permission ${_permissionGranted}");
+      if (_permissionGranted == PermissionStatus.denied) {
+        showMyDialog(context, "Accept Location Permission", "Please accept location permission to continue app", false);
+        return false;
+      } else if (_permissionGranted == PermissionStatus.deniedForever) {
+        showMyDialog(context, "Accept Location Permission",
+            "Please enable location permission from setting to continue app", true);
+        return false;
+      }
+    } else if (_permissionGranted == PermissionStatus.deniedForever) {
+      showMyDialog(context, "Accept Location Permission",
+          "Please enable location permission from setting to continue app", true);
+      return false;
+    }
+    _locationData = await location.getLocation();
+    if ((_latitude == null) || (_longitude == null) && ((_locationData != null))) {
+      _latitude = _locationData.latitude!;
+      _longitude = _locationData.longitude!;
+    }
+  }
+
+  void showMyDialog(BuildContext context, String title, String message, bool isOnlyOk) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+                child: Text("Ok"),
+                onPressed: () {
+                  if (!isOnlyOk) {
+                    Navigator.pop(context);
+                    //setState(() {});
+                  } else {
+                    if (Platform.isAndroid) {
+                      SystemNavigator.pop();
+                    } else if (Platform.isIOS) {
+                      exit(0);
+                    }
+                  }
+                }),
+            isOnlyOk
+                ? Container()
+                : TextButton(
+                    child: Text("Cancel"),
+                    onPressed: () {
+                      if (Platform.isAndroid) {
+                        SystemNavigator.pop();
+                      } else if (Platform.isIOS) {
+                        exit(0);
+                      }
+                    }),
+          ],
+        );
+      },
+    );
+  }*/
 }

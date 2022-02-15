@@ -39,11 +39,12 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
   var emergencyPhoneController = TextEditingController();
   var aDateController = TextEditingController();
   var aTimeController = TextEditingController();
-
+  var res;
   bool isVisible = false;
   int? aDate = 0;
   var clientSecret;
   var paymentDetails;
+  late MySchedule mySchedule;
 
   bool isValid() {
     if (firstNameController.text.toString().isEmpty) {
@@ -709,7 +710,6 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       if (pickedDate == null) {
                                         return;
                                       }
-
                                       var res = await commonBloc.hitGetApi(
                                           ApiUrl.get_therapist_schedule +
                                               '?doctor_id=' +
@@ -721,6 +721,13 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       for (int i = 0;
                                           i < mySchedule.data.length;
                                           i++) {
+
+                                      res = await commonBloc
+                                          .hitGetApi(ApiUrl.get_therapist_schedule + '?doctor_id=' + widget.dId);
+                                      print('resp:' + json.encode(res).toString());
+                                      mySchedule = myScheduleFromJson(json.encode(res));
+                                      for (int i = 0; i < mySchedule.data.length; i++) {
+
                                         if (mySchedule.data[i].scheduleDate ==
                                             DateFormat('yyyy-MM-dd')
                                                 .format(pickedDate)) {}
@@ -746,6 +753,9 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                                 .isEmpty
                                             ? "Appointment Date"
                                             : aDateController.text.toString()),
+                                    title: Text(aDateController.text.toString().isEmpty
+                                        ? "Appointment Date"
+                                        : aDateController.text.toString()),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
