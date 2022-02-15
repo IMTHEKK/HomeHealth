@@ -40,7 +40,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
   var res;
   bool isVisible = false;
   int? aDate = 0;
-  MySchedule mySchedule;
+  late MySchedule mySchedule;
 
   bool isValid() {
     if (firstNameController.text.toString().isEmpty) {
