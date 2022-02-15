@@ -9,6 +9,8 @@ import 'package:untitled3/models/schedule.dart';
 import 'package:untitled3/network/api_blocs.dart';
 import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/utilities/utils.dart';
+import 'package:flutter_stripe/flutter_stripe.dart' as StripePayment;
+import 'package:http/http.dart' as http;
 
 class AppointmentForm1 extends StatefulWidget {
   final dId, cId;
@@ -40,6 +42,8 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
   var res;
   bool isVisible = false;
   int? aDate = 0;
+  var clientSecret;
+  var paymentDetails;
   late MySchedule mySchedule;
 
   bool isValid() {
@@ -140,7 +144,8 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                   Column(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.06),
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.06),
                         child: Row(
                           children: [
                             InkWell(
@@ -149,7 +154,8 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                               },
                               child: Container(
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                                 child: Icon(
                                   Icons.arrow_back,
@@ -160,10 +166,15 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                             ),
                             Expanded(
                               child: Container(
-                                margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.12),
+                                margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width *
+                                        0.12),
                                 child: Text(
                                   'Appointment Form',
-                                  style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 22),
+                                  style: TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22),
                                 ),
                               ),
                             ),
@@ -181,11 +192,14 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                           elevation: 10,
                           shape: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(38),
-                              borderSide: BorderSide(color: Colors.transparent)),
+                              borderSide:
+                                  BorderSide(color: Colors.transparent)),
                           color: Colors.white,
                           child: Column(
                             children: [
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.04),
                               Container(
                                 decoration: BoxDecoration(
                                   // color: Colors.blue,
@@ -199,18 +213,23 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                     controller: firstNameController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey[800]),
                                         hintText: "First Name",
                                         fillColor: Colors.white70),
                                   ),
                                   trailing: Icon(Icons.person),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   // color: Colors.blue,
@@ -224,18 +243,23 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                     controller: lastNameController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey[800]),
                                         hintText: "Last Name",
                                         fillColor: Colors.white70),
                                   ),
                                   trailing: Icon(Icons.person),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               /*Container(
                                 decoration: BoxDecoration(
                                   // color: Colors.blue,
@@ -279,7 +303,9 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                         return;
                                       }
                                       setState(() {
-                                        dobController.text = DateFormat('yyyy-MM-dd').format(pickedDate1);
+                                        dobController.text =
+                                            DateFormat('yyyy-MM-dd')
+                                                .format(pickedDate1);
                                       });
                                     });
                                   },
@@ -292,17 +318,23 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                           hintText: "Appointment Date",
                                           fillColor: Colors.white70),
                                     ),*/
-                                        Text(dobController.text.toString().isEmpty
+                                        Text(dobController.text
+                                                .toString()
+                                                .isEmpty
                                             ? "Date of Birth"
                                             : dobController.text.toString()),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -315,17 +347,22 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                     controller: addressController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintStyle: TextStyle(color: Colors.grey[800]),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey[800]),
                                         hintText: "Address",
                                         fillColor: Colors.white70),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -339,23 +376,29 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                     title: TextField(
                                       controller: phoneController,
                                       inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp(r'[0-9]')),
                                       ],
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[800]),
                                           hintText: "Phone",
                                           fillColor: Colors.white70),
                                     ),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -370,18 +413,23 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       controller: emailController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[800]),
                                           hintText: "Email",
                                           fillColor: Colors.white70),
                                     ),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -396,18 +444,23 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       controller: familyDoctorController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[800]),
                                           hintText: "Family Doctor",
                                           fillColor: Colors.white70),
                                     ),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -422,18 +475,23 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       controller: medicalConditionsController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[800]),
                                           hintText: "Medical Conditions",
                                           fillColor: Colors.white70),
                                     ),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -447,18 +505,23 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       controller: injuredAreaController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[800]),
                                           hintText: "Injured Area",
                                           fillColor: Colors.white70),
                                     ),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -473,18 +536,23 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       controller: xrayController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[800]),
                                           hintText: "XRAY/Ultrasound/MRI",
                                           fillColor: Colors.white70),
                                     ),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -498,20 +566,27 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       controller: medicationsController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[800]),
                                           hintText: "Medications",
                                           fillColor: Colors.white70),
                                     ),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Text('Emergency Contact Information'),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -526,18 +601,23 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       controller: emergencyNameController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[800]),
                                           hintText: "Name",
                                           fillColor: Colors.white70),
                                     ),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -552,18 +632,23 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       controller: relationshipController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[800]),
                                           hintText: "Relationship",
                                           fillColor: Colors.white70),
                                     ),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -576,12 +661,14 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                     title: TextField(
                                       controller: emergencyPhoneController,
                                       inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp(r'[0-9]')),
                                       ],
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[800]),
                                           hintText: "Phone Number",
                                           fillColor: Colors.white70),
                                     ),
@@ -596,11 +683,15 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -619,32 +710,64 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       if (pickedDate == null) {
                                         return;
                                       }
+                                      var res = await commonBloc.hitGetApi(
+                                          ApiUrl.get_therapist_schedule +
+                                              '?doctor_id=' +
+                                              widget.dId);
+                                      print('resp:' +
+                                          json.encode(res).toString());
+                                      MySchedule mySchedule =
+                                          myScheduleFromJson(json.encode(res));
+                                      for (int i = 0;
+                                          i < mySchedule.data.length;
+                                          i++) {
 
                                       res = await commonBloc
                                           .hitGetApi(ApiUrl.get_therapist_schedule + '?doctor_id=' + widget.dId);
                                       print('resp:' + json.encode(res).toString());
                                       mySchedule = myScheduleFromJson(json.encode(res));
                                       for (int i = 0; i < mySchedule.data.length; i++) {
+
                                         if (mySchedule.data[i].scheduleDate ==
-                                            DateFormat('yyyy-MM-dd').format(pickedDate)) {}
+                                            DateFormat('yyyy-MM-dd')
+                                                .format(pickedDate)) {}
                                       }
                                       setState(() {
-                                        aDateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                        aDateController.text =
+                                            DateFormat('yyyy-MM-dd')
+                                                .format(pickedDate);
                                       });
                                     });
                                   },
                                   child: ListTile(
+                                    title: /*TextField(
+                                      controller: aDateController,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintStyle: TextStyle(color: Colors.grey[800]),
+                                          hintText: "Appointment Date",
+                                          fillColor: Colors.white70),
+                                    ),*/
+                                        Text(aDateController.text
+                                                .toString()
+                                                .isEmpty
+                                            ? "Appointment Date"
+                                            : aDateController.text.toString()),
                                     title: Text(aDateController.text.toString().isEmpty
                                         ? "Appointment Date"
                                         : aDateController.text.toString()),
                                   ),
                                 ),
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
 /*
                               Container(
                                 decoration: BoxDecoration(
@@ -695,14 +818,21 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       borderRadius: BorderRadius.circular(30.0),
                                     ),
                                     margin: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width * 0.07,
-                                      right: MediaQuery.of(context).size.width * 0.07,
+                                      left: MediaQuery.of(context).size.width *
+                                          0.07,
+                                      right: MediaQuery.of(context).size.width *
+                                          0.07,
                                     ),
                                     padding: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width * 0.04,
-                                      right: MediaQuery.of(context).size.width * 0.07,
-                                      top: MediaQuery.of(context).size.height * 0.01,
-                                      bottom: MediaQuery.of(context).size.height * 0.01,
+                                      left: MediaQuery.of(context).size.width *
+                                          0.04,
+                                      right: MediaQuery.of(context).size.width *
+                                          0.07,
+                                      top: MediaQuery.of(context).size.height *
+                                          0.01,
+                                      bottom:
+                                          MediaQuery.of(context).size.height *
+                                              0.01,
                                     ),
                                     child: DropdownButtonHideUnderline(
                                       child: DropdownButton(
@@ -732,11 +862,20 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                         onChanged: (int? value) {
                                           setState(() {
                                             aDate = value;
-                                            if (value == 0) aTimeController.text = "";
-                                            if (value == 1) aTimeController.text = "09:00-12:00";
-                                            if (value == 2) aTimeController.text = "12:00-15:00";
-                                            if (value == 3) aTimeController.text = "15:00-18:00";
-                                            if (value == 4) aTimeController.text = "18:00-21:00";
+                                            if (value == 0)
+                                              aTimeController.text = "";
+                                            if (value == 1)
+                                              aTimeController.text =
+                                                  "09:00-12:00";
+                                            if (value == 2)
+                                              aTimeController.text =
+                                                  "12:00-15:00";
+                                            if (value == 3)
+                                              aTimeController.text =
+                                                  "15:00-18:00";
+                                            if (value == 4)
+                                              aTimeController.text =
+                                                  "18:00-21:00";
                                           });
                                         },
                                       ),
@@ -744,51 +883,23 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Container(
                                 margin: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.width * 0.07,
-                                  right: MediaQuery.of(context).size.width * 0.07,
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
-                                height: MediaQuery.of(context).size.height * 0.06,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.06,
                                 child: GestureDetector(
                                   onTap: () async {
-                                    isVisible = true;
-                                    setState(() {});
-                                    //     '&appointment_date=2022-02-06'
-                                    //   '&appointment_time=09:00-12:00'
-                                    Map<String, dynamic> params = {
-                                      'customer_id': widget.cId.toString(),
-                                      'doctor_id': widget.dId.toString(),
-                                      'first_name': firstNameController.text.toString(),
-                                      'last_name': lastNameController.text.toString(),
-                                      'dob': dobController.text.toString(),
-                                      'address': addressController.text.toString(),
-                                      'phone': phoneController.text.toString(),
-                                      'email': emailController.text.toString(),
-                                      'family_doctor': familyDoctorController.text.toString(),
-                                      'medical_conditions': medicalConditionsController.text.toString(),
-                                      'injured_area': injuredAreaController.text.toString(),
-                                      // 'xray': injuredAreaController.text.toString(),
-                                      'medications': medicationsController.text.toString(),
-                                      'xray': xrayController.text.toString(),
-                                      'emergency_contact_name': emergencyNameController.text.toString(),
-                                      'emergency_contact_relation': relationshipController.text.toString(),
-                                      'emergency_contact_number': emergencyPhoneController.text.toString(),
-                                      'appointment_date': aDateController.text.toString(),
-                                      'appointment_time': aTimeController.text.toString(),
-                                    };
-                                    print('######################' + params.toString());
                                     if (isValid()) {
-                                      var res = await commonBloc.hitPostApi(params, ApiUrl.book_appointment);
-                                      if (res['code'] == 200) {
-                                        Utils.showToast(context, '${res['message']}');
-                                        Navigator.pop(context);
-                                      } else
-                                        Utils.showToast(context, '${res['validation-errors']}');
+                                      makePayment();
                                     }
-                                    isVisible = false;
-                                    setState(() {});
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -799,7 +910,8 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       borderRadius: BorderRadius.circular(30.0),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
                                         Center(
                                           child: Text(
@@ -818,7 +930,9 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.04),
                               /*TextButton(
                                 onPressed: () async {
                                   // create payment method
@@ -852,5 +966,179 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
         ),
       ),
     );
+  }
+
+  void confirmAppointment() async {
+    isVisible = true;
+    setState(() {});
+    //     '&appointment_date=2022-02-06'
+    //   '&appointment_time=09:00-12:00'
+    Map<String, dynamic> params = {
+      'customer_id': widget.cId.toString(),
+      'doctor_id': widget.dId.toString(),
+      'first_name': firstNameController.text.toString(),
+      'last_name': lastNameController.text.toString(),
+      'dob': dobController.text.toString(),
+      'address': addressController.text.toString(),
+      'phone': phoneController.text.toString(),
+      'email': emailController.text.toString(),
+      'family_doctor': familyDoctorController.text.toString(),
+      'medical_conditions': medicalConditionsController.text.toString(),
+      'injured_area': injuredAreaController.text.toString(),
+      // 'xray': injuredAreaController.text.toString(),
+      'medications': medicationsController.text.toString(),
+      'xray': xrayController.text.toString(),
+      'emergency_contact_name': emergencyNameController.text.toString(),
+      'emergency_contact_relation': relationshipController.text.toString(),
+      'emergency_contact_number': emergencyPhoneController.text.toString(),
+      'appointment_date': aDateController.text.toString(),
+      'appointment_time': aTimeController.text.toString(),
+    };
+    print('######################' + params.toString());
+    var res = await commonBloc.hitPostApi(params, ApiUrl.book_appointment);
+    if (res['code'] == 200) {
+      paymentDetails = await fetchPaymentDetails();
+      updateTransactionDetails();
+    } else
+      Utils.showToast(context, '${res['validation-errors']}');
+    isVisible = false;
+    setState(() {});
+  }
+
+  Future<void> makePayment() async {
+    isVisible = true;
+    setState(() {});
+    final billingDetails = StripePayment.BillingDetails(
+      email: "abc@gmail.com",
+      phone: '+48888000888',
+      address: StripePayment.Address(
+        city: 'Houston',
+        country: 'US',
+        line1: '1459  Circle Drive',
+        line2: '',
+        state: 'Texas',
+        postalCode: '77063',
+      ),
+    ); // mo mocked data for tests
+    clientSecret = await fetchPaymentIntentClientSecret();
+    isVisible = false;
+    setState(() {});
+
+    await StripePayment.Stripe.instance.initPaymentSheet(
+      paymentSheetParameters: StripePayment.SetupPaymentSheetParameters(
+        paymentIntentClientSecret: clientSecret["client_secret"],
+        applePay: true,
+        googlePay: true,
+        billingDetails: billingDetails,
+        style: ThemeMode.system,
+        customFlow: true,
+        // Main params
+        merchantDisplayName: 'Icon Home Health',
+        merchantCountryCode: 'CA',
+        // Extra options
+        testEnv: false,
+      ),
+    );
+    setState(() {});
+    displayPaymentSheet();
+  }
+
+  Future<void> displayPaymentSheet() async {
+    try {
+      await StripePayment.Stripe.instance.presentPaymentSheet();
+      setState(() {});
+      confirmPayment();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> confirmPayment() async {
+    try {
+      // 4. Confirm the payment sheet.
+      await StripePayment.Stripe.instance.confirmPaymentSheetPayment();
+
+      setState(() {});
+
+      confirmAppointment();
+    } on Exception catch (e) {
+      if (e is StripePayment.StripeException) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error from Stripe: ${e.error.localizedMessage}'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Unforeseen error: ${e}'),
+          ),
+        );
+      }
+    }
+  }
+
+  Future<Map<String, dynamic>> fetchPaymentDetails() async {
+    final url = Uri.parse(
+        "https://api.stripe.com/v1/payment_intents/" + clientSecret["id"]);
+    String basicAuth = 'Basic ' +
+        base64Encode(utf8.encode(
+            "sk_test_51KIylfK3RxekJkNFoUv5UTxVcnkX4joADtYFayUfiqz1JxktHoN1nzOpReiW7ijdDmLdEAAMTYaaRXkXyUwMbQx000n3WrvCa6"));
+    final response = await http.get(
+      url,
+      headers: {
+        'authorization': basicAuth,
+      },
+    );
+    return json.decode(response.body);
+  }
+
+  Future<Map<String, dynamic>> fetchPaymentIntentClientSecret() async {
+    final url = Uri.parse("https://api.stripe.com/v1/payment_intents");
+    String basicAuth = 'Basic ' +
+        base64Encode(utf8.encode(
+            "sk_test_51KIylfK3RxekJkNFoUv5UTxVcnkX4joADtYFayUfiqz1JxktHoN1nzOpReiW7ijdDmLdEAAMTYaaRXkXyUwMbQx000n3WrvCa6"));
+    Map<String, dynamic> params = {
+      'amount': "100",
+      'currency': "cad",
+      'payment_method_types[]': "card",
+    };
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'authorization': basicAuth,
+      },
+      body: params,
+    );
+    return json.decode(response.body);
+  }
+
+  void updateTransactionDetails() async {
+    isVisible = true;
+    setState(() {});
+    //     '&appointment_date=2022-02-06'
+    //   '&appointment_time=09:00-12:00'
+    Map<String, dynamic> params = {
+      'customer_id': widget.cId.toString(),
+      'doctor_id': widget.dId.toString(),
+      'appointment_id': "need from backend",
+      'order_id': paymentDetails["charges"]["data"][0]["id"],
+      'transaction_id': paymentDetails["charges"]["data"][0]["balance_transaction"],
+      'amount': (paymentDetails["amount"]/100).toString(),
+      'transaction_status': paymentDetails["status"],
+      'signature': "Not available",
+    };
+    print('######################' + params.toString());
+    if (isValid()) {
+      var res = await commonBloc.hitPostApi(params, ApiUrl.store_transaction);
+      if (res['code'] == 200) {
+        Utils.showToast(context, '${res['message']}');
+        Navigator.pop(context);
+      } else
+        Utils.showToast(context, '${res['validation-errors']}');
+    }
+    isVisible = false;
+    setState(() {});
   }
 }
