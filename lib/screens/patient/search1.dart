@@ -7,6 +7,7 @@ import 'package:untitled3/network/api_urls.dart';
 import 'package:untitled3/screens/doctor_detail.dart';
 import 'package:untitled3/screens/search.dart';
 import 'package:untitled3/screens/search_doctor.dart';
+import 'package:geolocator/geolocator.dart';
 
 class SearchPage1 extends StatefulWidget {
   final cId, name;
@@ -17,7 +18,8 @@ class SearchPage1 extends StatefulWidget {
   State<SearchPage1> createState() => _SearchPage1State();
 }
 
-class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStateMixin {
+class _SearchPage1State extends State<SearchPage1>
+    with SingleTickerProviderStateMixin {
   var scrollController;
   var _tabController;
   late double _latitude; //= 10.750492; // = 12.916983;
@@ -30,6 +32,7 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
     _tabController.addListener(() {
       setState(() {});
     });
+    //getLatLong();
   }
 
   @override
@@ -55,7 +58,8 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
+                          margin: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.03),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,9 +76,11 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                               Center(
                                 child: Container(
                                   padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height * 0.02,
+                                    top: MediaQuery.of(context).size.height *
+                                        0.02,
                                   ),
-                                  width: MediaQuery.of(context).size.width * 0.5,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.5,
                                   child: Image.asset('images/IHH_Logo.png'),
                                 ),
                               ),
@@ -107,7 +113,8 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                                 MaterialPageRoute(
                                     builder: (context) => SearchDoctor(
                                           cId: widget.name,
-                                          type: ApiUrl.therapist_list + '?location=',
+                                          type: ApiUrl.therapist_list +
+                                              '?location=',
                                         )));
                           },
                           child: Center(
@@ -156,7 +163,9 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.2,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Color(0XFFF4F4F5)),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Color(0XFFF4F4F5)),
                     margin: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.02,
                       left: MediaQuery.of(context).size.width * 0.05,
@@ -168,7 +177,9 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                       controller: _tabController,
                       unselectedLabelColor: Colors.grey,
                       indicatorSize: TabBarIndicatorSize.label,
-                      indicator: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.blue),
+                      indicator: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.blue),
                       tabs: [
                         Container(
                           margin: EdgeInsets.all(0),
@@ -176,10 +187,13 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                             child: Column(
                               children: [
                                 Container(
-                                    height: MediaQuery.of(context).size.height * 0.14,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.14,
                                     child: Image.asset(
                                       'images/massage _therapy_unselectable.png',
-                                      color: _tabController.index == 0 ? Colors.white : Colors.black,
+                                      color: _tabController.index == 0
+                                          ? Colors.white
+                                          : Colors.black,
                                     )),
                                 Text(
                                   "Massage Therapy", //Components
@@ -194,10 +208,13 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
                             child: Column(
                               children: [
                                 Container(
-                                  height: MediaQuery.of(context).size.height * 0.14,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.14,
                                   child: Image.asset(
                                     'images/physiotherapy_selectable.png',
-                                    color: _tabController.index == 1 ? Colors.white : Colors.black,
+                                    color: _tabController.index == 1
+                                        ? Colors.white
+                                        : Colors.black,
                                   ),
                                 ),
                                 Text(
@@ -254,225 +271,326 @@ class _SearchPage1State extends State<SearchPage1> with SingleTickerProviderStat
             ),
           ];
         },
-        body: TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            FutureBuilder(
-              future: commonBloc.hitGetApi(ApiUrl.therapist_list),
-              builder: (context, AsyncSnapshot snap) {
-                if (snap.data == null) {
-                  return Container(
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                } else {
-                  TherapistList therapistList = TherapistList.fromJson(snap.data);
-                  return ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: therapistList.data.length,
-                    itemBuilder: (context, index) {
-                      if (therapistList.data[index].doctorType == 'Massage Therapy')
-                        return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DoctorDetailScreen(
-                                        doctorId: therapistList.data[index].doctorId,
-                                        cId: widget.cId,
-                                      ) //OnGoingTreatment(),
-                                  ),
-                            );
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.01,
-                              bottom: MediaQuery.of(context).size.height * 0.01,
-                              left: MediaQuery.of(context).size.width * 0.05,
-                              right: MediaQuery.of(context).size.width * 0.05,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey,
-                              ),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.02,
-                              bottom: MediaQuery.of(context).size.height * 0.02,
-                              left: MediaQuery.of(context).size.width * 0.05,
-                              right: MediaQuery.of(context).size.width * 0.05,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  therapistList.data[index].doctorName, //'John Deo',
-                                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  therapistList.data[index].doctorType, //'Physiotherapist',
-                                  style: TextStyle(color: Colors.blue),
-                                ),
-                                SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Icon(Icons.add_location_outlined),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width * 0.03,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        therapistList.data[index].doctorAddress, /*'MA, New York'*/
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    RatingBarIndicator(
-                                      rating: double.parse(therapistList.data[index].doctorRatings),
-                                      //2.75,
-                                      itemBuilder: (context, index) => Icon(
-                                        Icons.star,
-                                        color: Colors.blue,
-                                      ),
-                                      itemCount: 5,
-                                      itemSize: 20.0,
-                                      direction: Axis.horizontal,
-                                    ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                      therapistList.data[index].doctorRatings, /*'9.7'*/
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+        body: FutureBuilder(
+          future: getLatLong(),
+          builder: (context, snapshot) {
+            if (snapshot.data == null) {
+              return Container(
+                child: Center(child: CircularProgressIndicator()),
+              );
+            } else {
+              return TabBarView(
+                controller: _tabController,
+                children: <Widget>[
+                  FutureBuilder(
+                    future: commonBloc.hitGetApi(ApiUrl.therapist_list +
+                        "?latitude=$_latitude&longitude=$_longitude"),
+                    builder: (context, AsyncSnapshot snap) {
+                      if (snap.data == null) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          child: Center(
+                            child: CircularProgressIndicator(),
                           ),
                         );
-                      return Container();
-                    },
-                  );
-                }
-              },
-            ),
-            FutureBuilder(
-              future: commonBloc.hitGetApi(ApiUrl.therapist_list),
-              builder: (context, AsyncSnapshot snap) {
-                if (snap.data == null) {
-                  return Container(
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                } else {
-                  TherapistList therapistList1 = TherapistList.fromJson(snap.data);
-                  return ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: therapistList1.data.length,
-                    itemBuilder: (context, index) {
-                      if (therapistList1.data[index].doctorType == "Physiotherapy")
-                        return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DoctorDetailScreen(
-                                      doctorId: therapistList1.data[index].doctorId) //OnGoingTreatment(),
+                      } else {
+                        if (snap.data["status"] == "200") {
+                          TherapistList therapistList =
+                              TherapistList.fromJson(snap.data);
+                          return ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: therapistList.data.length,
+                            itemBuilder: (context, index) {
+                              if (therapistList.data[index].doctorType ==
+                                  'Massage Therapy')
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DoctorDetailScreen(
+                                                doctorId: therapistList
+                                                    .data[index].doctorId,
+                                                cId: widget.cId,
+                                              ) //OnGoingTreatment(),
+                                          ),
+                                    );
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height *
+                                          0.01,
+                                      bottom:
+                                          MediaQuery.of(context).size.height *
+                                              0.01,
+                                      left: MediaQuery.of(context).size.width *
+                                          0.05,
+                                      right: MediaQuery.of(context).size.width *
+                                          0.05,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    padding: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height *
+                                          0.02,
+                                      bottom:
+                                          MediaQuery.of(context).size.height *
+                                              0.02,
+                                      left: MediaQuery.of(context).size.width *
+                                          0.05,
+                                      right: MediaQuery.of(context).size.width *
+                                          0.05,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          therapistList.data[index].doctorName,
+                                          //'John Deo',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 18),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          therapistList.data[index].doctorType,
+                                          //'Physiotherapist',
+                                          style: TextStyle(color: Colors.blue),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            Icon(Icons.add_location_outlined),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.03,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                therapistList.data[index]
+                                                    .doctorAddress, /*'MA, New York'*/
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            RatingBarIndicator(
+                                              rating: double.parse(therapistList
+                                                  .data[index].doctorRatings),
+                                              //2.75,
+                                              itemBuilder: (context, index) =>
+                                                  Icon(
+                                                Icons.star,
+                                                color: Colors.blue,
+                                              ),
+                                              itemCount: 5,
+                                              itemSize: 20.0,
+                                              direction: Axis.horizontal,
+                                            ),
+                                            SizedBox(
+                                              width: 8,
+                                            ),
+                                            Text(
+                                              therapistList.data[index]
+                                                  .doctorRatings, /*'9.7'*/
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                            );
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.01,
-                              bottom: MediaQuery.of(context).size.height * 0.01,
-                              left: MediaQuery.of(context).size.width * 0.05,
-                              right: MediaQuery.of(context).size.width * 0.05,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey,
+                                );
+                              return Container();
+                            },
+                          );
+                        } else {
+                          return Center(
+                            child: Container(
+                              child: Text(
+                                snap.data["message"],
                               ),
-                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                            padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.02,
-                              bottom: MediaQuery.of(context).size.height * 0.02,
-                              left: MediaQuery.of(context).size.width * 0.05,
-                              right: MediaQuery.of(context).size.width * 0.05,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  therapistList1.data[index].doctorName, //'John Deo',
-                                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  therapistList1.data[index].doctorType, //'Physiotherapist',
-                                  style: TextStyle(color: Colors.blue),
-                                ),
-                                SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Icon(Icons.add_location_outlined),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width * 0.03,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        therapistList1.data[index].doctorAddress, /*'MA, New York'*/
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    RatingBarIndicator(
-                                      rating: double.parse(therapistList1.data[index].doctorRatings),
-                                      //2.75,
-                                      itemBuilder: (context, index) => Icon(
-                                        Icons.star,
-                                        color: Colors.blue,
-                                      ),
-                                      itemCount: 5,
-                                      itemSize: 20.0,
-                                      direction: Axis.horizontal,
-                                    ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                      therapistList1.data[index].doctorRatings, /*'9.7'*/
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                          );
+                        }
+                      }
+                    },
+                  ),
+                  FutureBuilder(
+                    future: commonBloc.hitGetApi(ApiUrl.therapist_list +
+                        "?latitude=$_latitude&longitude=$_longitude"),
+                    builder: (context, AsyncSnapshot snap) {
+                      if (snap.data == null) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          child: Center(
+                            child: CircularProgressIndicator(),
                           ),
                         );
-                      return Container();
+                      } else {
+                        if (snap.data["status"] == "200") {
+                          TherapistList therapistList1 =
+                              TherapistList.fromJson(snap.data);
+                          return ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: therapistList1.data.length,
+                            itemBuilder: (context, index) {
+                              if (therapistList1.data[index].doctorType ==
+                                  "Physiotherapy")
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => DoctorDetailScreen(
+                                              doctorId: therapistList1
+                                                  .data[index]
+                                                  .doctorId) //OnGoingTreatment(),
+                                          ),
+                                    );
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height *
+                                          0.01,
+                                      bottom:
+                                          MediaQuery.of(context).size.height *
+                                              0.01,
+                                      left: MediaQuery.of(context).size.width *
+                                          0.05,
+                                      right: MediaQuery.of(context).size.width *
+                                          0.05,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    padding: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height *
+                                          0.02,
+                                      bottom:
+                                          MediaQuery.of(context).size.height *
+                                              0.02,
+                                      left: MediaQuery.of(context).size.width *
+                                          0.05,
+                                      right: MediaQuery.of(context).size.width *
+                                          0.05,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          therapistList1.data[index].doctorName,
+                                          //'John Deo',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 18),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          therapistList1.data[index].doctorType,
+                                          //'Physiotherapist',
+                                          style: TextStyle(color: Colors.blue),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            Icon(Icons.add_location_outlined),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.03,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                therapistList1.data[index]
+                                                    .doctorAddress, /*'MA, New York'*/
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            RatingBarIndicator(
+                                              rating: double.parse(
+                                                  therapistList1.data[index]
+                                                      .doctorRatings),
+                                              //2.75,
+                                              itemBuilder: (context, index) =>
+                                                  Icon(
+                                                Icons.star,
+                                                color: Colors.blue,
+                                              ),
+                                              itemCount: 5,
+                                              itemSize: 20.0,
+                                              direction: Axis.horizontal,
+                                            ),
+                                            SizedBox(
+                                              width: 8,
+                                            ),
+                                            Text(
+                                              therapistList1.data[index]
+                                                  .doctorRatings, /*'9.7'*/
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              return Container();
+                            },
+                          );
+                        } else {
+                          return Center(
+                            child: Container(
+                              child: Text(
+                                snap.data["message"],
+                              ),
+                            ),
+                          );
+                        }
+                      }
                     },
-                  );
-                }
-              },
-            ),
-          ],
+                  ),
+                ],
+              );
+            }
+          },
         ),
       ),
     );
+  }
+
+  Future getLatLong() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission.name == "denied") {
+      LocationPermission permission = await Geolocator.requestPermission();
+    } else if (permission.name == "deniedForever") {
+      LocationPermission permission = await Geolocator.requestPermission();
+    } else {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      _latitude = position.latitude;
+      _longitude = position.longitude;
+      return "fetched";
+    }
   }
 
 /*  getCurrentLocation() async {

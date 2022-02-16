@@ -699,6 +699,12 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                   ),
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
+                                margin: EdgeInsets.only(
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                ),
                                 child: InkWell(
                                   onTap: () {
                                     showDatePicker(
@@ -706,38 +712,47 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime.now(),
                                       lastDate: DateTime(2024),
-                                    ).then((pickedDate) async {
-                                      if (pickedDate == null) {
-                                        return;
-                                      }
-                                      var res = await commonBloc.hitGetApi(
-                                          ApiUrl.get_therapist_schedule +
-                                              '?doctor_id=' +
-                                              widget.dId);
-                                      print('resp:' +
-                                          json.encode(res).toString());
-                                      MySchedule mySchedule =
-                                          myScheduleFromJson(json.encode(res));
-                                      for (int i = 0;
-                                          i < mySchedule.data.length;
-                                          i++) {
-
-                                      res = await commonBloc
-                                          .hitGetApi(ApiUrl.get_therapist_schedule + '?doctor_id=' + widget.dId);
-                                      print('resp:' + json.encode(res).toString());
-                                      mySchedule = myScheduleFromJson(json.encode(res));
-                                      for (int i = 0; i < mySchedule.data.length; i++) {
-
-                                        if (mySchedule.data[i].scheduleDate ==
-                                            DateFormat('yyyy-MM-dd')
-                                                .format(pickedDate)) {}
-                                      }
-                                      setState(() {
-                                        aDateController.text =
-                                            DateFormat('yyyy-MM-dd')
-                                                .format(pickedDate);
-                                      });
-                                    });
+                                    ).then(
+                                      (pickedDate) async {
+                                        if (pickedDate == null) {
+                                          return;
+                                        }
+                                        var res = await commonBloc.hitGetApi(
+                                            ApiUrl.get_therapist_schedule +
+                                                '?doctor_id=' +
+                                                widget.dId);
+                                        print('resp:' +
+                                            json.encode(res).toString());
+                                        MySchedule mySchedule =
+                                            myScheduleFromJson(
+                                                json.encode(res));
+                                        for (int i = 0;
+                                            i < mySchedule.data.length;
+                                            i++) {
+                                          res = await commonBloc.hitGetApi(
+                                              ApiUrl.get_therapist_schedule +
+                                                  '?doctor_id=' +
+                                                  widget.dId);
+                                          print('resp:' +
+                                              json.encode(res).toString());
+                                          mySchedule = myScheduleFromJson(
+                                              json.encode(res));
+                                          for (int i = 0;
+                                              i < mySchedule.data.length;
+                                              i++) {
+                                            if (mySchedule
+                                                    .data[i].scheduleDate ==
+                                                DateFormat('yyyy-MM-dd')
+                                                    .format(pickedDate)) {}
+                                          }
+                                          setState(() {
+                                            aDateController.text =
+                                                DateFormat('yyyy-MM-dd')
+                                                    .format(pickedDate);
+                                          });
+                                        }
+                                      },
+                                    );
                                   },
                                   child: ListTile(
                                     title: /*TextField(
@@ -753,16 +768,7 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
                                                 .isEmpty
                                             ? "Appointment Date"
                                             : aDateController.text.toString()),
-                                    title: Text(aDateController.text.toString().isEmpty
-                                        ? "Appointment Date"
-                                        : aDateController.text.toString()),
                                   ),
-                                ),
-                                margin: EdgeInsets.only(
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.07,
-                                  right:
-                                      MediaQuery.of(context).size.width * 0.07,
                                 ),
                               ),
                               SizedBox(
@@ -1124,8 +1130,9 @@ class _AppointmentForm1State extends State<AppointmentForm1> {
       'doctor_id': widget.dId.toString(),
       'appointment_id': "need from backend",
       'order_id': paymentDetails["charges"]["data"][0]["id"],
-      'transaction_id': paymentDetails["charges"]["data"][0]["balance_transaction"],
-      'amount': (paymentDetails["amount"]/100).toString(),
+      'transaction_id': paymentDetails["charges"]["data"][0]
+          ["balance_transaction"],
+      'amount': (paymentDetails["amount"] / 100).toString(),
       'transaction_status': paymentDetails["status"],
       'signature': "Not available",
     };

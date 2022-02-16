@@ -15,9 +15,9 @@ class TherapistList {
     required this.data,
   });
 
-  String status;
-  int code;
-  List<Datum> data;
+  late String status;
+  late int code;
+  late List<Datum> data;
 
   factory TherapistList.fromJson(Map<String, dynamic> json) =>
       TherapistList(
